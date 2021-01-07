@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'Gotham-Bold';
+    src: url('../fonts/Gotham-Bold.otf');
+}
+@font-face {
+    font-family: 'Gotham-Medium';
+    src: url('../fonts/Gotham-Medium.otf');
+}
+@font-face {
+    font-family: 'Alright-Regular';
+    src: url('../fonts/AlrightSans-Regular.otf');
+}
+@font-face {
+    font-family: 'Alright-Bold';
+    src: url('../fonts/AlrightSans-Bold.otf');
+}
+@font-face {
+    font-family: 'Alright-Black';
+    src: url('../fonts/AlrightSans-Black.otf');
+}
+.font-gotham-bold{
+    font-family: 'Gotham-Bold';
+}
+.font-gotham-medium{
+    font-family: 'Gotham-Medium';
+}
+.font-alright-regular{
+    font-family: 'Alright-Regular';
+}
+body{
+    background-color:#2E9A73;
+}
+.card_amarilla{
+    background-color: #FFC20E;
+    border: none;
+    border-radius: 15px;
+}
+.card_amarilla a{
+    color: #0E5155;
+}
+.color-white{
+    color: white;
+}
+.caja{
+    width: 160px;
+    height: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+.fotoperfil{
+    width: 96%;
+    height: 96%;
+    border-radius: 15px;
+    margin:2%;
+    background-repeat: no-repeat;
+}
+.input{
+    border-radius: 15px;
+    font-family: 'Alright-Regular';
+    padding: 5px;
+}
+.color-secondary{
+    color: #FFC20E;
+}
+
+.cajaVideo{
+    width: 300px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    background-color: #FFC20E;
+    border: none;
+    border-radius: 15px;
+}
+.video{
+    width: 290px;
+    height: 290px;
+    border-radius: 15px;
+    margin:5px;
+    background-repeat: no-repeat;
+}
