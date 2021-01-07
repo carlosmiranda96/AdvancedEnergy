@@ -1,0 +1,7 @@
+<nav class="nav nav-ae flex-column flex-sm-row mb-3">
+    <a class="flex-sm-fill text-sm-center nav-link @if(in_array(Route::current()->getName(),array('empleados.edit'))) active @endif" href="{{route('empleados.edit',$empleados->id)}}"><i class="fas fa-info"></i> Información</a>
+    <a class="flex-sm-fill text-sm-center nav-link @if(in_array(Route::current()->getName(),array('empleadodocumento.show','empleadodocumento.create','empleadodocumento.edit'))) active @endif" href="{{route('empleadodocumento.show',$empleados->id)}}"><i class="far fa-id-card"></i> Documentos</a>
+    <a class="flex-sm-fill text-sm-center nav-link @if(in_array(Route::current()->getName(),array('empleadoempresa.show','empleadoempresa.create','empleadoempresa.edit'))) active @endif" href="{{route('empleadoempresa.show',$empleados->id)}}"><i class="far fa-building"></i> Empresa</a>
+    <a class="flex-sm-fill text-sm-center nav-link @if(in_array(Route::current()->getName(),array('empleadoreferencia.show','empleadoreferencia.create','empleadoreferencia.edit'))) active @endif" href="{{route('empleadoreferencia.show',$empleados->id)}}"><i class="fas fa-asterisk"></i> Referencias</a>
+    <a class="flex-sm-fill text-sm-center nav-link @if(in_array(Route::current()->getName(),array('empleadouser.show','empleadouser.create','empleadouser.edit'))) active @endif" href="{{route('empleadouser.show',$empleados->id)}}"><i class="fas fa-sign-in-alt"></i> Login</a>
+</nav>

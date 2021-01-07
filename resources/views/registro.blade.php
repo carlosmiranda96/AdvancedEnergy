@@ -1,0 +1,57 @@
+@extends('plantillaLogin')
+@section('pagina')
+<div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary bg-secondary">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block align-middle">
+                <img class="col-12" src="{{asset('')}}img/isotipo.png">
+              </div>
+              <div class="col-lg-6">
+                <div class="p-4">  
+                  <div class="text-center">
+                    <img class="col-12" src="{{asset('')}}img/logo.png"/>
+                  </div>
+                  <form class="user" action="{{route('iniciarsesion')}}" method="post">
+                    @csrf
+                    @if(session('mensaje'))
+                    <div class="alert alert-danger" role="alert">
+                      {{session('mensaje')}}
+                    </div>
+                    @endif
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user input" name="email" value="{{old('email')}}" autofocus placeholder="Nombre y Apellido" required >
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user input" name="email" value="{{old('email')}}" autofocus placeholder="Correo Electronico" required >
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label text-white" for="customCheck">Recordar usuario</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                      Iniciar sesión
+                    </button>
+                    <!--button class="btn btn-primary btn-user btn-block" id="btniniciar">Iniciar sesión</button-->
+                  </form>
+                  <hr>
+                  <div class="text-center">
+                    <a class="text-white" href="{{ route('recordar')}}">¿Olvido la contraseña?</a>
+                    <br><br>
+                    <a class="text-warning" href="{{ route('login')}}">¿Ya tienes una cuenta? Inicia sesión!</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+@stop
