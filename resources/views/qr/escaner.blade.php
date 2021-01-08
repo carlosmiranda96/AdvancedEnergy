@@ -1,23 +1,49 @@
 @extends('plantillaQR')
 @section('pagina')
-<div hidden>
-    <input id="cant" value="0"/>
-    <input id="latitud" value="{{$latitud}}"/>
-    <input id="longitud" value="{{$longitud}}"/>
-    <input id="idusuario" value="1"/>
-    <input id="idubicacion" value="76AE"/>
+<form id="frmescaner" action="#" method="POST">
+<div >
+    <input type="text" id="latitud" name="latitud" value="0"/>
+    <input type="text" id="longitud" name="longitud" value="0"/>
+    <input type="text" id="idempleadoinicio" name="idempleadoinicio" value="@if ($empleado) {{$empleado->id}} @else {{'0'}} @endif"/>
+    <input type="text" id="idvehiculo" name="idvehiculo" value="{{$idvehiculo}}"/>
+    <input type="text" id="contenido"  name="contenido" />
 </div>
 <div class="row">
     <div class="col-12 text-center pt-2">
-        <label class="font-gotham-medium color-secondary">Carnet </label>
-        <select class="input" id="idempleado">
-            <option value="{{$empleado->id}}">{{$empleado->codigo}}</option>
+        <label class="font-gotham-medium color-secondary">Ubicación</label>
+        <select class="input" id="idubicacion" name="idubicacion">
+        @if($ubicacion)
+          <option value="{{$ubicacion->id}}">{{$ubicacion->descripcion}}</option>
+        @endif
         </select>
     </div>
 </div>
-<div class="row pt-3">
-    <div class="col-12 text-center">
-        <label class="font-gotham-medium color-secondary">Escanea el codigo QR</label>
+<div class="row">
+  <div class="col-12 text-center pt-2">
+    <label class="font-gotham-medium color-secondary">Codigo Carnet </label>
+        <select class="input" id="idempleado" name="idempleado">
+          @if ($empleado)
+            <option value="{{$empleado->id}}">{{$empleado->codigo}}</option>
+          @endif
+          <option value="0">Escanea QR</option>
+        </select>
+  </div>
+</div>
+<div class="row pt-3 pb-3 mt-3">
+    <div class="col-12 text-center color-secondary">
+        <label class="font-gotham-medium color-secondary h5 pb-3">Selecciona una opción</label>
+        <div class="form-check form-group">
+          <input class="form-check-input" type="radio" name="opcion" id="vehiculo" value="vehiculo" @if(!$ubicacion) {{'checked'}} @endif>
+          <label class="form-check-label h6" for="vehiculo">
+            Utilizar vehiculo&nbsp;&nbsp;
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opcion" id="asistencia" value="asistencia" @if($ubicacion) {{'checked'}} @endif>
+          <label class="form-check-label h6" for="asistencia">
+            Marcar asistencia
+          </label>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -25,6 +51,7 @@
         <video id="preview" class="video" playsinline></video>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="notificacion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -44,11 +71,101 @@
     </div>
   </div>
 </div>
+<button type="submit">Enviar</button>
+</form>
 @stop
 @section('script')
 <script src="{{asset('js/instascan.js')}}"></script>
 <script src="{{asset('js/buzz.min.js')}}"></script>
 <script>
+    //METODO PARA OBTENER COORDENADAS GPS
+  if(navigator.geolocation){
+        //intentamos obtener las coordenadas del usuario
+        navigator.geolocation.getCurrentPosition(function(objPosicion){
+            //almacenamos en variables la longitud y latitud
+            var iLongitud=objPosicion.coords.longitude;
+            var iLatitud=objPosicion.coords.latitude;
+            $("#latitud").val(iLatitud);
+            $("#longitud").val(iLongitud);
+            obtenerUbicacion(iLatitud,iLongitud);             
+        },function(objError){
+            //manejamos los errores devueltos por Geolocation API
+            switch(objError.code){
+                //no se pudo obtener la informacion de la ubicacion
+                case objError.POSITION_UNAVAILABLE:
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"No se ha podido obtener la ubicación",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                    break;
+                    //timeout al intentar obtener las coordenadas
+                case objError.TIMEOUT:
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"Tiempo de espera agotado",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                    break;
+                    //el usuario no desea mostrar la ubicacion
+                case objError.PERMISSION_DENIED:
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"Por favor activa el GPS",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                    break;
+                    //errores desconocidos
+                case objError.UNKNOWN_ERROR:
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"Error desconocido",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                    break;
+            }
+        });
+    }else{
+        //el navegador del usuario no soporta el API de Geolocalizacion de HTML5
+        alertify.alert('Tu navegador no soporta la Geolocalización en HTML5');
+    }
+  
+    //METODO PARA OBTENER LA UBICACION EN LA BD DE ACUERDO A LAS COORDENADS OBTENIDAS
+    function obtenerUbicacion(lat,lon){
+        $("#latitud").val(lat);
+        $("#longitud").val(lon);
+        var datos = {latitud:lat,longitud:lon};
+        $.ajax({
+            url:"{{route('api.getUbicacion')}}",
+            type:"get",
+            data: datos,
+            success:function(r)
+            {
+                var json = JSON.parse(r);
+                var contador = 0;
+                $.each(json,function(e,key){
+                    contador++;
+                    $("#idubicacion").append('<option value="'+key.id+'">'+key.descripcion+'</option>');
+                });
+            }
+        });
+    }
   $("#notificacion").on('hide.bs.modal',function(){
     Instascan.Camera.getCameras().then(function(cameras){
       if (cameras.length > 0){
@@ -63,15 +180,16 @@
   });
   var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 3, mirror:false });
   var lector = new buzz.sound("{{asset('sound/lector')}}", {formats: [ "mp3"]});
-  scanner.addListener('scan',function(content){
+  $("#contenido").val('https://192.168.2.98/AdvancedEnergy/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt#');
+  scanner.addListener('scan',function(content)
+  {
     lector.play().bind("lector", function() {});
-    var token = '{{csrf_token()}}';
-    var user = $("#idusuario").val();
-    var la = $("#latitud").val();
-    var lo = $("#longitud").val();
-    var ubicacion = $("#idubicacion").val();
-    var empleado = $("#idempleado").val();
-    var datos = {contenido:content,_token:token,idusuario:user,idempleado:empleado,latitud:la,longitud:lo,idubicacion:ubicacion};
+    $("#contenido").val(content);
+    $("#frmescaner").submit();
+  });
+  $("#frmescaner").bind('submit',function(){
+    var datos = $(this).serialize();
+    var datos = datos+"&_token={{csrf_token()}}";
     $.ajax({
       url:"{{route('api.escanear')}}",
       type:"get",
@@ -86,20 +204,21 @@
           $("#idubicacion").empty();
           var jsonUbicacion = JSON.parse(json['json']);
           $("#idubicacion").append('<option value="'+jsonUbicacion['id']+'">'+jsonUbicacion['ubicacion']+'</option>');
-          $("#idubicacion").append('<option value="0">Seleccione</option>');
+          $("#idubicacion").append('<option value="0">Escanea QR</option>');
           cantidad.val(cantidad.val()+1);
         }else if(json['id']==2){
           $("#bodynotificacion").html(json['mensaje']);
           $("#idempleado").empty();
           var jsonEmpleado = JSON.parse(json['json']);
           $("#idempleado").append('<option value="'+jsonEmpleado['id']+'">'+jsonEmpleado['nombre']+'</option>');
-          $("#idempleado").append('<option value="0">Seleccione</option>');
+          $("#idempleado").append('<option value="0">Escanea QR</option>');
           cantidad.val(cantidad.val()+1);
         }
         $("#notificacion").modal('show');
         scanner.stop();
       }
     });
+    return false;
   });
   Instascan.Camera.getCameras().then(function (cameras){
     if (cameras.length > 0) {

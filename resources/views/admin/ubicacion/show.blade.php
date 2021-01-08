@@ -73,7 +73,7 @@
         var qrcode = new QRCode("codigoQR");
         qrcode.clear(); // clear the code.
         //qrcode.makeCode("https://maps.google.com/?q={{$ubicacion->latitud}},{{$ubicacion->longitud}}&ae={{$ubicacion->id}}");
-        qrcode.makeCode("{{asset('api/ubicacion?id='.$ubicacion->id)}}");
+        qrcode.makeCode("{{route('lectorqr',['c'=>$ubicacion->id])}}");
         $("#descargarCodigo").on("click",function(){
             var base64 = $("#codigoQR img").attr('src');
             $("#descargarCodigo").attr('href', base64);

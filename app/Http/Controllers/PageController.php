@@ -20,7 +20,20 @@ class PageController extends Controller
 	{
 		date_default_timezone_set('America/El_Salvador');
 	}
-	//API ASISTENCIA
+	public function loadaplicacion()
+	{
+		$idusuario = session('user_id');
+        $empleado = empleadoUser::where('idusuario',$idusuario)->first();
+        $idempleado = 0;
+        if($empleado){
+			$a = $empleado->idempleado;
+			$datosempleado = empleados::find($a);
+			$b = $datosempleado->toquen;
+        }
+		$url = route('asistencia',['a'=>$a,'b'=>$b]);
+		return view('aplicacion.cargar',compact('url'));
+	}
+	//API APLICACION ASISTENCIA
 	public function asistencia(Request $request)
 	{
 		$id = $request->a;
@@ -29,8 +42,7 @@ class PageController extends Controller
 			$empleado = empleados::where('id',$id)->where('toquen',$toquen)->first();
 			if(isset($empleado))
 			{
-				//session()->put('codigoCarnet',$empleado->codigo);
-				return view('qr.carnet',compact('empleado'));
+				return view('aplicacion.aplicacion',compact('empleado'));
 			}else{
 				abort(404);
 			}
@@ -38,51 +50,19 @@ class PageController extends Controller
 			abort(404);
 		}
 	}
-	//API VEHICULO
-	public function vehiculo(Request $request)
+	//API LECTORQR
+	public function lectorqr(Request $request)
 	{
-			$latitud = $request->latitud;
-			$longitud = $request->longitud;
-			$idempleado = $request->idempleado;
-			if(isset($latitud) && isset($longitud) && isset($idempleado)){
-				$empleado = empleados::find($idempleado);
-				if(isset($empleado)){
-					return view('qr.vehiculo',compact('empleado','latitud','longitud'));
-				}else{
-					abort(404);
-				}
-			}else{
-				abort(404);
-			}
-	}
-	public function abrirescaner(Request $request)
-	{
-		$latitud = $request->latitud;
-		$longitud = $request->longitud;
-		$idempleado = $request->idempleado;
-		if(isset($latitud) && isset($longitud) && isset($idempleado)){
-			$empleado = empleados::find($idempleado);
-			if(isset($empleado)){
-				session()->put('codigoCarnet',$empleado->codigo);
-				return view('qr.escaner',compact('empleado','latitud','longitud'));
-			}else{
-				abort(404);
-			}
-		}else{
-			abort(404);
+		$idvehiculo = $request->a;
+		$toquen = $request->b;
+		$idubicacion = $request->c;
+		$ubicacion = ubicacion::find($idubicacion);
+		$empleado = empleados::where('toquen',$toquen)->first();
+		$idvehiculo = $request->a;
+		if(!$idvehiculo){
+			$idvehiculo = 0;
 		}
-	}
-	//Ubicacion
-	public function ubicacion(Request $request)
-	{
-		$id = $request->id;
-		$ubicacion = ubicacion::find($id);
-		if(isset($ubicacion)){
-			session()->put('idubicacion',$id);
-			return view('qr.ubicacion',compact('ubicacion'));
-		}else{
-			abort(404);
-		}
+		return view('qr.escaner',compact('empleado','idvehiculo','ubicacion'));
 	}
 	public function login(Request $request)
 	{
@@ -137,10 +117,12 @@ class PageController extends Controller
 			return redirect()->route('login')->with('mensaje', 'Usuario ingresado es incorrecto ');		
 		}		
 	}
+	//Crea la sesion al dar clic en una opcion del menu
 	public function sessionmenu(Request $request)
 	{
 		session()->put('menu_id',$request->id);
 	}
+
 	public function cerrar()
 	{
 		session()->flush();
@@ -158,18 +140,8 @@ class PageController extends Controller
 	public function general(){
 		return view('general.general');
 	}
-	public function lector(){
-		return view('qr.lectorqr');
-	}
 	public function rrhh(){
 		return view('rrhh.rrhh');
-	}
-	public function marcaciones(Request $request)
-	{
-		echo $request->id;
-		/*
-		$data['marcaciones'] = marcacionesempleados::all();
-		return view('qr.marcacion',$data);*/
 	}
 	public function equipos()
 	{
@@ -221,7 +193,7 @@ class PageController extends Controller
 		}else{
 			$contador++;
 			$datos[$contador]['id'] = '0';
-			$datos[$contador]['descripcion'] = 'Seleccione';
+			$datos[$contador]['descripcion'] = 'Escanea QR';
 		}
 		echo json_encode($datos);
 	}
@@ -253,12 +225,43 @@ class PageController extends Controller
 	public function escaner(Request $request)
 	{
 		$contenido = $request->contenido;
-		$idusuario = $request->idusuario;
 		$idempleado = $request->idempleado;
+		$idempleadoinicio = $request->idempleadoinicio;
 		$latitud = $request->latitud;
 		$longitud = $request->longitud;
 		$idubicacion = $request->idubicacion;
-		$split = explode(';',$contenido);
+		$idvehiculo = $request->idvehiculo;
+		$opcion = $request->opcion;
+
+		$split = explode('qr?',$contenido);
+
+		$data['id'] = 0;
+		$data['mensaje'] = 'Sin respuesta';
+		//Ejemplo de url de carnet https://192.168.2.98/AdvancedEnergy/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt#
+		//Ejemplo de url de vehiculo https://192.168.2.98/AdvancedEnergy/api/qr?a=1
+		//Ejemplo de url de ubicacion https://192.168.2.98/AdvancedEnergy/api/qr?c=1
+		switch($opcion)
+		{
+		case 'vehiculo':
+			//Para vehiculo se debe cumplir, Tener un idempleado, idvehiculo
+			$data['id'] = 0;
+			$data['mensaje'] = 'Vehiculos '.$contenido;
+			break;
+		case 'asistencia':
+			//Para asistencia se debe cumplir, Tener un idempleado, idubicacion
+			$data['id'] = 0;
+			$data['mensaje'] = 'Asistencia '.$contenido;
+			break;
+		}
+
+		if($opcion == 'vehiculo'){
+
+		}else{
+
+		}
+		//IMPRIMIR JSON
+		echo json_encode($data);
+		/*
 		if(isset($split['0']))
 		{
 			switch($split['0'])
@@ -480,7 +483,7 @@ class PageController extends Controller
 									/*
 									$data['id'] = 0;
 									$data['mensaje'] = "Carnet ".$empleado2->codigo;*/
-								}else{
+								/*}else{
 									$data['id'] = 0;
 									$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><h3 class="text-danger text-center">Carnet no válido !!</h3>';
 								}
@@ -498,8 +501,11 @@ class PageController extends Controller
 						$data['mensaje'] = $contenido;
 						echo json_encode($data);
 					}
-				break;
+				/*break;
 			}
-		}
+		}else{
+			$data['id'] = 0;
+			$data['mensaje'] = "Prueba";
+		}*/
 	}
 }

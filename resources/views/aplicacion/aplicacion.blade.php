@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <a href="{{route('api.form.covid',$empleado->id)}}" style="text-decoration: none;" target="_blank">
+                    <a href="{{route('api.form.covid',$empleado->toquen)}}" style="text-decoration: none;" target="_blank">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
@@ -57,20 +57,7 @@
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <a href="#" onclick='formulario("{{route('api.vehiculo')}}")' style="text-decoration: none;">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                        <div class="col">
-                            <div class="h5 mb-0 font-gotham-bold text-center">Utilizar Vehiculo</div>
-                        </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card card_amarilla mb-3">
-                    <a href="#" onclick='formulario("{{route('api.cargarescaner')}}")' style="text-decoration: none;">
+                    <a href="{{route('lectorqr',['b'=>$empleado->toquen])}}" style="text-decoration: none;" target="_blank">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
@@ -97,6 +84,8 @@
         </div>
     </div>
 </div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="notificacion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -119,7 +108,7 @@
 @stop
 @section('script')
 <script>
-    var cantidad = $("#cant");
+    //METODO PARA OBTENER COORDENADAS GPS
     if(navigator.geolocation){
         //intentamos obtener las coordenadas del usuario
         navigator.geolocation.getCurrentPosition(function(objPosicion){
@@ -134,19 +123,51 @@
             switch(objError.code){
                 //no se pudo obtener la informacion de la ubicacion
                 case objError.POSITION_UNAVAILABLE:
-                    alertify.alert('Notificación GPS','La información de tu posición no es posible');
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"No se ha podido obtener la ubicación",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
                     break;
                     //timeout al intentar obtener las coordenadas
                 case objError.TIMEOUT:
-                    alertify.alert('Notificación GPS','Tiempo de espera agotado');
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"Tiempo de espera agotado",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
                     break;
                     //el usuario no desea mostrar la ubicacion
                 case objError.PERMISSION_DENIED:
-                    alertify.alert('Notificación GPS','Necesitas permitir tu localización');
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"Por favor activa el GPS",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
                     break;
                     //errores desconocidos
                 case objError.UNKNOWN_ERROR:
-                    alertify.alert('Notificación GPS','Error desconocido');
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"Error desconocido",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
                     break;
             }
         });
@@ -154,6 +175,7 @@
         //el navegador del usuario no soporta el API de Geolocalizacion de HTML5
         alertify.alert('Tu navegador no soporta la Geolocalización en HTML5');
     }
+    //METODO PARA OBTENER LA UBICACION EN LA BD DE ACUERDO A LAS COORDENADS OBTENIDAS
     function obtenerUbicacion(lat,lon){
         var datos = {latitud:lat,longitud:lon};
         $.ajax({
@@ -168,10 +190,10 @@
                     contador++;
                     $("#idubicacion").append('<option value="'+key.id+'">'+key.descripcion+'</option>');
                 });
-                cantidad.val(contador);
             }
         });
     }
+    //Metodo para marcar la asistencia
     function asistencia(){
         var content = "Carnet;{{$empleado->codigo}}";
         var token = '{{csrf_token()}}';
@@ -180,7 +202,8 @@
         var lo = $("#longitud").val();
         var ubicacion = $("#idubicacion").val();
         var empleado = $("#idempleado").val();
-        var datos = {contenido:content,_token:token,idusuario:user,idempleado:empleado,latitud:la,longitud:lo,idubicacion:ubicacion};
+        var idempleado = $("#idempleadoinicio").val();
+        var datos = {contenido:content,_token:token,idusuario:user,idempleado:empleado,latitud:la,longitud:lo,idubicacion:ubicacion,idempleadoinicio:idempleado,opcion:'asistencia'};
         $.ajax({
             url:"{{route('api.escanear')}}",
             type:"get",
@@ -196,23 +219,16 @@
                     var jsonUbicacion = JSON.parse(json['json']);
                     $("#idubicacion").append('<option value="'+jsonUbicacion['id']+'">'+jsonUbicacion['ubicacion']+'</option>');
                     $("#idubicacion").append('<option value="0">Seleccione</option>');
-                    cantidad.val(cantidad.val()+1);
                 }else if(json['id']==2){
                     $("#bodynotificacion").html(json['mensaje']);
                     $("#idempleado").empty();
                     var jsonEmpleado = JSON.parse(json['json']);
                     $("#idempleado").append('<option value="'+jsonEmpleado['id']+'">'+jsonEmpleado['nombre']+'</option>');
                     $("#idempleado").append('<option value="0">Seleccione</option>');
-                    cantidad.val(cantidad.val()+1);
                 }
                 $("#notificacion").modal('show');
             }
         });
-    }
-    function formulario(accion)
-    {
-        $("#frmvehiculo").attr('action',accion)
-        $("#frmvehiculo").submit();
     }
 </script>
 @stop

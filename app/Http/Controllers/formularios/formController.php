@@ -26,10 +26,10 @@ class formController extends Controller
     {
         
     }
-    public function covid($idempleado)
+    public function covid($toquen)
     {
-        $empleado = empleados::find($idempleado);
-        $dui = empleadoDocumento::where('idempleado',$idempleado)->where('idtipodocumento',1)->first();
+        $empleado = empleados::where('toquen',$toquen)->first();
+        $dui = empleadoDocumento::where('idempleado',$empleado->id)->where('idtipodocumento',1)->first();
         $genero = genero::all();
         $sintomas = formuc::all();
         return view('form.covid',compact('empleado','dui','genero','sintomas'));

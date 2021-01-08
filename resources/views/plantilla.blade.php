@@ -131,7 +131,7 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="pt-4" id="pagina">
+                <main class="mt-4" id="pagina">
                     @yield('pagina')
                 </main>
                 <footer class="py-4 bg-light mt-auto">

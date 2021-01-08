@@ -1,6 +1,6 @@
 @extends('plantilla')
 @section('script')
 <script>
-    $("#pagina").load('{{$url}}');
+    $("#pagina").load('<?php echo $url;?>');
 </script>
 @stop

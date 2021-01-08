@@ -48,7 +48,8 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('cerrarsesion',[PageController::class,'cerrar'])->name('cerrarsesion');
     Route::get('inicio', [PageController::class, 'inicio'])->name('inicio');
     Route::get('rrhh',[PageController::class,'rrhh'])->name('rrhh');
-    Route::get('QR/lector',[PageController::class,'lector'])->name('lectorqr');
+
+    Route::get('aplicacion',[PageController::class,'loadaplicacion'])->name('load.aplicacion');
 
     Route::get('QR/marcaciones',[PageController::class,'marcaciones'])->name('marcacion');
     Route::get('QR/equipos',[PageController::class,'equipos'])->name('historialequipos');

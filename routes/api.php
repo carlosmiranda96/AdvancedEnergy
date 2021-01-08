@@ -20,17 +20,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('asistencia',[PageController::class,'asistencia'])->name('asistencia');
-Route::get('ubicacion',[PageController::class,'ubicacion'])->name('ubicacion');
+Route::get('qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('api.getUbicacion');//Obtener ubicacion segun coordenadas
+Route::get('asistencia',[PageController::class,'asistencia'])->name('asistencia');//Abre la aplicacion
+Route::get('qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
 
-Route::post('qr/vehiculo',[PageController::class,'vehiculo'])->name('api.vehiculo');
-Route::post('qr/escaner',[PageController::class,'abrirescaner'])->name('api.cargarescaner');
+Route::get('escaner',[PageController::class,'escaner'])->name('api.escanear');//Metodo para escanear, QR Empleado, QR Vehiculo, QR Ubicacion
 
-Route::get('form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');
-Route::put('form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//actualiza formulario
-Route::get('form/covid/{idempleado}',[formController::class,'covid'])->name('api.form.covid');
-Route::post('form/covidenviar',[formController::class,'guardarcovid'])->name('api.form.covid.enviar');
 
-Route::get('qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('api.getUbicacion');//Obtener ubicacion
+//FORMULARIO --COVID
+Route::get('form/covid/{toquen}',[formController::class,'covid'])->name('api.form.covid');//Abre formulario covid
+Route::post('form/covidenviar',[formController::class,'guardarcovid'])->name('api.form.covid.enviar');//Envia formulario covid
+//FORMULARIO --VEHICULO
+Route::get('form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
+Route::put('form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo
 
-Route::get('qr/escaner',[PageController::class,'escaner'])->name('api.escanear');//GUardar información
+
+
+
+
+
+
+
+

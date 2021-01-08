@@ -66,7 +66,7 @@
     <script>
         var qrcode = new QRCode("codigoQR");
         qrcode.clear(); // clear the code.
-        qrcode.makeCode("{{'Vehiculo;'.$equipostrabajo->codigo}}");
+        qrcode.makeCode("{{route('lectorqr',['a'=>$equipostrabajo->id])}}");
         $("#descargarCodigo").on("click",function(){
             var base64 = $("#codigoQR img").attr('src');
             $("#descargarCodigo").attr('href', base64);

@@ -97,7 +97,7 @@
             </div>
             <div class="form-group col-12">
                 <label>Temperatura registrada en grados C</label>
-                <input type="text" class="form-control input" value="" id="temperatura" name="temperatura"/>
+                <input type="number" class="form-control input" step="0.01" value="" id="temperatura" name="temperatura"/>
             </div>
             <div class="form-group col-12">
                 <label>Es responsabilidad de todos cuidarnos. Juntos saldremos adelante! Déjanos tus comentarios</label>
@@ -127,7 +127,7 @@
                     success:function(r)
                     {
                         $("#formulario").empty();
-                        $("#formulario").html('<h3 class="text-center text-primary font-gotham-bold">Gracias por completar el formulario!! <br><br> <div onclick="reenviar()" class="btn btn-primary">Enviar otra respuesta</div></h3>');
+                        $("#formulario").html('<h3 class="text-center text-primary font-gotham-bold">Gracias por completar el formulario!! <br><br><div onclick="reenviar()" class="btn btn-primary">Enviar otra respuesta</div></h3><hr><div class="text-center"><a href="{{URL::previous()}}"><div class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Atrás</div></a></div>');
                     }
                 });
                 return false;
