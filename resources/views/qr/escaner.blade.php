@@ -180,7 +180,7 @@
   });
   var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 3, mirror:false });
   var lector = new buzz.sound("{{asset('sound/lector')}}", {formats: [ "mp3"]});
-  $("#contenido").val('https://192.168.2.98/AdvancedEnergy/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt#');
+  $("#contenido").val('https://192.168.2.98/AdvancedEnergy/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt');
   scanner.addListener('scan',function(content)
   {
     lector.play().bind("lector", function() {});
@@ -205,14 +205,17 @@
           var jsonUbicacion = JSON.parse(json['json']);
           $("#idubicacion").append('<option value="'+jsonUbicacion['id']+'">'+jsonUbicacion['ubicacion']+'</option>');
           $("#idubicacion").append('<option value="0">Escanea QR</option>');
-          cantidad.val(cantidad.val()+1);
+          $("#asistencia").prop("checked",true);
         }else if(json['id']==2){
           $("#bodynotificacion").html(json['mensaje']);
           $("#idempleado").empty();
           var jsonEmpleado = JSON.parse(json['json']);
           $("#idempleado").append('<option value="'+jsonEmpleado['id']+'">'+jsonEmpleado['nombre']+'</option>');
           $("#idempleado").append('<option value="0">Escanea QR</option>');
-          cantidad.val(cantidad.val()+1);
+        }else if(json['id']==3){
+          $("#bodynotificacion").html(json['mensaje']);
+          $("#idvehiculo").val(json['idvehiculo']);
+          $("#vehiculo").prop("checked",true);
         }
         $("#notificacion").modal('show');
         scanner.stop();

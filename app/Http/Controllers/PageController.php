@@ -24,7 +24,9 @@ class PageController extends Controller
 	{
 		$idusuario = session('user_id');
         $empleado = empleadoUser::where('idusuario',$idusuario)->first();
-        $idempleado = 0;
+		$idempleado = 0;
+		$a=0;
+		$b=0;
         if($empleado){
 			$a = $empleado->idempleado;
 			$datosempleado = empleados::find($a);
@@ -222,6 +224,42 @@ class PageController extends Controller
 					'min_lng' => $return['west']['lng'],
 					'max_lng' => $return['east']['lng']);
 	}
+	public function obtenerParametros($url)
+	{
+		$arreglo = array();
+		$split = explode('?',$url);
+		if(isset($split[1])){
+			$parametros = $split[1];
+			$split2 = explode('&',$parametros);
+			$contador = 0;
+			foreach($split2 as $item)
+			{
+				$split3 = explode('=',$item);
+				if(isset($split3[1])){
+					$arreglo[$contador]['id'] = $split3[0];
+					$arreglo[$contador]['valor'] = $split3[1];
+					$contador++;
+				}
+			}
+		}
+		return $arreglo;
+	}
+	public function lector($contenido)
+	{
+		//https://www.google.com
+		$sitiohttps = strpos($contenido, 'https://');
+		$sitiohttp = strpos($contenido, 'http://');	
+		if($sitiohttps!==false){
+			$mensaje = 'Click en el enlace para acceder<br><a href="'.$contenido.'" target="_blank">'.$contenido.'</a>';
+		}else if($sitiohttp!==false){
+			$mensaje = 'Click en el enlace para acceder<br><a href="'.$contenido.'" target="_blank">'.$contenido.'</a>';
+		}else{
+			$mensaje = $contenido;
+		}
+		$data['id'] = 0;
+		$data['mensaje'] = $mensaje;
+		return $data;
+	}
 	public function escaner(Request $request)
 	{
 		$contenido = $request->contenido;
@@ -233,31 +271,194 @@ class PageController extends Controller
 		$idvehiculo = $request->idvehiculo;
 		$opcion = $request->opcion;
 
-		$split = explode('qr?',$contenido);
+		$empleadouser = empleadoUser::where('idempleado',$idempleadoinicio)->first();
+		if($empleadouser){
+			$idusuario = $empleadouser->idusuario;
+		}else{
+			$idusuario = 1;
+		}
 
 		$data['id'] = 0;
 		$data['mensaje'] = 'Sin respuesta';
-		//Ejemplo de url de carnet https://192.168.2.98/AdvancedEnergy/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt#
-		//Ejemplo de url de vehiculo https://192.168.2.98/AdvancedEnergy/api/qr?a=1
-		//Ejemplo de url de ubicacion https://192.168.2.98/AdvancedEnergy/api/qr?c=1
+		//Ejemplo de url de carnet https://192.168.2.98/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt#
+		//Ejemplo de url de vehiculo https://192.168.2.98/api/qr?a=1
+		//Ejemplo de url de ubicacion https://192.168.2.98/api/qr?c=1
+
+		//0 = enviar mensaje a pantalla
+		//1 = Cargar ubicacion
+		//2 = Cargar codigo carnet
+		//3 = Cargar vehiculo
+
+		$error = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><div class="h3 text-danger text-center">';
+		$alert = '<img class="col-6 offset-3" src="'.asset('img/alert.png').'"><div class="h3 text-primary text-center">';
+		$success = '<img class="col-6 offset-3" src="'.asset('img/ok.png').'"><div class="h3 text-primary text-center">';
+
+		$ubicacionkey = strpos($contenido, 'api/qr?c=');
+		$vehiculokey = strpos($contenido, 'api/qr?a');
+		$carnetkey = strpos($contenido, 'api/asistencia?a=');
+
 		switch($opcion)
 		{
 		case 'vehiculo':
+			//Se debe permitir unicamente que se escnee, Carnet y vehiculo
 			//Para vehiculo se debe cumplir, Tener un idempleado, idvehiculo
-			$data['id'] = 0;
-			$data['mensaje'] = 'Vehiculos '.$contenido;
+			if ($ubicacionkey !== false)
+			{
+				//Es ubicacion
+				$parametros = $this->obtenerParametros($contenido);
+				if($parametros && isset($parametros[0]['valor']))
+				{
+					$idubicacion = $parametros[0]['valor'];
+					$ubicacion = ubicacion::find($idubicacion);
+					if(isset($ubicacion)){
+						$data['id'] = 1;
+						$data['mensaje'] = $success.'Ubicación '.$ubicacion->descripcion.' se agregó, cierra la notificación y escanea tu carnet</h3>';
+						$ubi['id'] = $ubicacion->id;
+						$ubi['ubicacion'] = $ubicacion->descripcion;
+						$data['json'] = json_encode($ubi);
+					}else{
+						$data['id'] = 0;
+						$data['mensaje'] = $error.'La ubicación no se encuentra registrada</div>';
+					}
+				}else{
+					//LECTOR QR
+					$data = $this->lector($contenido);
+				}
+			}else if ($carnetkey !== false)
+			{
+				//Se debe validar que exista idvehiculo
+				//Se debe validar que el qr de carnet sea valido
+
+			}else if ($vehiculokey !== false)
+			{
+				//Es QR VEHICULO
+				$parametros = $this->obtenerParametros($contenido);
+				if($parametros && isset($parametros[0]['valor']))
+				{
+					$idvehiculo = $parametros[0]['valor'];
+					$vehiculo = equipostrabajo::find($idvehiculo);
+					$data['id'] = 3;
+					$data['mensaje'] = $success.'Se ha seleccionado el vehiculo '.$vehiculo->codigo.', cierra la ventana y escanea tu carnet!';
+					$data['idvehiculo'] = $vehiculo->id;
+				}else{
+					//LECTOR QR
+					$data = $this->lector($contenido);
+				}
+			}else{
+				$data = $this->lector($contenido);
+			}
 			break;
 		case 'asistencia':
-			//Para asistencia se debe cumplir, Tener un idempleado, idubicacion
-			$data['id'] = 0;
-			$data['mensaje'] = 'Asistencia '.$contenido;
+			//Se debe permitir unicamente que se escanee, Carnet y Ubicación
+			//Si es vehiculo
+			//Si es carnet se debe cumplir, idubicacion
+			if ($ubicacionkey !== false)
+			{
+				//Es ubicacion
+				$parametros = $this->obtenerParametros($contenido);
+				if($parametros && isset($parametros[0]['valor']))
+				{
+					$idubicacion = $parametros[0]['valor'];
+					$ubicacion = ubicacion::find($idubicacion);
+					if(isset($ubicacion)){
+						$data['id'] = 1;
+						$data['mensaje'] = $success.'Ubicación '.$ubicacion->descripcion.' se agregó, cierra la notificación y escanea tu carnet</h3>';
+						$ubi['id'] = $ubicacion->id;
+						$ubi['ubicacion'] = $ubicacion->descripcion;
+						$data['json'] = json_encode($ubi);
+					}else{
+						$data['id'] = 0;
+						$data['mensaje'] = $error.'La ubicación no se encuentra registrada</div>';
+					}
+				}else{
+					//LECTOR QR
+					$data = $this->lector($contenido);
+				}
+			}else if($carnetkey !== false)
+			{
+				//Es carnet
+				$parametros = $this->obtenerParametros($contenido);
+				$idcarnet = 0;
+				$toquen = 0;
+				if($parametros && isset($parametros[1]['valor']))
+				{
+					$idcarnet = $parametros[0]['valor'];
+					$toquen = $parametros[1]['valor'];
+					if($idubicacion>0)
+					{
+						$hora = date('H:i:s');
+						$instante = date('H:i:s');
+						$fecha = date('Y-m-d');
+						$tipo = "Entrada";
+						if($hora>date('H:i:s',strtotime('12:00:00')))
+						{
+							$tipo = "Salida";
+						}
+						$empleadoCarnet = empleados::where('id',$idcarnet)->where('toquen',$toquen)->first();
+						if($empleadoCarnet)
+						{
+							$idempleado = $empleadoCarnet->id;
+							$marcacionempleado = marcacionesempleados::where('idempleado',$idempleado)->where('fecha',$fecha)->orderby('id','asc')->get();
+							$cantidad = $marcacionempleado->count();
+							$marcacionempleado = $marcacionempleado->last();
+							if(isset($marcacionempleado)&&$fecha==date('Y-m-d',strtotime($marcacionempleado->instante)))
+							{
+								$tipo=$marcacionempleado->tipo;
+								if($tipo=="Entrada"){
+									$tipo = "Salida";
+								}else{
+									$tipo = "Entrada";
+								}
+							}
+							if($cantidad>=6){
+								$data['id'] = 0;
+								$data['mensaje'] = $error.$empleadoCarnet->nombre1.', has alcanzado el número maximo de marcaciones para este dia</div>';
+							}else{
+								$ubicacion = ubicacion::find($idubicacion);
+								marcacionesempleados::create([
+									'idempleado' => $idempleado,
+									'idusuario' => $idusuario,
+									'tipo' => $tipo,
+									'fecha' => $fecha,
+									'instante' => $instante,
+									'idubicacion' => $idubicacion,
+									'latitud' => $latitud,
+									'longitud' => $longitud
+								]);
+								$data['id'] = 0;
+								$data['mensaje'] = $success.$empleadoCarnet->nombre1.' tu asistencia se registro en '.$ubicacion->descripcion.'!</div><br><h3 class="text-primary text-center">Hora: '.date('h:i a',strtotime($instante)).'<br>Tipo: '.$tipo.'</h3>';
+							}
+						}else{
+							$data['id'] = 0;
+							$data['mensaje'] = $error.'El carnet no no es válido</div>';
+						}
+					}else{
+						$data['id'] = 0;
+						$data['mensaje'] = $error.'Por favor escanea el QR de la ubicación y luego vuelve a escanear tu carnet!</div>';
+					}
+				}else{
+					//LECTOR QR
+					$data = $this->lector($contenido);
+				}
+			}else if($vehiculokey !== false){
+				//Es QR VEHICULO
+				$parametros = $this->obtenerParametros($contenido);
+				if($parametros && isset($parametros[0]['valor']))
+				{
+					$idvehiculo = $parametros[0]['valor'];
+					$vehiculo = equipostrabajo::find($idvehiculo);
+					$data['id'] = 3;
+					$data['mensaje'] = $success.'Se ha seleccionado el vehiculo '.$vehiculo->codigo.', cierra la ventana y escanea tu carnet!';
+					$data['idvehiculo'] = $vehiculo->id;
+				}else{
+					//LECTOR QR
+					$data = $this->lector($contenido);
+				}
+			}else{
+				//LECTOR QR
+				$data = $this->lector($contenido);
+			}		
 			break;
-		}
-
-		if($opcion == 'vehiculo'){
-
-		}else{
-
 		}
 		//IMPRIMIR JSON
 		echo json_encode($data);
@@ -336,94 +537,12 @@ class PageController extends Controller
 						}
 					}else{
 						$data['id'] = 0;
-						$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><h3 class="text-danger text-center">Equipo no esta registrado</h3>';
+						$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><div class="h3 text-danger text-center">Equipo no esta registrado</div>';
 						echo json_encode($data);
 					}
 				break;
 				case 'Carnet':
-					$hora = date('H:i:s');
-					$instante = date('H:i:s');
-					$fecha = date('Y-m-d');
-					$tipo = "Entrada";
-					if($hora>date('H:i:s',strtotime('12:00:00')))
-					{
-						$tipo = "Salida";
-					}
-					$codigoEmpleado = trim($split['1']);
-					if(isset($codigoEmpleado))
-					{
-						if(isset($idubicacion) && $idubicacion=="76AE")
-						{
-							$empleadoCarnet = empleados::where('codigo',$codigoEmpleado)->first();
-							if(isset($empleadoCarnet))
-							{
-								$empleado['id'] = $empleadoCarnet->id;
-								$empleado['nombre'] = $empleadoCarnet->nombreCompleto;
-								$data['id'] = 2;
-								$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/empleado.png').'"><h3 class="text-danger text-center">Empleado agregado<br>Escanea el codigo QR del vehiculo</h3>';;
-								$data['json'] = json_encode($empleado);
-								echo json_encode($data);
-							}else{
-								$data['id'] = 0;
-								$data['mensaje'] = '<h3 class="text-danger text-center">El carnet no se encuentra registrado</h3>';
-								echo json_encode($data);
-							}
-						}
-						else if(isset($idubicacion) && $idubicacion>0){
-							$empleadoCarnet = empleados::where('codigo',$codigoEmpleado)->first();
-							if(isset($empleadoCarnet))
-							{
-								$idempleado = $empleadoCarnet->id;
-								$marcacionempleado = marcacionesempleados::where('idempleado',$idempleado)->where('fecha',$fecha)->orderby('id','asc')->get();
-								$cantidad = $marcacionempleado->count();
-								$marcacionempleado = $marcacionempleado->last();
-								
-
-								if(isset($marcacionempleado)&&$fecha==date('Y-m-d',strtotime($marcacionempleado->instante)))
-								{
-									$tipo=$marcacionempleado->tipo;
-									if($tipo=="Entrada"){
-										$tipo = "Salida";
-									}else{
-										$tipo = "Entrada";
-									}
-								}
-								if($cantidad>=6){
-									$data['id'] = 0;
-									$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/alert.png').'"><h3 class="text-primary text-center">'.$empleadoCarnet->nombre1.', se ha alcanzado el número maximo de marcaciones por empleado para el dia '.date('d/m/Y').'</h3>';
-									echo json_encode($data);
-								}else{
-									marcacionesempleados::create([
-										'idempleado' => $idempleado,
-										'idusuario' => $idusuario,
-										'tipo' => $tipo,
-										'fecha' => $fecha,
-										'instante' => $instante,
-										'idubicacion' => $idubicacion,
-										'latitud' => $latitud,
-										'longitud' => $longitud
-									]);
-									$data['id'] = 0;
-									$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/ok.png').'"><h3 class="text-primary text-center">'.$empleadoCarnet->nombre1.
-									' tu asistencia se registro correctamente!</h3><br><h3 class="text-primary text-center">'.$tipo.': '.date('h:i a',strtotime($instante)).'</h3>';
-									echo json_encode($data);
-								}
-							}
-							else{
-								$data['id'] = 0;
-								$data['mensaje'] = '<h3 class="text-danger text-center">El carnet no se encuentra registrado</h3>';
-								echo json_encode($data);
-							}
-						}else{
-							$data['id'] = 0;
-							$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><h3 class="text-danger text-center">Por favor selecciona una ubicación válida!!</h3>';
-							echo json_encode($data);
-						}
-					}else{
-						$data['id'] = 0;
-						$data['mensaje'] = $contenido;
-						echo json_encode($data);
-					}
+					
 				break;
 				default:
 					if(strpos($contenido,'https://maps.google.com')!==false){
