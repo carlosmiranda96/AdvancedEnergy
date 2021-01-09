@@ -195,7 +195,7 @@
     }
     //Metodo para marcar la asistencia
     function asistencia(){
-        var content = "Carnet;{{$empleado->codigo}}";
+        var content = "{{route('asistencia',['a'=>$empleado->id,'b'=>$empleado->toquen])}}";
         var token = '{{csrf_token()}}';
         var user = $("#idusuario").val();
         var la = $("#latitud").val();
@@ -203,7 +203,7 @@
         var ubicacion = $("#idubicacion").val();
         var empleado = $("#idempleado").val();
         var idempleado = $("#idempleadoinicio").val();
-        var datos = {contenido:content,_token:token,idusuario:user,idempleado:empleado,latitud:la,longitud:lo,idubicacion:ubicacion,idempleadoinicio:idempleado,opcion:'asistencia'};
+        var datos = {contenido:content,_token:token,opcion:'asistencia',idusuario:user,idempleado:empleado,latitud:la,longitud:lo,idubicacion:ubicacion,idempleadoinicio:idempleado,opcion:'asistencia'};
         $.ajax({
             url:"{{route('api.escanear')}}",
             type:"get",

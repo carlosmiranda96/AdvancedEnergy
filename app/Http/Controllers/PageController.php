@@ -328,7 +328,13 @@ class PageController extends Controller
 			{
 				//Se debe validar que exista idvehiculo
 				//Se debe validar que el qr de carnet sea valido
-
+				if($idvehiculo>0)
+				{
+					$vehiculo = equipostrabajo::find($idvehiculo);
+				}else{
+					$data['id'] = 0;
+					$data['mensaje'] = $error.'Debes escanear primero el QR del vehiculo, cierra la ventana y escanealo!</div>';
+				}
 			}else if ($vehiculokey !== false)
 			{
 				//Es QR VEHICULO
