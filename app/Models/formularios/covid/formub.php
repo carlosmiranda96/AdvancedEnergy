@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class formub extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','idformua','idformuc','si','no'];
+    protected $fillable = ['id','idformua','idformuc','respuesta'];
 }

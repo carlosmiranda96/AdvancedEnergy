@@ -10319,3 +10319,33 @@ a {
 .barrasuperior{
   background-color: white;
 }
+
+.menu{
+  position: fixed;
+  top: 56px;
+	list-style: none;
+  padding: 0;
+  padding-left: 25px;
+	width: 100%;
+  margin: auto;
+  z-index: 1;
+  color: #0E5155;
+  border-bottom: 1px dashed;
+}
+
+.menu li{
+	text-decoration: none;
+	color: white;
+	padding: 0px;
+	display: block;
+}
+
+.menu li{
+	display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu li:hover{
+  background: #0E5155;
+}

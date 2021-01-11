@@ -328,9 +328,77 @@ class PageController extends Controller
 			{
 				//Se debe validar que exista idvehiculo
 				//Se debe validar que el qr de carnet sea valido
+
 				if($idvehiculo>0)
 				{
 					$vehiculo = equipostrabajo::find($idvehiculo);
+					if(isset($vehiculo))
+					{
+						$idequipotrabajo = $vehiculo->id;
+						$fecha = date('Y-m-d');
+						$hora = date('H:i:s');
+						$instante = date('Y-m-d H:i:s');
+						//Asignar empleado escaneado
+						$parametros = $this->obtenerParametros($contenido);
+						if($parametros && isset($parametros[1]['valor']))
+						{
+							$idempleado = $parametros[0]['valor'];
+							$toquen = $parametros[1]['valor'];
+							$empleado = empleados::find($idempleado)->where('toquen',$toquen)->first();
+							if($empleado){
+								//Para guardar verificar que el ultimo registro tenga mas de 15 minutos de ser asignado
+								$ultimoregistro = equiposhistorial::where('idempleado',$idempleado)->where('idequipotrabajo',$idequipotrabajo)->get();
+								$ultimoregistro = $ultimoregistro->last();
+								$minutos = 0;
+								$segundos = 0;
+								$tiempo = '';
+								if(isset($ultimoregistro)){
+									$date1 = new \DateTime($ultimoregistro->instante);
+									$date2 = new \DateTime($instante);
+									$diff = $date1->diff($date2);
+									$minutos = (($diff->days*24)*60)+($diff->i);
+									$segundos = $diff->s;
+									if($minutos>15){
+										$segundos = 0;
+									}
+									if($minutos==0){
+										$tiempo = $segundos.' segundos';
+									}else if($minutos==1){
+										$tiempo = "1 minuto con ".$segundos.' segundos';
+									}else if($minutos>1){
+										$tiempo = $minutos." minutos con ".$segundos.' segundos';
+									}
+								}
+								if(isset($ultimoregistro) && $minutos<=15)
+								{
+									$data['id'] = 0;
+									$data['mensaje'] = $error.'Vehiculo fue asignado hace '.$tiempo.'</div><br><h5 class="text-danger text-center">Espera 15 min para volver a escanear el mismo codigo</h5>';
+								}
+								else
+								{
+									$historial = equiposhistorial::create([
+										'instante' => $instante,
+										'idequipotrabajo' => $idequipotrabajo,
+										'idempleado' => $idempleado,
+										'idusuario' => $idusuario,
+										'latitud' => $latitud,
+										'longitud' => $longitud
+									]);
+									$data['id'] = 0;
+									$data['mensaje'] = $success.'Vehiculo asignado</h3>
+									<h6 class="text-primary text-center">Por favor llenar el siguiente formulario para finalizar el registro</h6>
+									<a href="'.route('api.form.vehiculo',['id'=>$historial->id]).'"><button class="btn btn-primary col-12"><i class="fas fa-share-square"></i> Formulario</button></a>';
+								}
+							}else{
+	
+								$data['id'] = 0;
+								$data['mensaje'] = $error.'Empleado no válido, por favor seleccionar empleado o escanear QR de carnet</div>';
+							}	
+						}
+					}else{
+						$data['id'] = 0;
+						$data['mensaje'] = $error.'Equipo no está registrado</div>';
+					}
 				}else{
 					$data['id'] = 0;
 					$data['mensaje'] = $error.'Debes escanear primero el QR del vehiculo, cierra la ventana y escanealo!</div>';
@@ -440,7 +508,7 @@ class PageController extends Controller
 						}
 					}else{
 						$data['id'] = 0;
-						$data['mensaje'] = $error.'Por favor escanea el QR de la ubicación y luego vuelve a escanear tu carnet!</div>';
+						$data['mensaje'] = $error.'<strong>Ubicación no válida</strong><br>Por favor escanea el QR de la ubicación y luego vuelve a escanear tu carnet!</div>';
 					}
 				}else{
 					//LECTOR QR

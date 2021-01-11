@@ -1,7 +1,7 @@
 @extends('plantillaQR')
 @section('pagina')
 <form id="frmescaner" action="#" method="POST">
-<div >
+<div hidden>
     <input type="text" id="latitud" name="latitud" value="0"/>
     <input type="text" id="longitud" name="longitud" value="0"/>
     <input type="text" id="idempleadoinicio" name="idempleadoinicio" value="@if ($empleado) {{$empleado->id}} @else {{'0'}} @endif"/>
@@ -71,7 +71,6 @@
     </div>
   </div>
 </div>
-<button type="submit">Enviar</button>
 </form>
 @stop
 @section('script')

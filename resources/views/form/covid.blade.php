@@ -121,7 +121,7 @@
             $("#frm").bind("submit",function(){
                 var datos = $("#frm").serialize();
                 $.ajax({
-                    type:"post",
+                    type:"get",
                     url:"{{route('api.form.covid.enviar')}}",
                     data:datos+'&_token={{csrf_token()}}',
                     success:function(r)

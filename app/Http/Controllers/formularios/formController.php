@@ -71,15 +71,14 @@ class formController extends Controller
                 $no = NULL;
                 if($valor=="SI")
                 {
-                    $si = "SI";
+                    $respuesta = "SI";
                 }else{
-                    $no = "NO";
+                    $respuesta = "NO";
                 }
                 formub::create([
                     'idformua' =>$idformua,
                     'idformuc' =>$item->id,
-                    'si' =>$si,
-                    'no' =>$no,
+                    'respuesta' =>$respuesta
                 ]);
             }
             echo "1";
