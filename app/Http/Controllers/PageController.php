@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 
+
+use Excel;
+
+use App\Exports\UsersExport;
+
 class PageController extends Controller
 {
 	public function __construct()
@@ -86,13 +91,10 @@ class PageController extends Controller
 	}
 	public function iniciarsesion(Request $request)
 	{
-		$usuario = User::where('email',$request->email)->first();
-		if(isset($usuario))
+		$validar = $this->validarUser($request->email,$request->password);
+		if($validar=="1")
 		{
-
-			$usuarioFill = User::find($usuario->id);
-			$decrypted = Crypt::decryptString($usuarioFill->password);
-			if($decrypted==$request->password){
+			$usuario = User::where('email',$request->email)->first();
 				session()->put('user_id', $usuario->id);
 				session()->put('name', $usuario->name);
 				session()->put('email',$usuario->email);
@@ -111,13 +113,25 @@ class PageController extends Controller
 					$cookie2 = Cookie::forget('password');
 					return redirect('inicio')->withCookie($cookie1)->withCookie($cookie2);
 				}
-				
+		}else{
+			return redirect()->route('login')->with('mensaje',$validar);		
+		}		
+	}
+	public function validarUser($email,$password)
+	{
+		$usuario = User::where('email',$email)->first();
+		if(isset($usuario))
+		{
+			$usuarioFill = User::find($usuario->id);
+			$decrypted = Crypt::decryptString($usuarioFill->password);
+			if($decrypted==$password){
+				return "1";			
 			}else{
-				return redirect()->route('login')->with('mensaje', 'La clave ingresada es incorrecta');
+				return "La clave ingresada es incorrecta";
 			}
 		}else{
-			return redirect()->route('login')->with('mensaje', 'Usuario ingresado es incorrecto ');		
-		}		
+			return "Usuario ingresado es incorrecto";		
+		}	
 	}
 	//Crea la sesion al dar clic en una opcion del menu
 	public function sessionmenu(Request $request)
@@ -387,10 +401,9 @@ class PageController extends Controller
 									$data['id'] = 0;
 									$data['mensaje'] = $success.'Vehiculo asignado</h3>
 									<h6 class="text-primary text-center">Por favor llenar el siguiente formulario para finalizar el registro</h6>
-									<a href="'.route('api.form.vehiculo',['id'=>$historial->id]).'"><button class="btn btn-primary col-12"><i class="fas fa-share-square"></i> Formulario</button></a>';
+									<a href="'.route('api.form.vehiculo',['id'=>$historial->id]).'"><div class="btn btn-primary col-12"><i class="fas fa-share-square"></i> Formulario</div></a>';
 								}
 							}else{
-	
 								$data['id'] = 0;
 								$data['mensaje'] = $error.'Empleado no válido, por favor seleccionar empleado o escanear QR de carnet</div>';
 							}	
@@ -700,5 +713,15 @@ class PageController extends Controller
 			$data['id'] = 0;
 			$data['mensaje'] = "Prueba";
 		}*/
+	}
+	public function marcaciones()
+	{
+		$marcacionesempleados = marcacionesempleados::join('empleados','idempleado','empleados.id')->join
+		('ubicacions','idubicacion','ubicacions.id')->select('marcacionesempleados.*','empleados.nombreCompleto as empleado','ubicacions.descripcion')->where('tipo','Entrada')->get();
+		return view('rrhh.marcaciones.show',compact('marcacionesempleados'));
+	}
+	public function export()
+	{
+		return Excel::dowload(new UsersExport,'users.xlsx');
 	}
 }

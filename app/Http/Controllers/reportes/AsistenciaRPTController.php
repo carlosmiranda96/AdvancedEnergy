@@ -9,19 +9,19 @@ use Illuminate\Http\Request;
 
 class AsistenciaRPTController extends Controller
 {
-    public function parametros($idpermiso)
+    public function parametros()
     {
         $empleados = empleados::where('estado',1)->orderby('nombre1')->get();
-        echo    '<div class="form-group">
+        $parametro=    '<div class="form-group">
                     <label>Seleccione empleado</label>
                     <select class="form-control" name="idempleado" required>
                         <option value="0">Todos</option>';
                         foreach($empleados as $item){
                         echo '<option value="'.$item->id.'">'.$item->nombre1.' '.$item->apellido1.' '.$item->codigo.'</option>';
                         }
-        echo    '   </select>
+        $parametro=$parametro.'   </select>
                 </div>';
-        echo '<div class="form-group">
+        $parametro=$parametro.'<div class="form-group">
                 <label>Desde</label>
                 <input type="date" class="form-control" name="desde" required/>
               </div>
@@ -30,7 +30,7 @@ class AsistenciaRPTController extends Controller
                 <input type="date" class="form-control" name="hasta" required/>
                </div>
               ';
-        //idreporte,idempleado,desde,hasta
+        return $parametro;
     }
     public function generarPDF(Request $request)
     {

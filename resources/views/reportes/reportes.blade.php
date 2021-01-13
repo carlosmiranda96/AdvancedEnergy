@@ -2,21 +2,12 @@
 @section('pagina')
 <div class="container-fluid">
   <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-primary">Reportes</h1>
-  </div>
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('inicio')}}">Pagina principal</a></li>
-      <li class="breadcrumb-item active">Reportes</li>
-    </ol>
-  </nav>
   <form action="{{route('reportes.pdf')}}" method="get" target="print_popup" >
   <div class="row pt-3">
     <div class="col-12 col-lg-6 offset-lg-3">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Reportes</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{$titulo}}</h6>
             </div>
             <div class="card-body">
                 @if (session('error'))
@@ -27,15 +18,7 @@
                     </button>
                 </div>
                 @endif
-                <div class="form-group">
-                    <label>Reporte</label>
-                    <select class="form-control" onchange="cargarParametros(this)" name="idreporte">
-                        <option value="0">Seleccione</option>
-                        @foreach($reportes as $item)
-                        <option value="{{$item->id}}">{{$item->nombre}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <?php echo $parametro;?>
                 <div class="form-group">
                     
                 </div>
@@ -51,11 +34,6 @@
                 
             </div>
         </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-6 offset-lg-3">
-        <button class="btn btn-primary float-right"><i class="fas fa-file-excel"></i> Generar PDF</button>
     </div>
   </div>
   </form>

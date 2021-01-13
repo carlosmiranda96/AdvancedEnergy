@@ -52,11 +52,11 @@
                                 {
                                     $userid = session('user_id');
                                     if($userid==1){
-                                        $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
-                                    }else{
-                                        
+                                        //$menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
                                     }
-                                    $nivel++;                                    
+                                    $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
+                                    if(isset($menu)){
+                                        $nivel++;                                    
                                     $menu_id = session('menu_id');                           
                                     foreach($menu as $item)
                                     {
@@ -98,7 +98,15 @@
                                         }else{
                                             if(isset($item->ruta))
                                             {
-                                                $ruta = route($item->ruta);
+                                                //$ruta = $item->ruta;
+                                                $div = explode(',',$item->ruta);
+                                                $ruta='';
+                                                $parametro = '';
+                                                $ruta = $div[0];
+                                                if(isset($div[1])){
+                                                    $parametro = $div[1];
+                                                }
+                                                $ruta = route($ruta,$parametro);
                                             }else{
                                                 $ruta = "#";
                                             }
@@ -120,6 +128,7 @@
                                         echo '</nav>
                                         </div>';
                                     }
+                                    }
                                 }
                             ?>
                         </div>
@@ -133,15 +142,15 @@
             <div id="layoutSidenav_content">
                 <nav class="p-0 m-0">
                     <ul class="menu bg-white">
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/preview.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/view.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/new.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/excel.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/pdf.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/left2.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/left1.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/right1.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="30px" src="{{asset('img/iconos/right2.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/preview.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/view.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/new.png')}}" /></button></li>
+                        <a href="{{route('exportar')}}"><li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/excel.png')}}" /></button></li></a>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/pdf.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/left2.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/left1.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/right1.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/right2.png')}}" /></button></li>
                     </ul>
                 </nav>
                 <main class="mt-5 pt-4" id="pagina">

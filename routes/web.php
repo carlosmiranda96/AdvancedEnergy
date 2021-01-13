@@ -26,7 +26,6 @@ use App\Http\Controllers\PaisController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\reportes\AsistenciaRPTController;
 use App\Http\Controllers\reportes\EmpleadosRPTController;
-use App\Http\Controllers\formularios\formController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\UsuariosController;
@@ -35,12 +34,14 @@ use App\Http\Controllers\SvmunicipioController;
 use App\Http\Controllers\TipodocumentoController;
 use Illuminate\Support\Facades\Route;
 
+use Maatwebsite\Excel\Facades\Excel;
+
 //RUTAS QUE NO NECESITAN ESTAR LOGEADO
 Route::get('/',[PageController::class,'login'])->name('login');
 Route::get('recuperacion',[PageController::class,'recordar'])->name('recordar');
 Route::get('registrarse',[PageController::class,'registrarse'])->name('registrarse');
 Route::post('iniciarsesion', [PageController::class, 'iniciarsesion'])->name('iniciarsesion');
-
+Route::post('validaruser/{$id1}/{$id2}', [PageController::class, 'validarUser'])->name('validaruser');
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
@@ -68,18 +69,21 @@ Route::group(['middleware' => 'sesion'], function() {
 
     Route::get('ingenieria',[IngenieriaController::class,'index'])->name('ingenieria.index');
     Route::get('ingenieria/formulario',[IngenieriaController::class,'formulario'])->name('ingenieria.formulario');
-    Route::get('reportes',[ReportesController::class,'reportes'])->name('reportes');
-    Route::get('reportes/parametros',[ReportesController::class,'parametros'])->name('reportes.parametros');
-    Route::get('reportes/pdf',[ReportesController::class,'generarPDF'])->name('reportes.pdf');
+
     Route::resource('equipos',EquipostrabajoController::class);
     Route::resource('equipomantenimiento',EquipomantenimientoController::class);
     Route::get('mantenimiento/programacion',[EquipomantenimientoController::class,'programacion'])->name('equipomantenimiento.programacion');
     Route::get('session/guardarmenu',[PageController::class,'sessionmenu'])->name('session.guardarmenu');
 
     //Rutas de formularios
-    Route::get('formulario/covid',[formController::class,'formcovid'])->name('formulario.covid');
+    Route::get('formulario/covid',[Reporte::class,'parametros'])->name('formulario.covid');
 
     //REPORTES
+    Route::get('reporte/{id}',[ReportesController::class,'reportes'])->name('reportes');//Cargar el reporte por su id
+
+    Route::get('reportes/parametros',[ReportesController::class,'parametros'])->name('reportes.parametros');
+    Route::get('reportes/pdf',[ReportesController::class,'generarPDF'])->name('reportes.pdf');
+
     //empleados
     Route::get('reportes/empleado/parametros/{id}',[EmpleadosRPTController::class,'parametros'])->name('reportes.empleados.parametros');//obtener parametros a imprimir
     Route::get('reportes/empleado/pdf',[EmpleadosRPTController::class,'generarPDF'])->name('reportes.empleados.pdf');//GENERA REPORTE PDF
@@ -87,6 +91,9 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('reportes/asistencia/parametros/{id}',[AsistenciaRPTController::class,'parametros'])->name('reportes.asistencia.parametros');//obtener parametros a imprimir
     Route::get('reportes/asistencia/pdf',[AsistenciaRPTController::class,'generarPDF'])->name('reportes.asistencia.pdf');//GENERA REPORTE PDF
 
+    Route::get('marcaciones',[PageController::class,'marcaciones'])->name('marcaciones');
+
+    Route::get('exportar',[PageController::class,'export'])->name('exportar');
 });
 
 //RUTAS DE ADMINISTRADOR

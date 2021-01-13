@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h4 class="text-primary">Accesos directos Advanced Energy</h4>
+            <h4 class="text-primary">Accesos directos</h4>
         <div>
     </div>
     <div class="row">

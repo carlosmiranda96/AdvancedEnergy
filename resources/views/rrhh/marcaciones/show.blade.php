@@ -7,7 +7,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><a href="{{route('marcacionesempleados.index')}}" style="color: #2E9A73"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp&nbspLista de asistencia</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Lista de asistencia</h6>
         </div>
         <div class="card-body">
             @if (session('mensaje'))
@@ -18,37 +18,47 @@
                 </button>
             </div>
             @endif
-            <div class="form-group">
-                <a href="{{route('marcacionesempleados.index')}}"><button class="btn btn-sm btn-primary"><i class="fas fa-qrcode fa-sm text-white-50"></i> Marcar asistencia</button></a>
-            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Tipo</th>
                             <th>Empleado</th>
+                            <th>Fecha</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
                             <th>Ubicación</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Tipo</th>
                             <th>Empleado</th>
+                            <th>Fecha</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
                             <th>Ubicación</th>
                         </tr>
                     </tfoot>
+                    <?php 
+                        use App\Models\marcacionesempleados;
+                    ?>
                     <tbody>
                         @foreach ($marcacionesempleados as $item)
                         <tr>
-                            <td>{{date('d/m/Y',strtotime($item->instante))}}</td>
-                            <td>{{date('h:i a',strtotime($item->instante))}}</td>
-                            <td>@if ($item->tipo=="E") {{'ENTRADA'}} @else {{'SALIDA'}} @endif</td>
                             <td>{{$item->empleado}}</td>
-                            <td>{{$item->ubicacion}}</td>
+                            <td>{{date('d/m/Y',strtotime($item->fecha))}}</td>
+                            <td>{{date('h:i:s a',strtotime($item->instante))}}</td>
+                            <?php
+                                $salida = marcacionesempleados::where('tipo','Salida')->where('idempleado',$item->idempleado)->where('id','>',$item->id)->where('fecha',$item->fecha)->first();
+                                if($salida!=null){
+                                    $hora = $salida->instante;
+                                    $horasalida = date('h:i:s a',strtotime($hora));
+                                }else{
+                                    $hora = "00:00";
+                                    $horasalida = "No disponible";
+                                }
+                            ?>
+                            <td>{{$horasalida}}</td>                           
+                            <td>{{$item->descripcion}}</td>
                         </tr>
                         @endforeach
                         @if ($marcacionesempleados->count()==0)
@@ -59,7 +69,6 @@
                     </tbody>
                 </table>
             </div>
-            {{ $marcacionesempleados->links() }}
         </div>
     </div>
     </div>

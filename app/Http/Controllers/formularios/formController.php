@@ -20,16 +20,18 @@ class formController extends Controller
     {
         $disabled = "";
         $equipohistorial = equiposhistorial::find($request->id);
+        if(isset($equipohistorial->kilometraje)){
+            $disabled = "disabled";
+        }
 		return view('form.vehiculo',compact('disabled','equipohistorial'));
-    }
-    public function vehiculoupdate(Request $request)
-    {
-        
     }
     public function covid($toquen)
     {
         $empleado = empleados::where('toquen',$toquen)->first();
-        $dui = empleadoDocumento::where('idempleado',$empleado->id)->where('idtipodocumento',1)->first();
+        $dui = "";
+        if($empleado){
+            $dui = empleadoDocumento::where('idempleado',$empleado->id)->where('idtipodocumento',1)->first();
+        }
         $genero = genero::all();
         $sintomas = formuc::all();
         return view('form.covid',compact('empleado','dui','genero','sintomas'));
@@ -39,10 +41,9 @@ class formController extends Controller
         $idusuario = session('user_id');
         $empleado = empleadoUser::where('idusuario',$idusuario)->first();
         $idempleado = 0;
-        if($empleado){
-            $idempleado = $empleado->idempleado;
-        }
-        $url = route('api.form.covid',$idempleado);
+        $toquen=0;
+        
+        $url = route('api.form.covid',$toquen);
         return view('form.cargar',compact('url'));
     }
     public function guardarcovid(Request $request)

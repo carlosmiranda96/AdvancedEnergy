@@ -76,161 +76,162 @@
 @section('script')
 <script src="{{asset('js/instascan.js')}}"></script>
 <script src="{{asset('js/buzz.min.js')}}"></script>
-<script>
+<script>  
+  $(document).ready(function(){
     //METODO PARA OBTENER COORDENADAS GPS
-  if(navigator.geolocation){
-        //intentamos obtener las coordenadas del usuario
-        navigator.geolocation.getCurrentPosition(function(objPosicion){
-            //almacenamos en variables la longitud y latitud
-            var iLongitud=objPosicion.coords.longitude;
-            var iLatitud=objPosicion.coords.latitude;
-            $("#latitud").val(iLatitud);
-            $("#longitud").val(iLongitud);
-            obtenerUbicacion(iLatitud,iLongitud);             
-        },function(objError){
-            //manejamos los errores devueltos por Geolocation API
-            switch(objError.code){
-                //no se pudo obtener la informacion de la ubicacion
-                case objError.POSITION_UNAVAILABLE:
-                    bootbox.alert({
-                        title:'Notificación',
-                        message:"No se ha podido obtener la ubicación",
-                        buttons:{
-                            ok:{
-                                label:'Cerrar'
-                            }
-                        }
-                    });
-                    break;
-                    //timeout al intentar obtener las coordenadas
-                case objError.TIMEOUT:
-                    bootbox.alert({
-                        title:'Notificación',
-                        message:"Tiempo de espera agotado",
-                        buttons:{
-                            ok:{
-                                label:'Cerrar'
-                            }
-                        }
-                    });
-                    break;
-                    //el usuario no desea mostrar la ubicacion
-                case objError.PERMISSION_DENIED:
-                    bootbox.alert({
-                        title:'Notificación',
-                        message:"Por favor activa el GPS",
-                        buttons:{
-                            ok:{
-                                label:'Cerrar'
-                            }
-                        }
-                    });
-                    break;
-                    //errores desconocidos
-                case objError.UNKNOWN_ERROR:
-                    bootbox.alert({
-                        title:'Notificación',
-                        message:"Error desconocido",
-                        buttons:{
-                            ok:{
-                                label:'Cerrar'
-                            }
-                        }
-                    });
-                    break;
-            }
-        });
-    }else{
-        //el navegador del usuario no soporta el API de Geolocalizacion de HTML5
-        alertify.alert('Tu navegador no soporta la Geolocalización en HTML5');
-    }
-  
-    //METODO PARA OBTENER LA UBICACION EN LA BD DE ACUERDO A LAS COORDENADS OBTENIDAS
-    function obtenerUbicacion(lat,lon){
-        $("#latitud").val(lat);
-        $("#longitud").val(lon);
-        var datos = {latitud:lat,longitud:lon};
-        $.ajax({
-            url:"{{route('api.getUbicacion')}}",
-            type:"get",
-            data: datos,
-            success:function(r)
-            {
-                var json = JSON.parse(r);
-                var contador = 0;
-                $.each(json,function(e,key){
-                    contador++;
-                    $("#idubicacion").append('<option value="'+key.id+'">'+key.descripcion+'</option>');
-                });
-            }
-        });
-    }
-  $("#notificacion").on('hide.bs.modal',function(){
-    Instascan.Camera.getCameras().then(function(cameras){
-      if (cameras.length > 0){
+    if(navigator.geolocation){
+          //intentamos obtener las coordenadas del usuario
+          navigator.geolocation.getCurrentPosition(function(objPosicion){
+              //almacenamos en variables la longitud y latitud
+              var iLongitud=objPosicion.coords.longitude;
+              var iLatitud=objPosicion.coords.latitude;
+              $("#latitud").val(iLatitud);
+              $("#longitud").val(iLongitud);
+              obtenerUbicacion(iLatitud,iLongitud);             
+          },function(objError){
+              //manejamos los errores devueltos por Geolocation API
+              switch(objError.code){
+                  //no se pudo obtener la informacion de la ubicacion
+                  case objError.POSITION_UNAVAILABLE:
+                      bootbox.alert({
+                          title:'Notificación',
+                          message:"No se ha podido obtener la ubicación",
+                          buttons:{
+                              ok:{
+                                  label:'Cerrar'
+                              }
+                          }
+                      });
+                      break;
+                      //timeout al intentar obtener las coordenadas
+                  case objError.TIMEOUT:
+                      bootbox.alert({
+                          title:'Notificación',
+                          message:"Tiempo de espera agotado",
+                          buttons:{
+                              ok:{
+                                  label:'Cerrar'
+                              }
+                          }
+                      });
+                      break;
+                      //el usuario no desea mostrar la ubicacion
+                  case objError.PERMISSION_DENIED:
+                      bootbox.alert({
+                          title:'Notificación',
+                          message:"Por favor activa el GPS",
+                          buttons:{
+                              ok:{
+                                  label:'Cerrar'
+                              }
+                          }
+                      });
+                      break;
+                      //errores desconocidos
+                  case objError.UNKNOWN_ERROR:
+                      bootbox.alert({
+                          title:'Notificación',
+                          message:"Error desconocido",
+                          buttons:{
+                              ok:{
+                                  label:'Cerrar'
+                              }
+                          }
+                      });
+                      break;
+              }
+          });
+      }else{
+          //el navegador del usuario no soporta el API de Geolocalizacion de HTML5
+          alertify.alert('Tu navegador no soporta la Geolocalización en HTML5');
+      }
+    
+      //METODO PARA OBTENER LA UBICACION EN LA BD DE ACUERDO A LAS COORDENADS OBTENIDAS
+      function obtenerUbicacion(lat,lon){
+          $("#latitud").val(lat);
+          $("#longitud").val(lon);
+          var datos = {latitud:lat,longitud:lon};
+          $.ajax({
+              url:"{{route('api.getUbicacion')}}",
+              type:"get",
+              data: datos,
+              success:function(r)
+              {
+                  var json = JSON.parse(r);
+                  var contador = 0;
+                  $.each(json,function(e,key){
+                      contador++;
+                      $("#idubicacion").append('<option value="'+key.id+'">'+key.descripcion+'</option>');
+                  });
+              }
+          });
+      }
+    $("#notificacion").on('hide.bs.modal',function(){
+      Instascan.Camera.getCameras().then(function(cameras){
+        if (cameras.length > 0){
+          scanner.start(cameras[0]);
+        }
+        else {
+                      
+        }
+      }).catch (function(e){
+
+      });
+    });
+    var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 3, mirror:false });
+    var lector = new buzz.sound("{{asset('sound/lector')}}", {formats: [ "mp3"]});
+    scanner.addListener('scan',function(content)
+    {
+      lector.play().bind("lector", function() {});
+      $("#contenido").val(content);
+      $("#frmescaner").submit();
+    });
+    $("#frmescaner").bind('submit',function(){
+      var datos = $(this).serialize();
+      var datos = datos+"&_token={{csrf_token()}}";
+      $.ajax({
+        url:"{{route('api.escanear')}}",
+        type:"get",
+        data: datos,
+        success:function(r)
+        {
+          var json = JSON.parse(r);
+          if(json['id']==0){
+            $("#bodynotificacion").html(json['mensaje']);
+          }else if(json['id']==1){
+            $("#bodynotificacion").html(json['mensaje']);
+            $("#idubicacion").empty();
+            var jsonUbicacion = JSON.parse(json['json']);
+            $("#idubicacion").append('<option value="'+jsonUbicacion['id']+'">'+jsonUbicacion['ubicacion']+'</option>');
+            $("#idubicacion").append('<option value="0">Escanea QR</option>');
+            $("#asistencia").prop("checked",true);
+          }else if(json['id']==2){
+            $("#bodynotificacion").html(json['mensaje']);
+            $("#idempleado").empty();
+            var jsonEmpleado = JSON.parse(json['json']);
+            $("#idempleado").append('<option value="'+jsonEmpleado['id']+'">'+jsonEmpleado['nombre']+'</option>');
+            $("#idempleado").append('<option value="0">Escanea QR</option>');
+          }else if(json['id']==3){
+            $("#bodynotificacion").html(json['mensaje']);
+            $("#idvehiculo").val(json['idvehiculo']);
+            $("#vehiculo").prop("checked",true);
+          }
+          $("#notificacion").modal('show');
+          scanner.stop();
+        }
+      });
+      return false;
+    });
+    Instascan.Camera.getCameras().then(function (cameras){
+      if (cameras.length > 0) {
         scanner.start(cameras[0]);
       }
       else {
                     
       }
-    }).catch (function(e){
+    }).catch (function(e){  
 
     });
-  });
-  var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 3, mirror:false });
-  var lector = new buzz.sound("{{asset('sound/lector')}}", {formats: [ "mp3"]});
-  $("#contenido").val('https://192.168.2.98/AdvancedEnergy/api/asistencia?a=5&b=eyJpdiI6IjRMZ2pmTmpt');
-  scanner.addListener('scan',function(content)
-  {
-    lector.play().bind("lector", function() {});
-    $("#contenido").val(content);
-    $("#frmescaner").submit();
-  });
-  $("#frmescaner").bind('submit',function(){
-    var datos = $(this).serialize();
-    var datos = datos+"&_token={{csrf_token()}}";
-    $.ajax({
-      url:"{{route('api.escanear')}}",
-      type:"get",
-      data: datos,
-      success:function(r)
-      {
-        var json = JSON.parse(r);
-        if(json['id']==0){
-          $("#bodynotificacion").html(json['mensaje']);
-        }else if(json['id']==1){
-          $("#bodynotificacion").html(json['mensaje']);
-          $("#idubicacion").empty();
-          var jsonUbicacion = JSON.parse(json['json']);
-          $("#idubicacion").append('<option value="'+jsonUbicacion['id']+'">'+jsonUbicacion['ubicacion']+'</option>');
-          $("#idubicacion").append('<option value="0">Escanea QR</option>');
-          $("#asistencia").prop("checked",true);
-        }else if(json['id']==2){
-          $("#bodynotificacion").html(json['mensaje']);
-          $("#idempleado").empty();
-          var jsonEmpleado = JSON.parse(json['json']);
-          $("#idempleado").append('<option value="'+jsonEmpleado['id']+'">'+jsonEmpleado['nombre']+'</option>');
-          $("#idempleado").append('<option value="0">Escanea QR</option>');
-        }else if(json['id']==3){
-          $("#bodynotificacion").html(json['mensaje']);
-          $("#idvehiculo").val(json['idvehiculo']);
-          $("#vehiculo").prop("checked",true);
-        }
-        $("#notificacion").modal('show');
-        scanner.stop();
-      }
-    });
-    return false;
-  });
-  Instascan.Camera.getCameras().then(function (cameras){
-    if (cameras.length > 0) {
-      scanner.start(cameras[0]);
-    }
-    else {
-                   
-    }
-  }).catch (function(e){  
-
   });
 </script>
 @stop
