@@ -151,6 +151,7 @@
                         <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/left1.png')}}" /></button></li>
                         <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/right1.png')}}" /></button></li>
                         <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/right2.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/enlace.png')}}" /></button></li>
                     </ul>
                 </nav>
                 <main class="mt-5 pt-4" id="pagina">

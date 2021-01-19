@@ -44,7 +44,7 @@
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <a href="#" onclick="asistencia()" style="text-decoration: none;">
+                    <a href="{{route('login',['url'=>Request::fullUrl()])}}" style="text-decoration: none;">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
@@ -57,7 +57,7 @@
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <a href="{{route('lectorqr',['b'=>$empleado->toquen])}}" style="text-decoration: none;" target="_blank">
+                    <a onclick="validar()" href="#" style="text-decoration: none;">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
@@ -173,7 +173,15 @@
         });
     }else{
         //el navegador del usuario no soporta el API de Geolocalizacion de HTML5
-        alertify.alert('Tu navegador no soporta la Geolocalización en HTML5');
+        bootbox.alert({
+            title:'Notificación',
+            message:"El navegador no suporta la Geolocalización",
+            buttons:{
+            ok:{
+                label:'Cerrar'
+            }
+           }
+        });
     }
     //METODO PARA OBTENER LA UBICACION EN LA BD DE ACUERDO A LAS COORDENADS OBTENIDAS
     function obtenerUbicacion(lat,lon){
@@ -192,6 +200,20 @@
                 });
             }
         });
+    }
+    function validar()
+    {
+        /*bootbox.alert({
+            title:'Notificación',
+            message:"Se debe iniciar sesión {{Request::fullUrl()}}",
+            buttons:{
+                ok:{
+                    label:'Cerrar'
+                }
+            }
+        });*/
+        //Abrir QR
+        //{{route('lectorqr',['b'=>$empleado->toquen])}}
     }
     //Metodo para marcar la asistencia
     function asistencia(){

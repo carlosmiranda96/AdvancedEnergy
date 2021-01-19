@@ -107,10 +107,14 @@ class PageController extends Controller
 					$minutos = 2880;//48 Horas
 					$cookie1 = cookie('email',$request->email,$minutos);
 					$cookie2 = cookie('password',$request->password,$minutos);
-					return redirect('inicio')->withCookie($cookie1)->withCookie($cookie2);
 				}else{
 					$cookie1 = Cookie::forget('email');
 					$cookie2 = Cookie::forget('password');
+				}
+				if(isset($request->url))
+				{
+					return redirect('www.google.com.sv');
+				}else{
 					return redirect('inicio')->withCookie($cookie1)->withCookie($cookie2);
 				}
 		}else{

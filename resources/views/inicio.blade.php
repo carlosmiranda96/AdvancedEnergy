@@ -20,38 +20,38 @@
                     
                     
                     <li class="item i3">
-                        <span>Photos</span>
+                        <span>Finanzas</span>
                     </li>
 
                     <li class="item i4">
-                        <span>Music</span>
+                        <span>COVID-19</span>
                     </li>
 
                     <li class="item i5">
-                        <span>Setting</span>
+                        <span>Empleados</span>
                     </li>
 
                 </div>
             
                 <div class="l2">
                     <li class="item i3">
-                        <span>Photos</span>
+                        <span>Asistencia</span>
                     </li>
 
                     <li class="item i4">
-                        <span>Music</span>
+                        <span>Permisos</span>
                     </li>
 
                     <li class="item i5">
-                        <span>Setting</span>
+                        <span>Vacaciones</span>
                     </li>
 
                     <li class="item i1">
-                        <span>Android</span>
+                        <span>Finanzas</span>
                     </li>
 
                     <li class="item i2">
-                        <span>Videos</span>
+                        <span>Recursos humanos</span>
                     </li>
                 </div>
                 
