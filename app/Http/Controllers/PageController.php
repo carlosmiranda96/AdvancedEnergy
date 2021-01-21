@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\autorizacionusuarios;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\empleados;
 use App\Models\marcacionesempleados;
 use App\Models\User;
@@ -15,15 +16,18 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 
 
-use Excel;
-
-use App\Exports\UsersExport;
 
 class PageController extends Controller
 {
 	public function __construct()
 	{
 		date_default_timezone_set('America/El_Salvador');
+	}
+	public function export()
+	{
+		//return Excel::dowload(new UsersExport,'users.xlsx');
+		$export = new UsersExport();
+		return $export->download('users.pdf');
 	}
 	public function loadaplicacion()
 	{
@@ -49,7 +53,11 @@ class PageController extends Controller
 			$empleado = empleados::where('id',$id)->where('toquen',$toquen)->first();
 			if(isset($empleado))
 			{
-				return view('aplicacion.aplicacion',compact('empleado'));
+				$email = '';
+				$password = '';
+				$email = $request->cookie('email');
+				$password = $request->cookie('password');
+				return view('aplicacion.aplicacion',compact('empleado','email','password'));
 			}else{
 				abort(404);
 			}
@@ -731,9 +739,5 @@ class PageController extends Controller
 		$marcacionesempleados = marcacionesempleados::join('empleados','idempleado','empleados.id')->join
 		('ubicacions','idubicacion','ubicacions.id')->select('marcacionesempleados.*','empleados.nombreCompleto as empleado','ubicacions.descripcion')->where('tipo','Entrada')->get();
 		return view('rrhh.marcaciones.show',compact('marcacionesempleados'));
-	}
-	public function export()
-	{
-		return Excel::dowload(new UsersExport,'users.xlsx');
 	}
 }

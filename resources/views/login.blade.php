@@ -46,8 +46,6 @@
                   <hr>
                   <div class="text-center">
                     <a class="text-white" href="{{ route('recordar')}}">¿Olvido la contraseña?</a>
-                    <br><br>
-                    <a class="text-warning" href="{{ route('registrarse')}}">------ > REGISTRATE AQUI < ------</a>
                   </div>
                 </div>
               </div>

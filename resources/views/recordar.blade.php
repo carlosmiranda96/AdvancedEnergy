@@ -29,8 +29,6 @@
                   <hr>
                   <div class="text-center">
                     <a class="text-white" href="{{ route('login')}}">¿Ya tienes una cuenta? Inicia sesión!</a>
-                    <br><br>
-                    <a class="text-warning" href="{{ route('registrarse')}}">------ > REGISTRATE AQUI < ------</a>
                   </div>
                 </div>
               </div>

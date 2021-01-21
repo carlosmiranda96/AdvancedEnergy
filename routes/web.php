@@ -126,6 +126,7 @@ Route::group(['middleware' => 'admin'], function() {
     Route::get('menu/crear',[modulosController::class,'crear'])->name('modulos.crear');
 
     Route::resource('permisos',PermisosController::class);
+    
     Route::resource('autorizacion',AutorizacionController::class);
     Route::get('autorizacions/usuario',[AutorizacionController::class,'usuario'])->name('autorizacion.usuario');
     Route::get('autorizacions/grupo',[AutorizacionController::class,'grupo'])->name('autorizacion.grupo');

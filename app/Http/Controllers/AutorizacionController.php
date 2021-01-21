@@ -24,13 +24,12 @@ class AutorizacionController extends Controller
     public function create()
     {
         $usuarios = User::get();
-        $permisos = permisos::join('modulos','idmodulo','modulos.id')->select('permisos.*','modulos.modulo')->orderby('modulos.modulo')->get();
-        return view('admin.autorizacion.create',compact('usuarios','permisos'));
+        return view('admin.autorizacion.create',compact('usuarios'));
     }
     public function usuario()
     {
-        $autorizacionusuarios = autorizacionusuarios::leftJoin('users','idusuario','users.id')->select('users.id','name as usuario')->groupby('users.id','name')->paginate(5);
-        return view('admin.autorizacion.lista',compact('autorizacionusuarios'));
+        $usuarios = User::get();
+        return view('admin.autorizacion.lista',compact('usuarios'));
     }
     public function grupo()
     {

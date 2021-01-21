@@ -36,35 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label>Permisos</label>
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Modulo</th>
-                                    <th>Permiso</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($permisos as $item)
-                                <tr>
-                                    <td>{{$item->modulo}}</td>
-                                    <td>{{$item->nombre}}</td>
-                                    <td class="text-center"> 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{$item->id}}" name="permiso[]"> 
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @if ($permisos->count()==0)
-                                <tr>
-                                    <td colspan="3" class="text-center">No hay datos</td>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+                    
                 </div>
                 <div class="form-group">
                     <a href="{{route('autorizacion.index')}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>

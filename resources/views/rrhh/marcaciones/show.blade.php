@@ -83,5 +83,9 @@
 
         });
     }
+    function herramienta(id,div)
+    {
+        bootbox.alert('Mensaje');
+    }
 </script>
 @stop

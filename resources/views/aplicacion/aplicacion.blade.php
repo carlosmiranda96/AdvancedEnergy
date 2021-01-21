@@ -209,9 +209,13 @@
             success:function(r)
             {
                 if(r==0){
+                    var html = "¡Bienvenido!, para acceder a la opción elegida primero debes iniciar sesión..<br><br>"+
+                        "<label>Ingresa tu correo:</label><input id='correo' type='text' value='{{$email}}' class='form-control'/><br>"+
+                        "<label>Ingresa tu contraseña:</label><input id='clave' type='password' value='{{$password}}' class='form-control'/><br>"+
+                        "<button class='btn btn-primary' onclick='login()'>Iniciar Sesión</button>";
                     bootbox.alert({
                         title:'Iniciar Sesión',
-                        message:"Se debe iniciar sesión",
+                        message:html,
                         buttons:{
                             ok:{
                                 label:'Cerrar'
@@ -267,6 +271,11 @@
                 $("#notificacion").modal('show');
             }
         });
+    }
+    function login(){
+        var correo = $("#correo").val();
+        var clave = $("#clave").val();
+        
     }
 </script>
 @stop

@@ -142,16 +142,16 @@
             <div id="layoutSidenav_content">
                 <nav class="p-0 m-0">
                     <ul class="menu bg-white">
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/preview.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/view.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/new.png')}}" /></button></li>
-                        <a href="{{route('exportar')}}"><li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/excel.png')}}" /></button></li></a>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/pdf.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/left2.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/left1.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/right1.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/right2.png')}}" /></button></li>
-                        <li><button class="btn" onclick="herramienta(1,this)"><img height="20px" src="{{asset('img/iconos/enlace.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(1)"><img height="20px" src="{{asset('img/iconos/preview.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(2)"><img height="20px" src="{{asset('img/iconos/view.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(3)"><img height="20px" src="{{asset('img/iconos/new.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(4)"><img height="20px" src="{{asset('img/iconos/excel.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(5)"><img height="20px" src="{{asset('img/iconos/pdf.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(6)"><img height="20px" src="{{asset('img/iconos/left2.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(7)"><img height="20px" src="{{asset('img/iconos/left1.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(8)"><img height="20px" src="{{asset('img/iconos/right1.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(9)"><img height="20px" src="{{asset('img/iconos/right2.png')}}" /></button></li>
+                        <li><button class="btn" onclick="herramienta(10)"><img height="20px" src="{{asset('img/iconos/enlace.png')}}" /></button></li>
                     </ul>
                 </nav>
                 <main class="mt-5 pt-4" id="pagina">
@@ -195,10 +195,6 @@
                         window.location.href = ruta;
                     }
                 })
-            }
-            function herramienta(id,div)
-            {
-                bootbox.alert('Mensaje');
             }
         </script>
     </body>
