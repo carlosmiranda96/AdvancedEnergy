@@ -135,7 +135,15 @@ class PageController extends Controller
 			}
 		}else{
 			return "Usuario ingresado es incorrecto";		
-		}	
+		}
+	}
+	public function validarsesion(){
+		if(session('user_id'))
+		{
+			echo 1;
+		}else{
+			echo 0;
+		}
 	}
 	//Crea la sesion al dar clic en una opcion del menu
 	public function sessionmenu(Request $request)

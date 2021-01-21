@@ -41,10 +41,12 @@ Route::get('/',[PageController::class,'login'])->name('login');
 Route::get('recuperacion',[PageController::class,'recordar'])->name('recordar');
 Route::get('registrarse',[PageController::class,'registrarse'])->name('registrarse');
 Route::post('iniciarsesion', [PageController::class, 'iniciarsesion'])->name('iniciarsesion');
-Route::post('validaruser/{$id1}/{$id2}', [PageController::class, 'validarUser'])->name('validaruser');
+Route::get('validaruser/{email}/{password}', [PageController::class, 'validarUser'])->name('validaruser');
+Route::get('validarsesion', [PageController::class, 'validarsesion'])->name('validarsesion');
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
+    Route::get('api/qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
 
     Route::get('cerrarsesion',[PageController::class,'cerrar'])->name('cerrarsesion');
     Route::get('inicio', [PageController::class, 'inicio'])->name('inicio');

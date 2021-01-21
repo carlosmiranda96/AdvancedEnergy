@@ -44,28 +44,28 @@
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <a href="{{route('login',['url'=>Request::fullUrl()])}}" style="text-decoration: none;">
+                    <button onclick="verificarLogin(1)" style="background-color:transparent;border:none;">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 font-gotham-bold text-center">Registrar Asistencia</div>
+                            <div class="h5 mb-0 font-gotham-bold text-center text-secondary">Registrar Asistencia</div>
                         </div>
                         </div>
                     </div>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <a onclick="validar()" href="#" style="text-decoration: none;">
+                    <button onclick="verificarLogin(2)" style="background-color:transparent;border:none;">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 font-gotham-bold text-center">Lector QR</div>
+                            <div class="h5 mb-0 font-gotham-bold text-center text-secondary">Lector QR</div>
                         </div>
                         </div>
                     </div>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="col-12">
@@ -201,19 +201,35 @@
             }
         });
     }
-    function validar()
+    function verificarLogin(id)
     {
-        /*bootbox.alert({
-            title:'Notificación',
-            message:"Se debe iniciar sesión {{Request::fullUrl()}}",
-            buttons:{
-                ok:{
-                    label:'Cerrar'
+        $.ajax({
+            url:"{{route('validarsesion')}}",
+            type:"get",
+            success:function(r)
+            {
+                if(r==0){
+                    bootbox.alert({
+                        title:'Iniciar Sesión',
+                        message:"Se debe iniciar sesión",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                }else if(id==1){
+                    //Marcar asistencia
+                    asistencia();
+                }else if(id==2){
+                    //Abrir lector QR
+                    window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
                 }
+            },error:function(){
+                bootbox.alert('Error al conectar');
             }
-        });*/
-        //Abrir QR
-        //{{route('lectorqr',['b'=>$empleado->toquen])}}
+        })
+        
     }
     //Metodo para marcar la asistencia
     function asistencia(){

@@ -22,7 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('api.getUbicacion');//Obtener ubicacion segun coordenadas
 Route::get('asistencia',[PageController::class,'asistencia'])->name('asistencia');//Abre la aplicacion
-Route::get('qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
 
 Route::get('escaner',[PageController::class,'escaner'])->name('api.escanear');//Metodo para escanear, QR Empleado, QR Vehiculo, QR Ubicacion
 
