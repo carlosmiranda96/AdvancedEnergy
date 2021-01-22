@@ -48,7 +48,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 mt-2">
-                                <h5 class="font-weight-bold text-primary">Inicio de sesión</h5>
+                                <h5 class="font-weight-bold text-primary">Usuario de inicio de sesión</h5>
                                 <hr>
                             </div>
                             <div class="col-12">
@@ -63,12 +63,6 @@
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Usuario</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         @foreach ($empleadouser as $item)
                                         <tr>
@@ -93,6 +87,21 @@
                                 </table>
                             </div>
                             {{$empleadouser->links()}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <h5 class="font-weight-bold text-primary">Grupo de autorizaciones</h5>
+                                <hr>
+                            </div>
+                            <div class="col-12">
+                                <label>Grupo</label>
+                                <select class="form-control">
+                                    <option value="0">Seleccione</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <button class="btn btn-sm btn-primary float-right"><i class="fas fa-save"></i> Guardar</button>
                             </div>
                         </div>
                     </div>

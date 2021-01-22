@@ -99,7 +99,7 @@ class PageController extends Controller
 	}
 	public function iniciarsesion(Request $request)
 	{
-		$validar = $this->validarUser($request->email,$request->password);
+		$validar = $this->validarUser($request->email,$request->password,$request);
 		if($validar=="1")
 		{
 			$usuario = User::where('email',$request->email)->first();
@@ -129,14 +129,22 @@ class PageController extends Controller
 			return redirect()->route('login')->with('mensaje',$validar);		
 		}		
 	}
-	public function validarUser($email,$password)
+	public function validarUser($email,$password,Request $request)
 	{
 		$usuario = User::where('email',$email)->first();
 		if(isset($usuario))
 		{
-			$usuarioFill = User::find($usuario->id);
-			$decrypted = Crypt::decryptString($usuarioFill->password);
+			$decrypted = Crypt::decryptString($usuario->password);
 			if($decrypted==$password){
+				if(isset($request->crear))
+				{
+					session()->put('user_id', $usuario->id);
+					session()->put('name', $usuario->name);
+					session()->put('email',$usuario->email);
+					session()->put('foto','storage/app/'.$usuario->foto);
+					session()->put('idrol',$usuario->idrol);
+					session()->put('menu_id',5);//Seleccionar menu inicio
+				}
 				return "1";			
 			}else{
 				return "La clave ingresada es incorrecta";

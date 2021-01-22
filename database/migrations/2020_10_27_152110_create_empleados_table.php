@@ -35,6 +35,7 @@ class CreateEmpleadosTable extends Migration
             $table->integer('idmunicipio');
             $table->boolean('estado');
             $table->string('toquen')->nullable();
+            $table->string('idgrupo')->nullable();
         });
     }
 

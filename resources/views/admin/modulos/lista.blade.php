@@ -41,7 +41,7 @@
                     </tfoot>
                     <tbody>
                                 <?php
-                                echo '<tr><td class="nav-link" href="#">
+                                echo '<tr><td>
                                 <strong>Menu principal</strong>
                             </td>
                             <td>0</td>
@@ -54,11 +54,7 @@
                                 menu2(1,0);
                                 function menu2($nivel,$dependencia){
                                     $userid = session('user_id');
-                                    if($userid==1){
-                                        $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
-                                    }else{
-                                        
-                                    }
+                                    $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
                                     $nivel++;
                                     if($nivel!=2){
                                         $nivelanterior = $nivel-2;
@@ -69,9 +65,10 @@
                                     foreach($menu as $item)
                                     {
                                         $tiponivel = modulos::where('dependencia',$item->id)->first();
+                                        $espacio = ($nivel-2)*25;
                                         if(isset($tiponivel->modulo)){
                                             if($nivel==2){
-                                                echo '<tr><td class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse'.$item->id.'">
+                                                echo '<tr><td>
                                                     <strong>'.$item->modulo.'</strong>
                                                 </td>
                                                 <td>'.$item->nivel.'</td>
@@ -82,8 +79,7 @@
                                                 </td>
                                                 </tr>';
                                             }else{
-                                                $espacio = $nivel*10;
-                                                echo '<tr><td style="padding-left:'.$espacio.'px" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse'.$item->id.'">
+                                                echo '<tr><td style="padding-left:'.$espacio.'px">
                                                 '.$item->modulo.'
                                                 </td>
                                                 <td>'.$item->nivel.'</td>
@@ -97,7 +93,7 @@
                                             menu2($nivel,$item->id);
                                         }else{
                                             if($nivel==2){
-                                                echo '<tr><td class="nav-link" href="#">
+                                                echo '<tr><td>
                                                     <strong>'.$item->modulo.'</strong>
                                                 </td>
                                                 <td>'.$item->nivel.'</td>
@@ -108,8 +104,7 @@
                                                 </td>
                                                 </tr>';
                                             }else{
-                                                $espacio = $nivel*15;
-                                                echo '<tr><td style="padding-left:'.$espacio.'px" class="nav-link" href="#">
+                                                echo '<tr><td style="padding-left:'.$espacio.'px">
                                                     '.$item->modulo.'
                                                 </td>
                                                 <td>'.$item->nivel.'</td>

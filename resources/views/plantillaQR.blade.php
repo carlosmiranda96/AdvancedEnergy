@@ -13,6 +13,8 @@
   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('css/styles.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('css/mystyleQR.css')}}"/>
+  <link rel="stylesheet" href="{{asset('vendor/alertify/css/alertify.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('vendor/alertify/css/themes/default.min.css')}}" />
   @yield('head')
 </head>
 <body>
@@ -33,6 +35,7 @@
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('js/bootbox.min.js')}}"></script>
+    <script src="{{asset('vendor/alertify/alertify.min.js')}}"></script>
     @yield('script')
     @yield('script2')
 </body>

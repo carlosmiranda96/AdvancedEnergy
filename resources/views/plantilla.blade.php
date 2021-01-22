@@ -14,6 +14,8 @@
         <link rel="icon" type="image/png" href="{{asset('img/isotipo.png')}}">
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
         <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{{asset('vendor/alertify/css/alertify.min.css')}}" />
+        <link rel="stylesheet" href="{{asset('vendor/alertify/css/themes/default.min.css')}}" />
         @yield('css')
         @yield('head')
     </head>
@@ -52,9 +54,12 @@
                                 {
                                     $userid = session('user_id');
                                     if($userid==1){
-                                        //$menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
+                                        $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
+                                    }else{
+                                        $idusuario = session('user_id');
+                                        $menu = modulos::join('autorizacionusuarios','modulos.id','autorizacionusuarios.idpermiso')->select('modulos.*')->where('idusuario',$idusuario)
+                                        ->where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('modulos.orden')->get();
                                     }
-                                    $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
                                     if(isset($menu)){
                                         $nivel++;                                    
                                     $menu_id = session('menu_id');                           
@@ -170,6 +175,7 @@
         <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('js/bootbox.min.js')}}"></script>
         <script src="{{asset('js/scripts.js')}}"></script>
+        <script src="{{asset('vendor/alertify/alertify.min.js')}}"></script>
         @yield('script')
         <script>
             function cerrarsesion(){

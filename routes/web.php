@@ -129,6 +129,7 @@ Route::group(['middleware' => 'admin'], function() {
     
     Route::resource('autorizacion',AutorizacionController::class);
     Route::get('autorizacions/usuario',[AutorizacionController::class,'usuario'])->name('autorizacion.usuario');
+    Route::get('autorizacions/update',[AutorizacionController::class,'update'])->name('autorizacion.update');
     Route::get('autorizacions/grupo',[AutorizacionController::class,'grupo'])->name('autorizacion.grupo');
 
     Route::resource('pais',PaisController::class);

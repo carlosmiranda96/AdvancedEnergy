@@ -18,27 +18,39 @@
                 </button>
             </div>
             @endif
-                <div class="form-group">
-                    <label>Usuario</label>
-                    <select class="form-control" name="idusuario" id="idusuario" autocomplete="off" autofocus>
-                        <option value="0">Seleccione</option>
-                        @foreach ($usuarios as $item1)
-                            <option @if(old('idusuario')==$item1->id){{'selected'}} @endif value="{{$item1->id}}">{{$item1->name}}</option>
-                        @endforeach
+            <div class="form-group">
+                <label>Usuario</label>
+                <select class="form-control" name="idusuario" id="idusuario" autocomplete="off" autofocus>
+                    <option value="0">Seleccione</option>
+                    @foreach ($usuarios as $item1)
+                        <option @if($idusuario==$item1->id){{'selected'}} @endif value="{{$item1->id}}">{{$item1->name}}</option>
+                    @endforeach
                     </select>
-                </div>
+            </div>
                 <div class="form-group">
                     <label>Permisos</label>
-                    <div class="table-responsive">
+                    <div class="table-responsive"  style="height:300px;">
                 <table class="table table-sm table-bordered" width="100%" cellspacing="0">
                     <tbody>
+                        <thead>
+                            <tr>
+                                <th>Permiso</th>
+                                <th class="text-center">Ver</th>
+                                <th class="text-center">Crear</th>
+                                <th class="text-center">Editar</th>
+                                <th class="text-center">Eliminar</th>
+                                <th class="text-center">Excel</th>
+                                <th class="text-center">PDF</th>
+                            </tr>
+                        </thead>
                                 <?php
 
+use App\Models\autorizacionusuarios;
 use App\Models\modulos;
 
-                                menu2(1,0);
+                                menu2(1,0,$idusuario);
 
-                                function menu2($nivel,$dependencia){
+                                function menu2($nivel,$dependencia,$iduser){
                                     $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
 
                                     $nivel++;
@@ -52,39 +64,115 @@ use App\Models\modulos;
                                         $tiponivel = modulos::where('dependencia',$item->id)->first();
                                         if(isset($tiponivel->modulo)){
                                             if($nivel==2){
-                                                echo '<tr><td>
+                                                echo '<tr>
+                                                <td>
                                                     <strong>'.$item->modulo.'</strong>
                                                 </td>
-                                                <td></td>
+                                                <td colspan="6"></td>
                                                 </tr>';
                                             }else{
                                                 
-                                                echo '<tr><td style="padding-left:'.$espacio.'px">
+                                                echo '<tr>
+                                                <td style="padding-left:'.$espacio.'px">
                                                 '.$item->modulo.'
                                                 </td>
-                                                <td></td>
+                                                <td colspan="6"></td>
                                                 </tr>';
                                             }
-                                            menu2($nivel,$item->id);
+                                            menu2($nivel,$item->id,$iduser);
                                         }else{
+                                            if($iduser>0){
+                                                $disabled =  "";
+                                            }else{
+                                                $disabled = "disabled";
+                                            }
+                                            $check = "";
+                                            $permiso = autorizacionusuarios::where('idusuario',$iduser)->where('idpermiso',$item->id)->first();
+                                            if(isset($permiso)){
+                                                $check = "checked";
+                                            }
                                             if($nivel==2){
-                                                echo '<tr class="fila"><td onclick="seleccionar('.$item->id.')">
+                                                echo '<tr class="fila">
+                                                <td onclick="seleccionar('.$item->id.')">
                                                     <strong>'.$item->modulo.'</strong>
                                                 </td>
                                                 <td class="text-center">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" onchange="cambio(this)" type="checkbox" value="'.$item->id.'" id="ch'.$item->id.'">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,1)" type="checkbox" value="'.$item->id.'" id="ch1'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,2)" type="checkbox" value="'.$item->id.'" id="ch2'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,3)" type="checkbox" value="'.$item->id.'" id="ch3'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,4)" type="checkbox" value="'.$item->id.'" id="ch4'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,5)" type="checkbox" value="'.$item->id.'" id="ch5'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,6)" type="checkbox" value="'.$item->id.'" id="ch6'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
                                                     </div>
                                                 </td>
                                                 </tr>';
                                             }else{
                                                 //$espacio = $nivel*20;
-                                                echo '<tr class="fila"><td style="padding-left:'.$espacio.'px" onclick="seleccionar('.$item->id.')">
+                                                echo '<tr class="fila">
+                                                <td style="padding-left:'.$espacio.'px" onclick="seleccionar('.$item->id.')">
                                                     '.$item->modulo.'
                                                 </td>
                                                 <td class="text-center">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" onchange="cambio(this)" type="checkbox" value="'.$item->id.'" id="ch'.$item->id.'">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,1)" value="'.$item->id.'" id="ch1'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,2)" type="checkbox" value="'.$item->id.'" id="ch2'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,3)" type="checkbox" value="'.$item->id.'" id="ch3'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,4)" type="checkbox" value="'.$item->id.'" id="ch4'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,5)" type="checkbox" value="'.$item->id.'" id="ch5'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,6)" type="checkbox" value="'.$item->id.'" id="ch6'.$item->id.'">
+                                                        <label class="custom-control-label text-white"></label>
                                                     </div>
                                                 </td>
                                                 </tr>';
@@ -96,11 +184,7 @@ use App\Models\modulos;
                     </tbody>
                 </table>
             </div>
-                </div>
-                <div class="form-group">
-                    <a href="{{route('autorizacion.index')}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>
-                    <button class="btn btn-sm btn-warning"><i class="fas fa-redo-alt"></i> Actualizar</button>
-                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -118,8 +202,8 @@ use App\Models\modulos;
     {
         var idusuario = $("#idusuario").val();
         if(idusuario>0){
-            $("#ch"+id).prop('checked',!$("#ch"+id).prop('checked'));
-            $("#ch"+id).change();
+            $("#ch1"+id).prop('checked',!$("#ch1"+id).prop('checked'));
+            $("#ch1"+id).change();
         }else{
             bootbox.alert({title:"Notificación",message:"Por favor selecciona un usuario"});
             idusuario.focus();
@@ -132,11 +216,29 @@ use App\Models\modulos;
             //ACTUALIZAR EN BASE DE DATOS
             var id = $(input).val();
             var autorizacion = $(input).prop('checked');
-            alert(id+" "+autorizacion);
+            $.ajax({
+                url:"{{route('autorizacion.update')}}",
+                type:"get",
+                data:"idpermiso="+id+"&idusuario="+idusuario+"&autorizacion="+autorizacion,
+                success:function(r)
+                {
+                    if(r==1){
+                        alertify.success("Dato guardado");
+                    }else if(r==2){
+                        alertify.success("Dato ya ha sido guardado");
+                    }else{
+                        alertify.error("No se ha podido guardar");
+                    }
+                }
+            })
         }else{
             bootbox.alert({title:"Notificación",message:"Por favor selecciona un usuario"});
             idusuario.focus();
         }
     }
+    $("#idusuario").on("change",function()
+    {
+        window.location = "{{route('autorizacion.usuario')}}?id="+$(this).val();
+    });
 </script>
 @stop

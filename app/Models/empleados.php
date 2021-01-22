@@ -27,6 +27,7 @@ class empleados extends Model
         'idestadocivil',
         'idmunicipio',
         'estado',
-        'toquen'
+        'toquen',
+        'idgrupo'
     ];
 }

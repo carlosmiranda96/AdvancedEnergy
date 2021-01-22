@@ -7,6 +7,7 @@ use App\Models\permisos;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use App\Models\modulos;
 
 class AutorizacionController extends Controller
 {
@@ -26,10 +27,14 @@ class AutorizacionController extends Controller
         $usuarios = User::get();
         return view('admin.autorizacion.create',compact('usuarios'));
     }
-    public function usuario()
+    public function usuario(Request $request)
     {
         $usuarios = User::get();
-        return view('admin.autorizacion.lista',compact('usuarios'));
+        $idusuario = 0;
+        if(isset($request->id)){
+            $idusuario = $request->id;
+        }
+        return view('admin.autorizacion.lista',compact('usuarios','idusuario'));
     }
     public function grupo()
     {
@@ -63,9 +68,9 @@ class AutorizacionController extends Controller
      * @param  \App\Models\cargos  $cargos
      * @return \Illuminate\Http\Response
      */
-    public function show(autorizacionusuarios $autorizacionusuarios)
+    public function show($id)
     {
-        //
+        echo "hola";
     }
     /**
      * Show the form for editing the specified resource.
@@ -75,17 +80,7 @@ class AutorizacionController extends Controller
      */
     public function edit($id)
     {
-        $autorizacionusuarios = autorizacionusuarios::select('idpermiso')->where('idusuario',$id)->get();
-        $usuario = User::find($id);
-        $permisos = permisos::join('modulos','idmodulo','modulos.id')->select('permisos.*','modulos.modulo')->orderby('modulos.modulo')->get();
-        $arreglo = array();
-        $contador = 0;
-        foreach($autorizacionusuarios as $item)
-        {
-            $arreglo[$contador] = $item->idpermiso;
-            $contador++;
-        }
-        return view('admin.autorizacion.edit',compact('arreglo','usuario','permisos'));
+        echo "hola";
     }
 
     /**
@@ -95,31 +90,39 @@ class AutorizacionController extends Controller
      * @param  \App\Models\cargos  $cargos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
-        $request->validate([
-            'permiso' => 'required',
-        ]);
-        $autorizacionusuarios = autorizacionusuarios::where('idusuario',$id)->get();
-        $arreglo = array();
-        $contador = 0;
-        foreach($autorizacionusuarios as $aut){
-            if(!in_array($aut->idpermiso,$request->permiso)){
-                $borrar = autorizacionusuarios::find($aut->id);
-                $borrar->delete();
+        $idpermiso = $request->idpermiso;
+        $idusuario = $request->idusuario;
+        if(isset($idpermiso))
+        {
+            if(isset($request->autorizacion) && $request->autorizacion=="true"){
+                $autorizacion = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$idpermiso)->first();
+                if(!isset($autorizacion)){
+                    //AGREGAR PERMISO
+                    autorizacionusuarios::create([
+                        'idusuario' => $idusuario,
+                        'idpermiso' => $idpermiso
+                    ]);
+                    $this->agregarDependencia($idusuario,$idpermiso);
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }else{
+                //ELIMINAR PERMISO
+                $borrar = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$idpermiso)->first();
+                if(isset($borrar)){
+                    $borrar->delete();
+                    $this->eliminarDependencia($idusuario,$idpermiso);
+                    echo "1";
+                }else{
+                    echo "0";
+                }
             }
-            $arreglo[$contador] = $aut->idpermiso;
-            $contador++;
+        }else{
+            echo "0";
         }
-        foreach($request->permiso as $item){
-            if(!in_array($item,$arreglo)){
-                autorizacionusuarios::create([
-                    'idusuario' => $id,
-                    'idpermiso' => $item
-                ]);
-            }
-        }
-        return redirect()->route('autorizacion.index')->with('mensaje','Datos guardados correctamente');
     }
     /**
      * Remove the specified resource from storage.
@@ -132,5 +135,38 @@ class AutorizacionController extends Controller
         $autorizacionusuarios = autorizacionusuarios::where('idusuario',$idusuario);
         $autorizacionusuarios->delete();
         return redirect()->route('autorizacion.index')->with('mensaje','Dato eliminado correctamente');
+    }
+    public function agregarDependencia($idusuario,$idpermiso)
+    {
+        $permiso = modulos::find($idpermiso);
+        $dependencia = $permiso->dependencia;
+        if($dependencia>0)
+        {
+            $autorizacion = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$dependencia)->first();
+            if(!isset($autorizacion)){
+                //AGREGAR PERMISO
+                autorizacionusuarios::create([
+                    'idusuario' => $idusuario,
+                    'idpermiso' => $dependencia
+                ]);
+                $this->agregarDependencia($idusuario,$dependencia);
+            }
+        }
+    }
+    public function eliminarDependencia($idusuario,$idpermiso)
+    {
+        $permiso = modulos::find($idpermiso);
+        $dependencia = $permiso->dependencia;
+        if($dependencia>0)
+        {
+            $auto = autorizacionusuarios::join('modulos','idpermiso','modulos.id')->select('modulos.*')->where('idusuario',$idusuario)->where('dependencia',$dependencia)->first();
+            if(!isset($auto)){
+                $borrar = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$dependencia)->first();
+                if(isset($borrar)){
+                    $borrar->delete();
+                    $this->eliminarDependencia($idusuario,$dependencia);
+                }
+            }
+        }
     }
 }

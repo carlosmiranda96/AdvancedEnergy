@@ -212,13 +212,14 @@
                     var html = "¡Bienvenido!, para acceder a la opción elegida primero debes iniciar sesión..<br><br>"+
                         "<label>Ingresa tu correo:</label><input id='correo' type='text' value='{{$email}}' class='form-control'/><br>"+
                         "<label>Ingresa tu contraseña:</label><input id='clave' type='password' value='{{$password}}' class='form-control'/><br>"+
-                        "<button class='btn btn-primary' onclick='login()'>Iniciar Sesión</button>";
-                    bootbox.alert({
+                        "<button class='btn btn-primary' onclick='login("+id+")'>Iniciar Sesión</button>";
+                    bootbox.dialog({
                         title:'Iniciar Sesión',
                         message:html,
                         buttons:{
-                            ok:{
-                                label:'Cerrar'
+                            cancel:{
+                                label:'Cerrar',
+                                className: 'btn-secondary'
                             }
                         }
                     });
@@ -272,10 +273,37 @@
             }
         });
     }
-    function login(){
-        var correo = $("#correo").val();
-        var clave = $("#clave").val();
-        
+    function login(id)
+    {
+        var correo = $("#correo");
+        var clave = $("#clave");
+        if(!correo.val()){
+            alertify.error("Ingrese un correo");
+            correo.focus();
+        }else if(!clave.val()){
+            alertify.error("Ingrese una contraseña");
+            clave.focus();
+        }else{
+            $.ajax({
+                url:"{{asset('validaruser')}}/"+correo.val()+"/"+clave.val(),
+                type:"GET",
+                data:"crear=1",
+                success:function(r)
+                {
+                    if(r==1){
+                        if(id==1){
+                            //Marcar asistencia
+                            asistencia();
+                        }else if(id==2){
+                            //Abrir lector QR
+                            window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
+                        }
+                    }else{
+                        alertify.error(r+"!!");
+                    }
+                }
+            });
+        }
     }
 </script>
 @stop
