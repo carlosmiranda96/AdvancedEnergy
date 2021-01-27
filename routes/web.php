@@ -43,6 +43,7 @@ Route::get('registrarse',[PageController::class,'registrarse'])->name('registrar
 Route::post('iniciarsesion', [PageController::class, 'iniciarsesion'])->name('iniciarsesion');
 Route::get('validaruser/{email}/{password}', [PageController::class, 'validarUser'])->name('validaruser');
 Route::get('validarsesion', [PageController::class, 'validarsesion'])->name('validarsesion');
+Route::get('validate',[PageController::class,'validar'])->name('validate');//Valida registro de usuario
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {

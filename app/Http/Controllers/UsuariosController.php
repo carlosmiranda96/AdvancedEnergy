@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Registro;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\Mail;
 
 class UsuariosController extends Controller
 {
@@ -38,16 +40,27 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
+        $toquen = NULL;
         $enviar = $request->invitacion;
+        $estado = 1;
+        $idrol = 2;
+        $clave = $request->password;
         if(isset($enviar)){
             $request->validate([
                 'name' => 'required',
-                'email' => 'required'
+                'email' => 'required|unique:users'
             ]);
+            //crear toquen para usuario
+            $toquen = substr(Crypt::encryptString($request->email),0,20);
+            $estado = 0;
+            $clave = 123456;
         }else{
+            if($request->idrol==1){
+                $idrol = 1;
+            }
             $request->validate([
                 'name' => 'required',
-                'email' => 'required',
+                'email' => 'required|unique:users',
                 'idrol' => 'required|integer|min:1',
                 'password' => 'required',
             ]);
@@ -58,15 +71,20 @@ class UsuariosController extends Controller
             $foto = "fotoperfil/perfilDefault.jpg";
         }
 
-        User::create([
+        $usuario = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>Crypt::encryptString($request->password),
+            'password' =>Crypt::encryptString($clave),
+            'remember_token' => $toquen,
             'foto' => $foto,
-            'idrol' => $request->idrol,
+            'idrol' => $idrol,
             'idempleado' => $request->idempleado,
-            'estado' => 1
+            'estado' => $estado
         ]);
+        if(isset($enviar)){
+            //Enviara correo de notificacion de usuario creado para validar cuenta
+            Mail::to($usuario->email)->send(new Registro($usuario->id));
+        }
         return redirect()->route('usuarios.index')->with('mensaje','Datos guardados correctamente');
     }
 

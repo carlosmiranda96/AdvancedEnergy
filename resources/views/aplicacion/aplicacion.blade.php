@@ -201,6 +201,7 @@
             }
         });
     }
+    var dialogo;
     function verificarLogin(id)
     {
         $.ajax({
@@ -212,8 +213,8 @@
                     var html = "¡Bienvenido!, para acceder a la opción elegida primero debes iniciar sesión..<br><br>"+
                         "<label>Ingresa tu correo:</label><input id='correo' type='text' value='{{$email}}' class='form-control'/><br>"+
                         "<label>Ingresa tu contraseña:</label><input id='clave' type='password' value='{{$password}}' class='form-control'/><br>"+
-                        "<button class='btn btn-primary' onclick='login("+id+")'>Iniciar Sesión</button>";
-                    bootbox.dialog({
+                        "<button class='btn btn-primary col-12' onclick='login("+id+")'>Iniciar Sesión</button>";
+                    dialogo = bootbox.dialog({
                         title:'Iniciar Sesión',
                         message:html,
                         buttons:{
@@ -293,6 +294,7 @@
                     if(r==1){
                         if(id==1){
                             //Marcar asistencia
+                            dialogo.modal('hide');
                             asistencia();
                         }else if(id==2){
                             //Abrir lector QR

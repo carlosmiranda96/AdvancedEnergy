@@ -134,20 +134,24 @@ class PageController extends Controller
 		$usuario = User::where('email',$email)->first();
 		if(isset($usuario))
 		{
-			$decrypted = Crypt::decryptString($usuario->password);
-			if($decrypted==$password){
-				if(isset($request->crear))
-				{
-					session()->put('user_id', $usuario->id);
-					session()->put('name', $usuario->name);
-					session()->put('email',$usuario->email);
-					session()->put('foto','storage/app/'.$usuario->foto);
-					session()->put('idrol',$usuario->idrol);
-					session()->put('menu_id',5);//Seleccionar menu inicio
+			if($usuario->estado==1){
+				$decrypted = Crypt::decryptString($usuario->password);
+				if($decrypted==$password){
+					if(isset($request->crear))
+					{
+						session()->put('user_id', $usuario->id);
+						session()->put('name', $usuario->name);
+						session()->put('email',$usuario->email);
+						session()->put('foto','storage/app/'.$usuario->foto);
+						session()->put('idrol',$usuario->idrol);
+						session()->put('menu_id',5);//Seleccionar menu inicio
+					}
+					return "1";			
+				}else{
+					return "La clave ingresada es incorrecta";
 				}
-				return "1";			
 			}else{
-				return "La clave ingresada es incorrecta";
+				return "Usuario no activo!!";
 			}
 		}else{
 			return "Usuario ingresado es incorrecto";		
@@ -750,8 +754,16 @@ class PageController extends Controller
 	}
 	public function pruebaemail()
 	{
+		//return new Registro(8);
+		Mail::to('carlos.miranda96@gmail.com')->send(new Registro(8));
+	}
+	public function validar(Request $request)
+	{
+		$idusuario = $request->a;
+		$correo = $request->b;
+		$toquen = $request->c;
 
-		return view('mail.registro');
-		//Mail::to('amiranda@ae-energiasolar.com')->send('html'=> new Registro());
+		$valido = true;
+		return view('validarRegistro',compact('valido','idusuario','correo'));
 	}
 }

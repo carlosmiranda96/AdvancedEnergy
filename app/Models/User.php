@@ -22,7 +22,8 @@ class User extends Authenticatable
         'password',
         'foto',
         'idrol',
-        'estado'
+        'estado',
+        'remember_token'
     ];
 
     /**

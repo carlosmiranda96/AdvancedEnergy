@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,9 +17,10 @@ class Registro extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    private $idusuario;
+    public function __construct($idusuario)
     {
-        //
+        $this->idusuario = $idusuario;
     }
 
     /**
@@ -28,6 +30,7 @@ class Registro extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.registro');
+        $usuario = User::find($this->idusuario);
+        return $this->view('mail.registro',compact('usuario'));
     }
 }
