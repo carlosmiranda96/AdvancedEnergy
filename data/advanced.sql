@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-01-2021 a las 17:19:26
+-- Tiempo de generación: 27-01-2021 a las 01:23:42
 -- Versión del servidor: 10.4.16-MariaDB
 -- Versión de PHP: 7.4.12
 
@@ -34,6 +34,26 @@ CREATE TABLE `autorizacionusuarios` (
   `idusuario` int(11) NOT NULL,
   `idpermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `autorizacionusuarios`
+--
+
+INSERT INTO `autorizacionusuarios` (`id`, `created_at`, `updated_at`, `idusuario`, `idpermiso`) VALUES
+(35, '2021-01-22 04:47:57', '2021-01-22 04:47:57', 3, 16),
+(36, '2021-01-22 04:47:57', '2021-01-22 04:47:57', 3, 6),
+(37, '2021-01-22 04:48:00', '2021-01-22 04:48:00', 3, 20),
+(38, '2021-01-22 04:48:00', '2021-01-22 04:48:00', 3, 19),
+(46, '2021-01-22 04:59:04', '2021-01-22 04:59:04', 3, 32),
+(47, '2021-01-22 04:59:04', '2021-01-22 04:59:04', 3, 14),
+(48, '2021-01-22 04:59:56', '2021-01-22 04:59:56', 3, 33),
+(49, '2021-01-22 05:09:29', '2021-01-22 05:09:29', 3, 23),
+(50, '2021-01-22 05:09:29', '2021-01-22 05:09:29', 3, 22),
+(51, '2021-01-22 05:09:29', '2021-01-22 05:09:29', 3, 24),
+(53, '2021-01-22 05:28:40', '2021-01-22 05:28:40', 3, 63),
+(54, '2021-01-22 05:41:49', '2021-01-22 05:41:49', 3, 21),
+(58, '2021-01-22 05:45:11', '2021-01-22 05:45:11', 3, 5),
+(62, '2021-01-22 06:10:12', '2021-01-22 06:10:12', 3, 17);
 
 -- --------------------------------------------------------
 
@@ -127,7 +147,7 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`id`, `created_at`, `updated_at`, `fechaingreso`, `codigo`, `nombre1`, `nombre2`, `apellido1`, `apellido2`, `apellido3`, `nombreCompleto`, `foto`, `direccion`, `correo`, `telefono`, `celular`, `fechanacimiento`, `idgenero`, `idestadocivil`, `idmunicipio`, `estado`, `toquen`) VALUES
-(1, '2020-12-11 05:03:17', '2020-12-11 05:03:17', '2016-04-01', 'AE-001', 'Alejandro', 'Eduardo', 'Bellas', 'Mayer', NULL, 'Alejandro Eduardo Bellas Mayer', 'fotoempleado/DqS3r4jlizX6NqPPRwQOSrY1nCGUXfCPUpLuYQgF.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImVKaFZaMWlz'),
+(1, '2020-12-11 05:03:17', '2021-01-22 05:00:36', '2016-04-01', 'AE-001', 'Alejandro', 'Eduardo', 'Bellas', 'Mayer', NULL, 'Alejandro Eduardo Bellas Mayer', 'fotoempleado/DqS3r4jlizX6NqPPRwQOSrY1nCGUXfCPUpLuYQgF.jpeg', NULL, NULL, '73997030', NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImVKaFZaMWlz'),
 (2, '2020-12-11 05:04:26', '2020-12-11 05:04:58', '2016-04-01', 'AE-002', 'Hasdy', 'Salvador', 'Muñoz', 'Montoya', NULL, 'Hasdy Salvador Muñoz Montoya', 'fotoempleado/AkktZ9n7CVspPiXmqWz31yJzJ4U71iOllgabakXN.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 0, 'eyJpdiI6Ik5UeXgvYldJ'),
 (3, '2020-12-11 05:06:45', '2020-12-11 05:06:45', '2017-08-01', 'AE-003', 'Denis', 'Iván', 'Herrera', NULL, NULL, 'Denis Iván Herrera', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImxtQkhnTUFN'),
 (4, '2020-12-11 05:07:59', '2020-12-11 05:07:59', '2017-08-01', 'AE-004', 'Jose', 'Carlos', 'Calderón', 'Melendez', NULL, 'Jose Carlos Calderón Melendez', 'fotoempleado/PZdIJ5lAKxKvfB48n0z4KTDWmNc1wwZvmKCPjc6J.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImRMMVpTWlBM'),
@@ -225,8 +245,9 @@ CREATE TABLE `empleado_documentos` (
 
 INSERT INTO `empleado_documentos` (`id`, `created_at`, `updated_at`, `idempleado`, `idtipodocumento`, `numerodocumento`, `fechaexpedicion`, `fechavencimiento`, `foto`) VALUES
 (1, '2021-01-06 05:36:04', '2021-01-06 05:36:04', 3, 1, '06142045-8', NULL, NULL, NULL),
-(2, '2021-01-06 05:37:35', '2021-01-06 05:37:35', 3, 1, '1', NULL, NULL, NULL),
-(3, '2021-01-06 20:17:49', '2021-01-06 20:17:49', 4, 1, '1234574-5', NULL, NULL, NULL);
+(3, '2021-01-06 20:17:49', '2021-01-06 20:17:49', 4, 1, '1234574-5', NULL, NULL, NULL),
+(4, '2021-01-21 04:30:08', '2021-01-21 04:30:08', 5, 1, '1235456-8', NULL, NULL, NULL),
+(6, '2021-01-22 05:01:20', '2021-01-22 05:01:20', 1, 1, '12345678-9', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -283,6 +304,13 @@ CREATE TABLE `empleado_referencias` (
   `idempleado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `empleado_referencias`
+--
+
+INSERT INTO `empleado_referencias` (`id`, `created_at`, `updated_at`, `tipo`, `nombre`, `contacto`, `idempleado`) VALUES
+(1, '2021-01-22 05:02:47', '2021-01-22 05:02:47', 'Personal', 'Carlos Oliva', '22559988', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -303,7 +331,8 @@ CREATE TABLE `empleado_users` (
 
 INSERT INTO `empleado_users` (`id`, `created_at`, `updated_at`, `idusuario`, `idempleado`) VALUES
 (1, '2021-01-06 20:17:14', '2021-01-07 23:25:47', 2, 4),
-(2, '2021-01-07 23:25:58', '2021-01-07 23:25:58', 1, 5);
+(2, '2021-01-07 23:25:58', '2021-01-07 23:25:58', 1, 5),
+(6, '2021-01-22 05:24:01', '2021-01-22 05:24:01', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -351,7 +380,9 @@ CREATE TABLE `equiposhistorials` (
 INSERT INTO `equiposhistorials` (`id`, `created_at`, `updated_at`, `instante`, `idequipotrabajo`, `idempleado`, `kilometraje`, `combustible`, `extinguidor`, `botiquin`, `equiposeguridad`, `observaciones`, `idusuario`, `latitud`, `longitud`, `uso`) VALUES
 (1, '2021-01-07 15:59:25', '2021-01-07 15:59:25', '2021-01-07 15:59:25', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13.6698395, -89.2941542, NULL),
 (2, '2021-01-07 16:01:28', '2021-01-07 16:01:28', '2021-01-07 16:01:28', 2, 3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13.6698395, -89.2941542, NULL),
-(8, '2021-01-11 16:11:25', '2021-01-11 22:11:39', '2021-01-11 16:11:25', 3, 62, 4578689, '1/4', 1, 1, 1, 'Prueba', 1, 13.6698658, -89.29412909999999, 'Oficina');
+(8, '2021-01-11 16:11:25', '2021-01-11 22:11:39', '2021-01-11 16:11:25', 3, 62, 4578689, '1/4', 1, 1, 1, 'Prueba', 1, 13.6698658, -89.29412909999999, 'Oficina'),
+(9, '2021-01-13 15:10:06', '2021-01-13 21:10:18', '2021-01-13 15:10:06', 2, 63, 45678, 'LLENO', 1, 1, 1, NULL, 1, 13.670018899999999, -89.29421169999999, 'Proyecto'),
+(10, '2021-01-13 15:10:29', '2021-01-13 21:10:40', '2021-01-13 15:10:29', 1, 65, 45678, 'LLENO', 1, 1, 1, NULL, 1, 13.670018899999999, -89.29421169999999, 'Proyecto');
 
 -- --------------------------------------------------------
 
@@ -468,7 +499,13 @@ INSERT INTO `formuas` (`id`, `created_at`, `updated_at`, `fecha`, `nombrecomplet
 (32, '2021-01-07 20:40:45', '2021-01-07 20:40:45', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', NULL, NULL),
 (33, '2021-01-07 20:46:18', '2021-01-07 20:46:18', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', 35.6, NULL),
 (34, '2021-01-07 20:50:35', '2021-01-07 20:50:35', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', 35.5, NULL),
-(35, '2021-01-07 20:51:20', '2021-01-07 20:51:20', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', NULL, NULL);
+(35, '2021-01-07 20:51:20', '2021-01-07 20:51:20', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', NULL, NULL),
+(36, '2021-01-12 02:32:52', '2021-01-12 02:32:52', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
+(37, '2021-01-12 02:32:58', '2021-01-12 02:32:58', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
+(38, '2021-01-12 02:34:24', '2021-01-12 02:34:24', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
+(39, '2021-01-12 02:34:29', '2021-01-12 02:34:29', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
+(40, '2021-01-14 22:15:03', '2021-01-14 22:15:03', '2021-01-14', 'José Miguel Rodríguez Romero', '135678-8', 1, 'Advanced Energy', NULL, 'Administracion', 35.7, NULL),
+(41, '2021-01-21 04:30:26', '2021-01-21 04:30:26', '2021-01-20', 'José Miguel Rodríguez Romero', '1235456-8', 1, 'Advanced Energy', NULL, 'Administración', 35, NULL);
 
 -- --------------------------------------------------------
 
@@ -481,107 +518,158 @@ CREATE TABLE `formubs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `idformua` int(11) NOT NULL,
-  `idformuc` int(11) NOT NULL,
-  `si` char(2) DEFAULT NULL,
-  `no` char(2) DEFAULT NULL
+  `idformuc` int(11) DEFAULT NULL,
+  `respuesta` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `formubs`
 --
 
-INSERT INTO `formubs` (`id`, `created_at`, `updated_at`, `idformua`, `idformuc`, `si`, `no`) VALUES
-(183, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 1, NULL, 'NO'),
-(184, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 2, NULL, 'NO'),
-(185, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 3, NULL, 'NO'),
-(186, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 4, NULL, 'NO'),
-(187, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 5, NULL, 'NO'),
-(188, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 6, NULL, 'NO'),
-(189, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 7, NULL, 'NO'),
-(190, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 8, NULL, 'NO'),
-(191, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 9, NULL, 'NO'),
-(192, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 10, NULL, 'NO'),
-(193, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 11, NULL, 'NO'),
-(194, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 12, NULL, 'NO'),
-(195, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, 13, NULL, 'NO'),
-(196, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 1, NULL, 'NO'),
-(197, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 2, NULL, 'NO'),
-(198, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 3, NULL, 'NO'),
-(199, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 4, NULL, 'NO'),
-(200, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 5, NULL, 'NO'),
-(201, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 6, NULL, 'NO'),
-(202, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 7, NULL, 'NO'),
-(203, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 8, NULL, 'NO'),
-(204, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 9, NULL, 'NO'),
-(205, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 10, NULL, 'NO'),
-(206, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 11, NULL, 'NO'),
-(207, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 12, NULL, 'NO'),
-(208, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, 13, NULL, 'NO'),
-(209, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 1, NULL, 'NO'),
-(210, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 2, NULL, 'NO'),
-(211, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 3, NULL, 'NO'),
-(212, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 4, NULL, 'NO'),
-(213, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 5, NULL, 'NO'),
-(214, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 6, NULL, 'NO'),
-(215, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 7, NULL, 'NO'),
-(216, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 8, NULL, 'NO'),
-(217, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 9, NULL, 'NO'),
-(218, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 10, NULL, 'NO'),
-(219, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 11, NULL, 'NO'),
-(220, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 12, NULL, 'NO'),
-(221, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, 13, NULL, 'NO'),
-(222, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 1, NULL, 'NO'),
-(223, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 2, NULL, 'NO'),
-(224, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 3, NULL, 'NO'),
-(225, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 4, NULL, 'NO'),
-(226, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 5, NULL, 'NO'),
-(227, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 6, NULL, 'NO'),
-(228, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 7, NULL, 'NO'),
-(229, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 8, NULL, 'NO'),
-(230, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 9, NULL, 'NO'),
-(231, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 10, NULL, 'NO'),
-(232, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 11, NULL, 'NO'),
-(233, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 12, NULL, 'NO'),
-(234, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, 13, NULL, 'NO'),
-(235, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 1, NULL, 'NO'),
-(236, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 2, NULL, 'NO'),
-(237, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 3, NULL, 'NO'),
-(238, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 4, NULL, 'NO'),
-(239, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 5, NULL, 'NO'),
-(240, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 6, NULL, 'NO'),
-(241, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 7, NULL, 'NO'),
-(242, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 8, NULL, 'NO'),
-(243, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 9, NULL, 'NO'),
-(244, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 10, NULL, 'NO'),
-(245, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 11, NULL, 'NO'),
-(246, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 12, NULL, 'NO'),
-(247, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, 13, NULL, 'NO'),
-(248, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 1, NULL, 'NO'),
-(249, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 2, NULL, 'NO'),
-(250, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 3, NULL, 'NO'),
-(251, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 4, NULL, 'NO'),
-(252, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 5, NULL, 'NO'),
-(253, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 6, NULL, 'NO'),
-(254, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 7, NULL, 'NO'),
-(255, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 8, NULL, 'NO'),
-(256, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 9, NULL, 'NO'),
-(257, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 10, NULL, 'NO'),
-(258, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 11, NULL, 'NO'),
-(259, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 12, NULL, 'NO'),
-(260, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, 13, NULL, 'NO'),
-(261, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 1, NULL, 'NO'),
-(262, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 2, NULL, 'NO'),
-(263, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 3, NULL, 'NO'),
-(264, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 4, 'SI', NULL),
-(265, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 5, 'SI', NULL),
-(266, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 6, 'SI', NULL),
-(267, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 7, NULL, 'NO'),
-(268, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 8, NULL, 'NO'),
-(269, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 9, NULL, 'NO'),
-(270, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 10, NULL, 'NO'),
-(271, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 11, NULL, 'NO'),
-(272, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 12, NULL, 'NO'),
-(273, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 13, NULL, 'NO');
+INSERT INTO `formubs` (`id`, `created_at`, `updated_at`, `idformua`, `idformuc`, `respuesta`) VALUES
+(183, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(184, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(185, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(186, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(187, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(188, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(189, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(190, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(191, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(192, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(193, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(194, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(195, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
+(196, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(197, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(198, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(199, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(200, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(201, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(202, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(203, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(204, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(205, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(206, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(207, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(208, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
+(209, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(210, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(211, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(212, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(213, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(214, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(215, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(216, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(217, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(218, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(219, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(220, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(221, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
+(222, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(223, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(224, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(225, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(226, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(227, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(228, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(229, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(230, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(231, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(232, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(233, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(234, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
+(235, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(236, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(237, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(238, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(239, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(240, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(241, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(242, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(243, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(244, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(245, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(246, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(247, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
+(248, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(249, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(250, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(251, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(252, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(253, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(254, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(255, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(256, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(257, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(258, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(259, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(260, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
+(261, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(262, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(263, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(264, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 0, NULL),
+(265, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 0, NULL),
+(266, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 0, NULL),
+(267, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(268, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(269, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(270, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(271, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(272, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(273, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
+(274, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 1, 'SI'),
+(275, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 2, 'SI'),
+(276, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 3, 'SI'),
+(277, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 4, 'SI'),
+(278, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 5, 'SI'),
+(279, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 6, 'SI'),
+(280, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 7, 'SI'),
+(281, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 8, 'SI'),
+(282, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 9, 'SI'),
+(283, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 10, 'SI'),
+(284, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 11, 'SI'),
+(285, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 12, 'SI'),
+(286, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 13, 'SI'),
+(287, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 1, 'SI'),
+(288, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 2, 'SI'),
+(289, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 3, 'SI'),
+(290, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 4, 'SI'),
+(291, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 5, 'SI'),
+(292, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 6, 'SI'),
+(293, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 7, 'SI'),
+(294, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 8, 'SI'),
+(295, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 9, 'SI'),
+(296, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 10, 'SI'),
+(297, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 11, 'SI'),
+(298, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 12, 'SI'),
+(299, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 13, 'SI'),
+(300, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 1, 'NO'),
+(301, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 2, 'SI'),
+(302, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 3, 'SI'),
+(303, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 4, 'SI'),
+(304, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 5, 'SI'),
+(305, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 6, 'SI'),
+(306, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 7, 'SI'),
+(307, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 8, 'SI'),
+(308, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 9, 'SI'),
+(309, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 10, 'SI'),
+(310, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 11, 'SI'),
+(311, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 12, 'SI'),
+(312, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 13, 'SI'),
+(313, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 1, 'SI'),
+(314, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 2, 'SI'),
+(315, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 3, 'SI'),
+(316, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 4, 'SI'),
+(317, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 5, 'SI'),
+(318, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 6, 'SI'),
+(319, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 7, 'SI'),
+(320, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 8, 'SI'),
+(321, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 9, 'SI'),
+(322, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 10, 'SI'),
+(323, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 11, 'SI'),
+(324, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 12, 'SI'),
+(325, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 13, 'SI');
 
 -- --------------------------------------------------------
 
@@ -725,7 +813,19 @@ INSERT INTO `marcacionesempleados` (`id`, `created_at`, `updated_at`, `idemplead
 (60, '2021-01-08 18:08:12', '2021-01-08 18:08:12', 5, 1, 'Entrada', '2021-01-08', '12:08:12', NULL, 1, 13.6698749, -89.29412169999999),
 (61, '2021-01-08 18:08:19', '2021-01-08 18:08:19', 5, 1, 'Salida', '2021-01-08', '12:08:19', NULL, 1, 13.6698749, -89.29412169999999),
 (62, '2021-01-11 15:28:52', '2021-01-11 15:28:52', 5, 1, 'Entrada', '2021-01-11', '09:28:52', NULL, 1, 13.670018899999999, -89.29421169999999),
-(63, '2021-01-11 15:37:10', '2021-01-11 15:37:10', 5, 1, 'Salida', '2021-01-11', '09:37:10', NULL, 1, 13.670018899999999, -89.29421169999999);
+(63, '2021-01-11 15:37:10', '2021-01-11 15:37:10', 5, 1, 'Salida', '2021-01-11', '09:37:10', NULL, 1, 13.670018899999999, -89.29421169999999),
+(76, '2021-01-13 15:56:32', '2021-01-13 15:56:32', 63, 1, 'Salida', '2021-01-13', '09:56:32', NULL, 1, 13.670018899999999, -89.29421169999999),
+(77, '2021-01-13 15:59:59', '2021-01-13 15:59:59', 65, 1, 'Entrada', '2021-01-13', '09:59:59', NULL, 1, 13.670018899999999, -89.29421169999999),
+(78, '2021-01-13 18:13:20', '2021-01-13 18:13:20', 65, 1, 'Salida', '2021-01-13', '12:13:20', NULL, 1, 13.669797899999999, -89.2938848),
+(79, '2021-01-13 18:13:45', '2021-01-13 18:13:45', 65, 1, 'Entrada', '2021-01-13', '12:13:45', NULL, 1, 13.669797899999999, -89.2938848),
+(80, '2021-01-13 18:22:09', '2021-01-13 18:22:09', 63, 1, 'Entrada', '2021-01-13', '12:22:09', NULL, 1, 13.669868000000001, -89.29412789999999),
+(81, '2021-01-13 18:22:30', '2021-01-13 18:22:30', 65, 1, 'Salida', '2021-01-13', '12:22:30', NULL, 1, 13.669868000000001, -89.29412789999999),
+(82, '2021-01-13 18:22:41', '2021-01-13 18:22:41', 63, 1, 'Salida', '2021-01-13', '12:22:41', NULL, 1, 13.669868000000001, -89.29412789999999),
+(83, '2021-01-14 16:09:01', '2021-01-14 16:09:01', 5, 1, 'Entrada', '2021-01-14', '10:09:01', NULL, 1, 13.66987, -89.2941599),
+(84, '2021-01-20 22:47:24', '2021-01-20 22:47:24', 5, 1, 'Salida', '2021-01-20', '16:47:24', NULL, 1, 13.6699978, -89.294731),
+(85, '2021-01-20 23:04:28', '2021-01-20 23:04:28', 5, 1, 'Entrada', '2021-01-20', '17:04:28', NULL, 1, 13.6699978, -89.294731),
+(86, '2021-01-21 00:09:55', '2021-01-21 00:09:55', 5, 1, 'Salida', '2021-01-20', '18:09:55', NULL, 1, 13.6699978, -89.294731),
+(87, '2021-01-21 18:25:42', '2021-01-21 18:25:42', 5, 1, 'Salida', '2021-01-21', '12:25:42', NULL, 1, 13.670018899999999, -89.29421169999999);
 
 -- --------------------------------------------------------
 
@@ -829,7 +929,7 @@ INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icon
 (29, '2021-01-06 03:54:04', '2021-01-06 09:52:44', 'Vehiculos', 'equipos.index', NULL, 3, 25, 1),
 (30, '2021-01-06 03:55:47', '2021-01-06 03:55:47', 'Mantenimientos', NULL, NULL, 3, 25, 2),
 (31, '2021-01-06 03:55:59', '2021-01-06 03:55:59', 'Control de vehiculos', NULL, NULL, 3, 25, 3),
-(32, '2021-01-06 03:56:37', '2021-01-06 03:56:37', 'Asistencia', NULL, NULL, 2, 14, 1),
+(32, '2021-01-06 03:56:37', '2021-01-13 21:15:34', 'Asistencia', 'marcaciones', NULL, 2, 14, 1),
 (33, '2021-01-06 03:56:49', '2021-01-06 03:56:49', 'Empleados', 'empleados.index', NULL, 2, 14, 2),
 (34, '2021-01-06 03:57:21', '2021-01-06 03:57:21', 'Vacaciones', NULL, NULL, 2, 14, 3),
 (35, '2021-01-06 03:57:27', '2021-01-06 03:57:27', 'Permisos', NULL, NULL, 2, 14, 4),
@@ -855,11 +955,12 @@ INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icon
 (55, '2021-01-06 09:06:38', '2021-01-06 09:06:38', 'Horarios laborales', 'grupohorario.index', NULL, 3, 41, 3),
 (56, '2021-01-06 09:08:47', '2021-01-06 09:08:47', 'General', NULL, NULL, 2, 15, 1),
 (57, '2021-01-06 09:09:19', '2021-01-06 09:09:19', 'Gestión vehiculos', NULL, NULL, 3, 56, 1),
-(58, '2021-01-06 09:09:33', '2021-01-06 09:09:33', 'Control vehiculos', NULL, NULL, 4, 57, 1),
+(58, '2021-01-06 09:09:33', '2021-01-12 03:04:49', 'Control vehiculos', 'reportes,58', NULL, 4, 57, 1),
 (59, '2021-01-06 09:09:52', '2021-01-06 09:09:52', 'Recursos humanos', NULL, NULL, 2, 15, 2),
-(60, '2021-01-06 09:10:08', '2021-01-06 09:10:08', 'Asistencia', NULL, NULL, 3, 59, 1),
+(60, '2021-01-06 09:10:08', '2021-01-12 02:41:52', 'Asistencia', 'reportes,60', NULL, 3, 59, 1),
 (61, '2021-01-06 11:26:05', '2021-01-06 11:26:05', 'Productos', NULL, NULL, 2, 9, 1),
-(62, '2021-01-06 11:26:16', '2021-01-06 11:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2);
+(62, '2021-01-06 11:26:16', '2021-01-06 11:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2),
+(63, '2021-01-22 05:28:28', '2021-01-22 05:28:28', 'Accesos directos', NULL, NULL, 3, 16, 3);
 
 -- --------------------------------------------------------
 
@@ -932,30 +1033,11 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`, `name`, `email`, `foto`, `idrol`) VALUES
-('1qnP1jbmF9DBgXc7TuVLkoKlGzbjArUZWVLUFCGr', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6Img0SzB1WEJFWEtZUFo3VTJDSk5ibHd0OW1wa3RjbXEwSEozTkowc2giO3M6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQwOiJodHRwOi8vbG9jYWxob3N0L3ZlcnNpb24vdXN1YXJpb3MvY3JlYXRlIjt9czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo2OiJidXNjYXIiO2I6MTtzOjc6Im1lbnVfaWQiO3M6MjoiMjMiO30=', 1609888468, NULL, NULL, NULL, NULL),
-('CHEFbi24hcI4XdjSdyepZitU5zW5D0PHAz4T4QWi', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IktZVFk4U2JWVEpzMlRiN05ibjJVcHlqRE5wT08zTHZuYVgzblExUGgiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM0OiJodHRwOi8vbG9jYWxob3N0L3ZlcnNpb24vZXF1aXBvcy8xIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo2OiJidXNjYXIiO2I6MTtzOjc6Im1lbnVfaWQiO3M6MjoiMjkiO30=', 1609886440, NULL, NULL, NULL, NULL),
-('CYrmConRz1ck56XQxTJODO6KPJPqfnz1FN3n0jP7', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3QvQWR2YW5jZWRFbmVyZ3kvZXF1aXBvcy8zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6Ik5pNHNscFN4aExORWhTd0JvSGMyWHc4OXVPb1RaTVk2b0NHMkw0c1giO3M6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czoyMDoic3VwZXJ2aXNvckBnbWFpbC5jb20iO3M6NDoiZm90byI7czo2Nzoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9VUzRwOXJJbjBRV2lMNTlyUElHQjN3eFlwS0ZhdVJteTZSeFNueEJaLnBuZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7czoyOiIyOSI7czo2OiJidXNjYXIiO2I6MTt9', 1610129885, NULL, NULL, NULL, NULL),
-('E3o4SzyTP9IRJcXgP8q5NAf1eBQ4xgBEMDfYjHog', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMXc3cDZHWGUwUXlnaVNqR0Nsek1PWG4wek9tdlpFc2tNbnBzUkRqMSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbi9hcGkvZm9ybS9jb3ZpZC8zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609889696, NULL, NULL, NULL, NULL),
-('EGgARUBCaHB1vOyNujWOPPpcGSvnlaNotliDk8nG', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiY2NjYWpSSmloRFBiNmdjVmFZVGh2bmEyWXN0b1BuSU1waEJNNmdLcyI7czoxMjoiY29kaWdvQ2FybmV0IjtzOjY6IkFFLTAwMyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609886450, NULL, NULL, NULL, NULL),
-('EoCUAXAA3EXcTkv0ZuSDYq3AyHlUPyWIpUiKUx4d', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiaHNkVGpheU1ubjRaT3ZWQWZKelhCSTBSTTdOZGhYcm1VcThDRUdBVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjQ6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbiI7fX0=', 1609889239, NULL, NULL, NULL, NULL),
-('eWSX50UJs8Qb16k8moUY8uBALioR4AWMEPX3b2LR', NULL, '::1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZmxSRHJnUWVMcXhCSFBJNmtWQ1dwbGt4YVlKOTZmdUI3MGNha3o1MSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbi9hcGkvZm9ybS9jb3ZpZC8zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609890880, NULL, NULL, NULL, NULL),
-('feeJJ52ufCGjw1yjpq9jeOdcdgJUIOLpayBglHHk', NULL, '192.168.2.164', 'Mozilla/5.0 (Linux; Android 10; SM-A217M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTk6Imh0dHBzOi8vMTkyLjE2OC4yLjk4L0FkdmFuY2VkRW5lcmd5L2VxdWlwb3NoaXN0b3JpYWwvMS9lZGl0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IjV5eHk5Yjdkc0dBNDJQQVRJYU5XZHdBVTg2VlZUWDd3UHBEMzI3eU4iO3M6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czoyMDoic3VwZXJ2aXNvckBnbWFpbC5jb20iO3M6NDoiZm90byI7czo2Nzoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9VUzRwOXJJbjBRV2lMNTlyUElHQjN3eFlwS0ZhdVJteTZSeFNueEJaLnBuZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7czoyOiIyOCI7czo2OiJidXNjYXIiO2I6MTt9', 1610035168, NULL, NULL, NULL, NULL),
-('fhtpuFIG95JEB3Uvq8Qauq4vqHZzQ3SGCIatH623', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly9sb2NhbGhvc3QvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6ImFLb0hsVVhHaVlyaUtxSzNNRnkwMTA3VFhmdFpuUVlzVzdNcGV6VFoiO3M6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czoyMDoic3VwZXJ2aXNvckBnbWFpbC5jb20iO3M6NDoiZm90byI7czo2Nzoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9VUzRwOXJJbjBRV2lMNTlyUElHQjN3eFlwS0ZhdVJteTZSeFNueEJaLnBuZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7czoxOiI1IjtzOjY6ImJ1c2NhciI7YjoxO30=', 1610381782, NULL, NULL, NULL, NULL),
-('FwhuGiMSDCOES5wfxuuLeyZU7u3KwnBKY1AXSZ2i', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IjZOWkF3d1NKWThaTWhZQkxmWXpFQmNFYkNmSjJUODk2T3V2dlFYanciO3M6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMxOiJodHRwOi8vbG9jYWxob3N0L3ZlcnNpb24vaW5pY2lvIjt9czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo2OiJidXNjYXIiO2I6MTtzOjc6Im1lbnVfaWQiO3M6MToiNSI7fQ==', 1609886523, NULL, NULL, NULL, NULL),
-('HAsmrvJYUg0kGw2GThivU2OErIXHxmdxrjJnxzC4', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQWNvMEgybGI0cVFvY3p1b3EyY054Rlg4QTRlRm55cEVXU3hDUm1xTSI7czoxMjoiY29kaWdvQ2FybmV0IjtzOjY6IkFFLTAwMyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609891731, NULL, NULL, NULL, NULL),
-('HDYGOozPmCeOHgTEsFy2to7IVXT9tLEGsXuuCw3H', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiODRrYVdXeENSc3RwbmxzYjIzWGtZU1NaZUJ4UUlzMzk1emZMV2g3ciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbi9hcGkvZm9ybS9jb3ZpZC8zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609891074, NULL, NULL, NULL, NULL),
-('KIHCn2cwidTNCxXhb0XLc2SgkeTQ50B9rCP9CP7d', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyNDoiaHR0cDovL2xvY2FsaG9zdC92ZXJzaW9uIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6Ijd6a3hPdnV2c01nTFdIc20zZ1hLNU9HdU9VcjVKV1JpZmx0NFBPSFgiO30=', 1609884962, NULL, NULL, NULL, NULL),
-('L42w5pBBDOTPJgd1Z0Ctit0CoLmSR2Iyn6ER5UEp', NULL, '192.168.2.164', 'Mozilla/5.0 (Linux; Android 10; SM-A217M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6InRiNlo3Z0Q3RHBiY0RkMU1hdHZDdE8ybDJWM05DMFNqZU5USW4ydkYiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ0OiJodHRwOi8vMTkyLjE2OC4yLjk4L0FkdmFuY2VkRW5lcmd5L2VxdWlwb3MvMyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czoyMDoic3VwZXJ2aXNvckBnbWFpbC5jb20iO3M6NDoiZm90byI7czo2Nzoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9VUzRwOXJJbjBRV2lMNTlyUElHQjN3eFlwS0ZhdVJteTZSeFNueEJaLnBuZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7czoyOiIyOSI7czo2OiJidXNjYXIiO2I6MTt9', 1610380765, NULL, NULL, NULL, NULL),
-('MvbidNWkaqQtqKiiRAECFbUHrLCKzRa8BEImC7oa', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNXlnWDlVMmdMVXdvdmFXdHlQT25xVEIyaU9QbUdFRXY3YXpLYU1BMSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbi9hcGkvZm9ybS9jb3ZpZC8zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoxMjoiY29kaWdvQ2FybmV0IjtzOjY6IkFFLTAwMyI7fQ==', 1609889052, NULL, NULL, NULL, NULL),
-('nZgyjA5MO2XNGJmwq9agS3TFcWmu3kLD24LH7B1T', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMjJUcjR5S3E5YzVkMVVMYmVubGpSM3ZZTkdzQ3RndlNwcVVjZmpWRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvYWR2YW5jZWRlbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1610061106, NULL, NULL, NULL, NULL),
-('oTVhuAbOfkCgABufRvka7i6gVBHdq4jISgjpCex8', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoia0FWZ21jbWx5alNQa1hrWjBkS3RsT0R5TUJIclFiZVFaQldsZjdZVCI7czoxMjoiY29kaWdvQ2FybmV0IjtzOjY6IkFFLTAwMyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjY6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbi9hcGkvYXNpc3RlbmNpYT9hPTMmYj1leUpwZGlJNklteHRRa2huVFVGTiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1609886274, NULL, NULL, NULL, NULL),
-('Ou4JSIVzHjz77erKgiFxbpfZNdIWU3DASbgKmzI8', NULL, '192.168.2.98', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6InJDbFFqRUZrUk5aZ1ZNdkVZOUFGVzZTT083UFFlaDg3M1NVSUlXRHYiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ2OiJodHRwczovLzE5Mi4xNjguMi45OC9BZHZhbmNlZEVuZXJneS9hcGxpY2FjaW9uIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjY3OiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL1VTNHA5ckluMFFXaUw1OXJQSUdCM3d4WXBLRmF1Um15NlJ4U254QloucG5nIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjI6IjI4IjtzOjY6ImJ1c2NhciI7YjoxO30=', 1610121358, NULL, NULL, NULL, NULL),
-('QkrxJOyk9Eo2IhyTJUqPFhGgVKdJIYj5xX7HwShO', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoiQU5BZHE5cDJYNk9qT3BzN216QTJ2Z3Jhb3JreThlM3BpRUlQaEZRcSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609886532, NULL, NULL, NULL, NULL),
-('rVfgSMaLDUO3ZjNhJ0z3RnzaaOF65JGPz1l04tqm', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6InhnNW5sT0hLZjdwbG5TbXQ3R29pdFlCNG1ma3ZEdWVJQ2ZnalNkeEQiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQxOiJodHRwOi8vbG9jYWxob3N0L3ZlcnNpb24vZW1wbGVhZG9zLzMvZWRpdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czoyMDoic3VwZXJ2aXNvckBnbWFpbC5jb20iO3M6NDoiZm90byI7czo2Nzoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9VUzRwOXJJbjBRV2lMNTlyUElHQjN3eFlwS0ZhdVJteTZSeFNueEJaLnBuZyI7czo1OiJpZHJvbCI7aToxO3M6NjoiYnVzY2FyIjtiOjE7czo3OiJtZW51X2lkIjtzOjI6IjMzIjt9', 1609890607, NULL, NULL, NULL, NULL),
-('UoqR174YR6dIi8eRaM4DS3oC1rGqmwnB2bNnqA4T', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IlQxa21TZDYyY00wOFdjZFFJZUE5S1NTRWZUWWxlSHQzZm9kbUd5dW0iO3M6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMxOiJodHRwOi8vbG9jYWxob3N0L3ZlcnNpb24vaW5pY2lvIjt9czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjY3OiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL1VTNHA5ckluMFFXaUw1OXJQSUdCM3d4WXBLRmF1Um15NlJ4U254QloucG5nIjtzOjU6Imlkcm9sIjtpOjE7czo2OiJidXNjYXIiO2I6MTtzOjc6Im1lbnVfaWQiO3M6MToiNSI7fQ==', 1609889953, NULL, NULL, NULL, NULL),
-('VhLOCCocaYIoe65Zxf2JvQ2FGXnyWvWLkKt6LlSJ', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiOW1EZ3pxVEU3WTBTbzNDbmxYeFlUdDA2dkdxb09RZEZjMjl4WTFsViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjQ6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1609891023, NULL, NULL, NULL, NULL),
-('yAmYZFfyWLeatLLLzWxWUWIOAMlyefkeD6SSbjSJ', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoiZkF6dXVNaElGSG5FaDJxNjRiMjVRbkhMdUxnM1B0UG5pc0lESjNWTiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609891720, NULL, NULL, NULL, NULL),
-('ZDir4XRXS1TTEzlPMLKVV4CknNgbtbBveN3qYl50', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNzk0VUhKck51VEZUMDhrclloM3NHWUVPQXN1d1pjUmFHWVFxMUs2OCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3QvdmVyc2lvbi9hcGkvZm9ybS9jb3ZpZC8zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1609890537, NULL, NULL, NULL, NULL);
+('7RpIoXoEy27AqZCIBYFuUHWkMLkDVlG2xR7YSZqd', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHBzOi8vbG9jYWxob3N0L0FkdmFuY2VkRW5lcmd5L21vZHVsb3MiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiVTlVd3hxN1AweVV5VURwSmNmUERNbHBEV09QRlBiNHNxT2NadWFZRCI7czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjY3OiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL1VTNHA5ckluMFFXaUw1OXJQSUdCM3d4WXBLRmF1Um15NlJ4U254QloucG5nIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjI6IjE3IjtzOjY6ImJ1c2NhciI7YjoxO30=', 1611703768, NULL, NULL, NULL, NULL),
+('BaVXfjO8VVB1aNB3NI3ym06LUUiMQve9wRicoQsn', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6ImN1M0pkWVlzSmo1V290ZFE3S0VNOUc0N0Z5dWFwR1ZJM3YyWFluYzQiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM3OiJodHRwczovL2xvY2FsaG9zdC9BZHZhbmNlZEVuZXJneS9tYWlsIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjY3OiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL1VTNHA5ckluMFFXaUw1OXJQSUdCM3d4WXBLRmF1Um15NlJ4U254QloucG5nIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtpOjU7czo2OiJidXNjYXIiO2I6MTt9', 1611706923, NULL, NULL, NULL, NULL),
+('eS8SXVmoPfM4uuFK0PZV6OUA3QizRho71R98iImW', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZDAwV3BNZkdRbTc0TGVKRW00NU92VHJwT2g5Vzh5YTc1alNBcGlwaiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHBzOi8vbG9jYWxob3N0L0FkdmFuY2VkRW5lcmd5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1611704213, NULL, NULL, NULL, NULL),
+('g78jvtrEru1VmSg9QT2sLeepy0VH5x7QRixq8pQj', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiell0OUFPNUdyMkE2SGNYc0ptQXJSMVhlemNMS2lSaWIxVzBVYXp6diI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvQWR2YW5jZWRFbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611323388, NULL, NULL, NULL, NULL),
+('y5TfMEfgPDbiUOKrtF4lwbRtrDn8r9bAOFzK3giz', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6Ijh6c21jbEM1Z1ZRRGgzQW03RGxSNTdFbzJCWXRYYzExd3FpYnlNVHMiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwczovLzE5Mi4xNjguMi4xNzkvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjM7czo0OiJuYW1lIjtzOjE3OiJBbGV4YW5kZXIgTWlyYW5kYSI7czo1OiJlbWFpbCI7czoyODoiYW1pcmFuZGFAYWUtZW5lcmdpYXNvbGFyLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjE6IjUiO3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611274387, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1197,8 +1279,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `foto`, `remember_token`, `created_at`, `updated_at`, `idrol`, `estado`) VALUES
-(1, 'Supervisor', 'supervisor@gmail.com', NULL, 'eyJpdiI6ImVWd2VETWt2amROT05kbUtFdDEzRmc9PSIsInZhbHVlIjoiSmcwWDhWdHRJc3FoN1RHSnJWcWZYQT09IiwibWFjIjoiMDVjYWZkM2U0MWZiNjkwYWE1MTZhMmRjNWY5MGVhOWZiNzVjZGY4MWM3YTQyMzBmOWJkYTdkNTA4OTgxYTg2OSJ9', 'fotoperfil/US4p9rIn0QWiL59rPIGB3wxYpKFauRmy6RxSnxBZ.png', NULL, NULL, '2021-01-06 05:38:42', 1, 1),
-(2, 'Carlos Miranda', 'amiranda@ae-energiasolar.com', NULL, 'eyJpdiI6Ims0cVo3VTl5bFpGNGUrQWlWS3Q0UXc9PSIsInZhbHVlIjoiNDJoUVY5aUtXUUNsU21UTFNLVkNnZz09IiwibWFjIjoiYzQxOWFkODA5MjZmNGM0ODRkMDA1NTY3NmNjMDJkNjhjNDBkMDc5MGQ0NGFlZjVmYWE5NzA2YzZlOGNiMDA1NyJ9', 'fotoperfil/perfilDefault.jpg', NULL, '2021-01-07 05:14:27', '2021-01-07 05:14:27', 0, 1);
+(1, 'Supervisor', 'supervisor@gmail.com', NULL, 'eyJpdiI6ImVWd2VETWt2amROT05kbUtFdDEzRmc9PSIsInZhbHVlIjoiSmcwWDhWdHRJc3FoN1RHSnJWcWZYQT09IiwibWFjIjoiMDVjYWZkM2U0MWZiNjkwYWE1MTZhMmRjNWY5MGVhOWZiNzVjZGY4MWM3YTQyMzBmOWJkYTdkNTA4OTgxYTg2OSJ9', 'fotoperfil/US4p9rIn0QWiL59rPIGB3wxYpKFauRmy6RxSnxBZ.png', NULL, NULL, '2021-01-06 05:38:42', 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -1425,7 +1506,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `autorizacionusuarios`
 --
 ALTER TABLE `autorizacionusuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `cargos`
@@ -1461,7 +1542,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT de la tabla `empleado_documentos`
 --
 ALTER TABLE `empleado_documentos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_documentos_fotos`
@@ -1479,13 +1560,13 @@ ALTER TABLE `empleado_empresas`
 -- AUTO_INCREMENT de la tabla `empleado_referencias`
 --
 ALTER TABLE `empleado_referencias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_users`
 --
 ALTER TABLE `empleado_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `equiposfotos`
@@ -1497,7 +1578,7 @@ ALTER TABLE `equiposfotos`
 -- AUTO_INCREMENT de la tabla `equiposhistorials`
 --
 ALTER TABLE `equiposhistorials`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `equipostrabajos`
@@ -1527,13 +1608,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `formuas`
 --
 ALTER TABLE `formuas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `formubs`
 --
 ALTER TABLE `formubs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=274;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 
 --
 -- AUTO_INCREMENT de la tabla `formucs`
@@ -1563,7 +1644,7 @@ ALTER TABLE `grupohorariosds`
 -- AUTO_INCREMENT de la tabla `marcacionesempleados`
 --
 ALTER TABLE `marcacionesempleados`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -1575,7 +1656,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`
@@ -1617,7 +1698,7 @@ ALTER TABLE `ubicacions`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
