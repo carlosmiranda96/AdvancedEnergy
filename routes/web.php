@@ -96,6 +96,8 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('marcaciones',[PageController::class,'marcaciones'])->name('marcaciones');
 
     Route::get('exportar',[PageController::class,'export'])->name('exportar');
+
+    Route::get('mail',[PageController::class,'pruebaemail']);
 });
 
 //RUTAS DE ADMINISTRADOR
@@ -124,6 +126,7 @@ Route::group(['middleware' => 'admin'], function() {
     Route::resource('modulos',modulosController::class);
 
     Route::get('menu/crear',[modulosController::class,'crear'])->name('modulos.crear');
+
 
     Route::resource('permisos',PermisosController::class);
     

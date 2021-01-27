@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-01-2021 a las 06:55:01
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.11
+-- Tiempo de generación: 27-01-2021 a las 00:29:51
+-- Versión del servidor: 10.4.16-MariaDB
+-- Versión de PHP: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `advanced`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `modulos`
+--
+
+CREATE TABLE `modulos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `modulo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ruta` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icono` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nivel` int(11) DEFAULT NULL,
+  `dependencia` int(11) DEFAULT NULL,
+  `orden` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `modulos`
@@ -52,11 +70,11 @@ INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icon
 (25, '2021-01-06 03:53:18', '2021-01-06 03:53:18', 'Gestión vehiculos', NULL, NULL, 2, 7, 1),
 (26, '2021-01-06 03:53:29', '2021-01-06 03:53:29', 'Calendario', NULL, NULL, 2, 7, 2),
 (27, '2021-01-06 03:53:36', '2021-01-06 03:53:36', 'Correo', NULL, NULL, 2, 7, 3),
-(28, '2021-01-06 03:53:48', '2021-01-06 03:53:48', 'Lector QR', NULL, NULL, 2, 7, 4),
+(28, '2021-01-06 03:53:48', '2021-01-07 21:10:11', 'Aplicación', 'load.aplicacion', NULL, 2, 7, 4),
 (29, '2021-01-06 03:54:04', '2021-01-06 09:52:44', 'Vehiculos', 'equipos.index', NULL, 3, 25, 1),
 (30, '2021-01-06 03:55:47', '2021-01-06 03:55:47', 'Mantenimientos', NULL, NULL, 3, 25, 2),
 (31, '2021-01-06 03:55:59', '2021-01-06 03:55:59', 'Control de vehiculos', NULL, NULL, 3, 25, 3),
-(32, '2021-01-06 03:56:37', '2021-01-06 03:56:37', 'Asistencia', NULL, NULL, 2, 14, 1),
+(32, '2021-01-06 03:56:37', '2021-01-13 21:15:34', 'Asistencia', 'marcaciones', NULL, 2, 14, 1),
 (33, '2021-01-06 03:56:49', '2021-01-06 03:56:49', 'Empleados', 'empleados.index', NULL, 2, 14, 2),
 (34, '2021-01-06 03:57:21', '2021-01-06 03:57:21', 'Vacaciones', NULL, NULL, 2, 14, 3),
 (35, '2021-01-06 03:57:27', '2021-01-06 03:57:27', 'Permisos', NULL, NULL, 2, 14, 4),
@@ -82,11 +100,33 @@ INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icon
 (55, '2021-01-06 09:06:38', '2021-01-06 09:06:38', 'Horarios laborales', 'grupohorario.index', NULL, 3, 41, 3),
 (56, '2021-01-06 09:08:47', '2021-01-06 09:08:47', 'General', NULL, NULL, 2, 15, 1),
 (57, '2021-01-06 09:09:19', '2021-01-06 09:09:19', 'Gestión vehiculos', NULL, NULL, 3, 56, 1),
-(58, '2021-01-06 09:09:33', '2021-01-06 09:09:33', 'Control vehiculos', NULL, NULL, 4, 57, 1),
+(58, '2021-01-06 09:09:33', '2021-01-12 03:04:49', 'Control vehiculos', 'reportes,58', NULL, 4, 57, 1),
 (59, '2021-01-06 09:09:52', '2021-01-06 09:09:52', 'Recursos humanos', NULL, NULL, 2, 15, 2),
-(60, '2021-01-06 09:10:08', '2021-01-06 09:10:08', 'Asistencia', NULL, NULL, 3, 59, 1),
+(60, '2021-01-06 09:10:08', '2021-01-12 02:41:52', 'Asistencia', 'reportes,60', NULL, 3, 59, 1),
 (61, '2021-01-06 11:26:05', '2021-01-06 11:26:05', 'Productos', NULL, NULL, 2, 9, 1),
-(62, '2021-01-06 11:26:16', '2021-01-06 11:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2);
+(62, '2021-01-06 11:26:16', '2021-01-06 11:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2),
+(63, '2021-01-22 05:28:28', '2021-01-22 05:28:28', 'Accesos directos', NULL, NULL, 3, 16, 3),
+(64, '2021-01-27 05:27:53', '2021-01-27 05:27:53', 'Config de correo', 'correo.config', NULL, 3, 16, 4);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `modulos`
+--
+ALTER TABLE `modulos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `modulos`
+--
+ALTER TABLE `modulos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

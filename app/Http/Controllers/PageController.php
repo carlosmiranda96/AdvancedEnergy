@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
+use App\Mail\Registro;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\empleados;
 use App\Models\marcacionesempleados;
@@ -14,8 +15,7 @@ use App\Models\ubicacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
-
-
+use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
@@ -747,5 +747,11 @@ class PageController extends Controller
 		$marcacionesempleados = marcacionesempleados::join('empleados','idempleado','empleados.id')->join
 		('ubicacions','idubicacion','ubicacions.id')->select('marcacionesempleados.*','empleados.nombreCompleto as empleado','ubicacions.descripcion')->where('tipo','Entrada')->get();
 		return view('rrhh.marcaciones.show',compact('marcacionesempleados'));
+	}
+	public function pruebaemail()
+	{
+
+		return view('mail.registro');
+		//Mail::to('amiranda@ae-energiasolar.com')->send('html'=> new Registro());
 	}
 }
