@@ -103,28 +103,23 @@ class PageController extends Controller
 		if($validar=="1")
 		{
 			$usuario = User::where('email',$request->email)->first();
-				session()->put('user_id', $usuario->id);
-				session()->put('name', $usuario->name);
-				session()->put('email',$usuario->email);
-				session()->put('foto','storage/app/'.$usuario->foto);
-				session()->put('idrol',$usuario->idrol);
-				session()->put('menu_id',5);//Seleccionar menu inicio
-				if($request->recordar)
-				{
-					//Crear cookie para recordar el email y contraseña
-					$minutos = 2880;//48 Horas
-					$cookie1 = cookie('email',$request->email,$minutos);
-					$cookie2 = cookie('password',$request->password,$minutos);
-				}else{
-					$cookie1 = Cookie::forget('email');
-					$cookie2 = Cookie::forget('password');
-				}
-				if(isset($request->url))
-				{
-					return redirect('www.google.com.sv');
-				}else{
-					return redirect('inicio')->withCookie($cookie1)->withCookie($cookie2);
-				}
+			session()->put('user_id', $usuario->id);
+			session()->put('name', $usuario->name);
+			session()->put('email',$usuario->email);
+			session()->put('foto','storage/app/'.$usuario->foto);
+			session()->put('idrol',$usuario->idrol);
+			session()->put('menu_id',5);//Seleccionar menu inicio
+			if($request->recordar)
+			{
+				//Crear cookie para recordar el email y contraseña
+				$minutos = 2880;//48 Horas
+				$cookie1 = cookie('email',$request->email,$minutos);
+				$cookie2 = cookie('password',$request->password,$minutos);
+			}else{
+				$cookie1 = Cookie::forget('email');
+				$cookie2 = Cookie::forget('password');
+			}
+			return redirect('inicio')->withCookie($cookie1)->withCookie($cookie2);
 		}else{
 			return redirect()->route('login')->with('mensaje',$validar);		
 		}		
@@ -136,7 +131,7 @@ class PageController extends Controller
 		{
 			if($usuario->estado==1){
 				$decrypted = Crypt::decryptString($usuario->password);
-				if($decrypted==$password){
+				if($decrypted==$password && $password!='123456'){
 					if(isset($request->crear))
 					{
 						session()->put('user_id', $usuario->id);
@@ -178,8 +173,18 @@ class PageController extends Controller
 	}
     public function inicio()
     {
+		$empleado = $this->verificarUserEmpleado();
+		return view('inicio',compact('empleado'));
+	}
+	public function verificarUserEmpleado()
+	{
 		$idusuario = session('user_id');
-		return view('inicio');
+		$empleado = empleadoUser::where('idusuario',$idusuario)->first();
+		if(isset($empleado)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	public function recordar()
 	{
@@ -581,170 +586,45 @@ class PageController extends Controller
 		}
 		//IMPRIMIR JSON
 		echo json_encode($data);
-		/*
-		if(isset($split['0']))
+	}
+	public function escanerCarnet(Request $request)
+	{
+		$error = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><div class="h3 text-danger text-center">';
+		$alert = '<img class="col-6 offset-3" src="'.asset('img/alert.png').'"><div class="h3 text-primary text-center">';
+		$success = '<img class="col-6 offset-3" src="'.asset('img/ok.png').'"><div class="h3 text-primary text-center">';
+
+		$url = $request->contenido.'&b='.$request->b;
+		$carnetkey = strpos($url, 'api/asistencia?a=');
+		if($carnetkey !== false)
 		{
-			switch($split['0'])
+			//Es carnet
+			$parametros = $this->obtenerParametros($url);
+			$idempleado = 0;
+			$toquen = 0;
+			$idusuario = session('user_id');
+			if($parametros && isset($parametros[1]['valor']))
 			{
-				case 'Vehiculo':
-					$codigovehiculo = trim($split['1']);
-					$vehiculo = equipostrabajo::where('codigo',$codigovehiculo)->first();
-					if(isset($vehiculo))
-					{
-						$idequipotrabajo = $vehiculo->id;
-						$fecha = date('Y-m-d');
-						$hora = date('H:i:s');
-						$instante = date('Y-m-d H:i:s');
-						if(isset($idempleado) && $idempleado>0){
-							//Para guardar verificar que el ultimo registro tenga mas de 15 minutos de ser asignado
-							$ultimoregistro = equiposhistorial::where('idempleado',$idempleado)->where('idequipotrabajo',$idequipotrabajo)->get();
-							$ultimoregistro = $ultimoregistro->last();
-							$minutos = 0;
-							$segundos = 0;
-							$tiempo = '';
-							if(isset($ultimoregistro)){
-								$date1 = new \DateTime($ultimoregistro->instante);
-								$date2 = new \DateTime($instante);
-								$diff = $date1->diff($date2);
-								$minutos = (($diff->days*24)*60)+($diff->i);
-								$segundos = $diff->s;
-								if($minutos>15){
-									$segundos = 0;
-								}
-								if($minutos==0){
-									$tiempo = $segundos.' segundos';
-								}else if($minutos==1){
-									$tiempo = "1 minuto con ".$segundos.' segundos';
-								}else if($minutos>1){
-									$tiempo = $minutos." minutos con ".$segundos.' segundos';
-								}
-							}
-							if(isset($ultimoregistro) && $minutos<=15)
-							{
-								$data['id'] = 0;
-								$data['mensaje'] = '<h3 class="text-primary text-center">Vehiculo fue asignado hace '.$tiempo.'</h3><br><h5 class="text-danger text-center">Espera 15 min para volver a escanear el mismo codigo</h5>';
-								echo json_encode($data);
-							}
-							else
-							{
-								$historial = equiposhistorial::create([
-									'instante' => $instante,
-									'idequipotrabajo' => $idequipotrabajo,
-									'idempleado' => $idempleado,
-									'idusuario' => $idusuario,
-									'latitud' => $latitud,
-									'longitud' => $longitud
-								]);
-								$data['id'] = 0;
-								if(session()->has('codigoCarnet')){
-									//SI SE LLENO DESDE LA API
-								$data['mensaje'] = '<h3 class="text-primary text-center">Vehiculo asignado</h3>
-								<h6 class="text-danger text-center">Por favor llenar el siguiente formulario para finalizar el registro</h6>
-								<a href="'.route('api.form.vehiculo',['id'=>$historial->id]).'"><button class="btn btn-primary col-12"><i class="fas fa-share-square"></i> Formulario</button></a>';
-								}else{
-								$data['mensaje'] = '<h3 class="text-primary text-center">Vehiculo asignado</h3>
-									<h6 class="text-danger text-center">Por favor llenar el siguiente formulario para finalizar el registro</h6>
-									<a href="'.route('equiposhistorial.edit',$historial->id).'"><button class="btn btn-primary col-12"><i class="fas fa-share-square"></i> Formulario</button></a>';
-								}
-								
-								echo json_encode($data);
-							}
-						}else{
-							$data['id'] = 0;
-							$data['mensaje'] = '<h3 class="text-danger text-center">Empleado no válido, por favor seleccionar empleado o escanear QR de carnet</h3>';
-							echo json_encode($data);
-						}
+				$idempleado = $parametros[0]['valor'];
+				$toquen = $parametros[1]['valor'];
+				$empleadoCarnet = empleados::where('id',$idempleado)->where('toquen',$toquen)->first();
+				if($empleadoCarnet)
+				{
+					$empleadouser = empleadoUser::where('idempleado',$idempleado)->first();
+					if(!$empleadouser){
+						//Asignar usuario a empleado
+						$empleado = new empleadoUser;
+						$empleado->idusuario = $idusuario;
+						$empleado->idempleado = $idempleado;
+						$empleado->save();
+						echo "1";
 					}else{
-						$data['id'] = 0;
-						$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><div class="h3 text-danger text-center">Equipo no esta registrado</div>';
-						echo json_encode($data);
+						echo $error."El carnet ya fue configurado con otro usuario!! <br>Contacta al administrador</h3>";
 					}
-				break;
-				case 'Carnet':
-					
-				break;
-				default:
-					if(strpos($contenido,'https://maps.google.com')!==false){
-						if(strpos($contenido,'ae=')==false){
-							$data['id'] = 0;
-							$data['mensaje'] = $contenido;
-							echo json_encode($data);
-						}else{
-							//Si entra aqui es un codigo QR de Ubicacion
-							$idubicacion = trim(explode('ae=',$contenido)[1]);
-							$ubicacion = ubicacion::find($idubicacion);
-							if(isset($ubicacion)){
-								$ubicacion['id'] = $ubicacion->id;
-								$ubicacion['ubicacion'] = $ubicacion->descripcion;
-								$data['id'] = 1;
-								$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/gps.png').'"><h3 class="text-danger text-center">Ubicación agregada<br>Escanea tu carnet</h3>';
-								$data['json'] = json_encode($ubicacion);
-								echo json_encode($data);
-							}else{
-								$data['id'] = 0;
-								$data['mensaje'] = '<h3 class="text-danger text-center">La ubicación no se encuentra registrada</h3>';
-								echo json_encode($data);
-							}
-							
-						}
-					}else if(strpos($contenido,'/api/ubicacion?id=')!==false){
-						$split2 = explode('=',$contenido);
-						if(isset($split2[1])){
-							$idubicacion = trim($split2[1]);
-							if(isset($idubicacion)){
-								$request->contenido = "https://maps.google.com?ae=".$idubicacion;
-								$this->escaner($request);
-								break;
-							}else{
-								$data['id'] = 0;
-								$data['mensaje'] = '<h3 class="text-danger text-center">La ubicación no se encuentra registrada</h3>';
-								echo json_encode($data);
-							}
-						}else{
-							$data['id'] = 0;
-							$data['mensaje'] = '<h3 class="text-danger text-center">La ubicación no se encuentra registrada</h3>';
-							echo json_encode($data);
-						}
-					}
-					else if(strpos($contenido,'/api/asistencia?a=')!==false){
-						$split2 = explode('=',$contenido);
-						if(isset($split2[1])){
-							$idempleado = str_replace("&b","",$split2[1]);
-							$idempleado = trim($idempleado);
-							if(isset($idempleado)){
-								$empleado2 = empleados::find($idempleado);
-								$codigo2 = $empleado2->codigo;
-								if(isset($empleado2)){
-									$request->contenido = "Carnet;".$codigo2;
-									$this->escaner($request);
-									break;
-									/*
-									$data['id'] = 0;
-									$data['mensaje'] = "Carnet ".$empleado2->codigo;*/
-								/*}else{
-									$data['id'] = 0;
-									$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><h3 class="text-danger text-center">Carnet no válido !!</h3>';
-								}
-							}else{
-								$data['id'] = 0;
-								$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><h3 class="text-danger text-center">Carnet no válido!!</h3>';
-							}
-						}else{
-							$data['id'] = 0;
-							$data['mensaje'] = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><h3 class="text-danger text-center">Carnet no válido!!</h3>';
-						}
-						echo json_encode($data);
-					}else{
-						$data['id'] = 0;
-						$data['mensaje'] = $contenido;
-						echo json_encode($data);
-					}
-				/*break;
+				}else{
+					echo $alert."Codigo QR no es válido</h3>";
+				}
 			}
-		}else{
-			$data['id'] = 0;
-			$data['mensaje'] = "Prueba";
-		}*/
+		}
 	}
 	public function marcaciones()
 	{
@@ -754,16 +634,20 @@ class PageController extends Controller
 	}
 	public function pruebaemail()
 	{
-		//return new Registro(8);
-		Mail::to('carlos.miranda96@gmail.com')->send(new Registro(8));
+		//return new Registro(7);
+		//Mail::to('amiranda@ae-energiasolar.com')->send(new Registro(7));
 	}
 	public function validar(Request $request)
 	{
 		$idusuario = $request->a;
 		$correo = $request->b;
 		$toquen = $request->c;
-
-		$valido = true;
+		$usuario = User::where('email',$correo)->where('remember_token',$toquen)->find($idusuario);
+		if(isset($usuario)){
+			$valido = true;
+		}else{
+			$valido = false;
+		}
 		return view('validarRegistro',compact('valido','idusuario','correo'));
 	}
 }

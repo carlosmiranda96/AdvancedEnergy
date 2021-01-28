@@ -47,25 +47,20 @@
   $(document).ready(function(){
     $("#frmrestablecer").bind("submit",function(){
       var datos = $("#frmrestablecer").serialize();
-      bootbox.alert({ 
-        title:'Notificación',
-        message: "Mensaje",
-        callback: function(result)
-        {
-          if(result==true){
-            window.location.href = "{{route('cerrarsesion')}}";
-          }
+      $.ajax({
+        url:"{{route('usuario.restablecer2')}}",
+        type:"POST",
+        data:"_token={{csrf_token()}}&"+datos,
+        success:function(r){
+          bootbox.alert({
+            title:"Notificación",
+            message:r
+          });
+        }
+        ,error:function(){
+          bootbox.alert("Error ");
         }
       });
-      /*$.ajax({
-        type:"post",
-        url:"{{route('api.form.covid.enviar')}}",
-        data:datos+'&_token={{csrf_token()}}',
-        success:function(r)
-        {
-
-        }
-      });*/
       return false;
     });
   });

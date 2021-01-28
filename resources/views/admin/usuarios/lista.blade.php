@@ -48,6 +48,7 @@
                                 @method('DELETE')
                                 <a class="btn btn-sm btn-warning" href="{{ route('usuarios.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
                                 <!--button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button-->
+                                <a onclick="restablecer('{{$item->id}}')" class="btn btn-sm btn-info" href="#"><i class="fas fa-key"></i></a>
                                 <a onclick="eliminar('{{$item->id}}')" class="btn btn-sm btn-danger" href="#"><i class="fas fa-trash-alt"></i></a>
                                 </form>
                             </td>
@@ -73,6 +74,39 @@
             $("#frmeliminar"+key).submit();
         },function(){
 
+        });
+    }
+    function restablecer(key)
+    {
+        bootbox.dialog({
+            title:"Notificación",
+            message:"¿Desea enviar correo para restablecer contraseña?",
+            buttons:{
+                confirm:{
+                    label:"SI",
+                    className:"btn-success",
+                    callback:function(){
+                        $.ajax({
+                            url:"{{route('usuario.restablecer')}}",
+                            type:"POST",
+                            data:"_token={{csrf_token()}}&id="+key,
+                            success:function(r){
+                                bootbox.alert({
+                                    title:"Notificación",
+                                    message:r
+                                });
+                            }
+                            ,error:function(){
+                                bootbox.alert("Error ");
+                            }
+                        });
+                    }
+                },
+                cancel:{
+                    label:"NO",
+                    className:"btn-danger"
+                }
+            }
         });
     }
 </script>

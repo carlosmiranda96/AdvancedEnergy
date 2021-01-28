@@ -43,7 +43,9 @@ Route::get('registrarse',[PageController::class,'registrarse'])->name('registrar
 Route::post('iniciarsesion', [PageController::class, 'iniciarsesion'])->name('iniciarsesion');
 Route::get('validaruser/{email}/{password}', [PageController::class, 'validarUser'])->name('validaruser');
 Route::get('validarsesion', [PageController::class, 'validarsesion'])->name('validarsesion');
-Route::get('validate',[PageController::class,'validar'])->name('validate');//Valida registro de usuario
+Route::get('validate',[PageController::class,'validar'])->name('validate');//Valida registro de usuario Restablecer Clave
+Route::post('validate/password/update',[UsuariosController::class,'updateclave2'])->name('usuarios.updateclave2');
+Route::POST('usuario/restablecer2',[UsuariosController::class,'restablecer2'])->name('usuario.restablecer2');
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
@@ -58,6 +60,7 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('QR/marcaciones',[PageController::class,'marcaciones'])->name('marcacion');
     Route::get('QR/equipos',[PageController::class,'equipos'])->name('historialequipos');
     Route::get('QR/escaner',[PageController::class,'escaner'])->name('escanear');
+    Route::post('QR/escanerCarnet',[PageController::class,'escanerCarnet'])->name('escanearCarnet');//Escanea el carnet para relacionar user con empleado
     Route::get('QR/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('getUbicacion');
     Route::get('QR/obtenerEmpleado',[PageController::class,'obtenerEmpleado'])->name('getEmpleado');
 
@@ -122,6 +125,8 @@ Route::group(['middleware' => 'admin'], function() {
     Route::resource('departamento',DepartamentoController::class);
     Route::resource('grupohorariosd',GrupohorariosdController::class);
     Route::resource('usuarios',UsuariosController::class);
+    Route::POST('usuario/restablecer',[UsuariosController::class,'restablecer'])->name('usuario.restablecer');
+
     Route::get('usuarios/password/{id}',[UsuariosController::class,'cambiarclave'])->name('usuarios.clave');
     Route::put('usuarios/password/update/{id}',[UsuariosController::class,'updateclave'])->name('usuarios.updateclave');
     Route::resource('modulos',modulosController::class);

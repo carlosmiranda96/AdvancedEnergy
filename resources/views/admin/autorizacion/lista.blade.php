@@ -86,10 +86,32 @@ use App\Models\modulos;
                                             }else{
                                                 $disabled = "disabled";
                                             }
-                                            $check = "";
+                                            $check1 = "";
+                                            $check2 = "";
+                                            $check3 = "";
+                                            $check4 = "";
+                                            $check5 = "";
+                                            $check6 = "";
                                             $permiso = autorizacionusuarios::where('idusuario',$iduser)->where('idpermiso',$item->id)->first();
                                             if(isset($permiso)){
-                                                $check = "checked";
+                                                if($permiso->ver==1){
+                                                    $check1 = "checked";
+                                                }
+                                                if($permiso->crear==1){
+                                                    $check2 = "checked";
+                                                }
+                                                if($permiso->editar==1){
+                                                    $check3 = "checked";
+                                                }
+                                                if($permiso->eliminar==1){
+                                                    $check4 = "checked";
+                                                }
+                                                if($permiso->excel==1){
+                                                    $check5 = "checked";
+                                                }
+                                                if($permiso->pdf==1){
+                                                    $check6 = "checked";
+                                                }
                                             }
                                             if($nivel==2){
                                                 echo '<tr class="fila">
@@ -98,38 +120,38 @@ use App\Models\modulos;
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,1)" type="checkbox" value="'.$item->id.'" id="ch1'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check1.' class="custom-control-input" onchange="cambio(this,1)" type="checkbox" value="'.$item->id.'" id="ch1'.$item->id.'">
+                                                        <label class="custom-control-label" for="ch1'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,2)" type="checkbox" value="'.$item->id.'" id="ch2'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check2.' class="custom-control-input" onchange="cambio(this,2)" type="checkbox" value="'.$item->id.'" id="ch2'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch2'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,3)" type="checkbox" value="'.$item->id.'" id="ch3'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check3.' class="custom-control-input" onchange="cambio(this,3)" type="checkbox" value="'.$item->id.'" id="ch3'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch3'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,4)" type="checkbox" value="'.$item->id.'" id="ch4'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check4.' class="custom-control-input" onchange="cambio(this,4)" type="checkbox" value="'.$item->id.'" id="ch4'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch4'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,5)" type="checkbox" value="'.$item->id.'" id="ch5'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check5.' class="custom-control-input" onchange="cambio(this,5)" type="checkbox" value="'.$item->id.'" id="ch5'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch5'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,6)" type="checkbox" value="'.$item->id.'" id="ch6'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check6.' class="custom-control-input" onchange="cambio(this,6)" type="checkbox" value="'.$item->id.'" id="ch6'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch6'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 </tr>';
@@ -141,38 +163,38 @@ use App\Models\modulos;
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,1)" value="'.$item->id.'" id="ch1'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input type="checkbox" '.$disabled.' '.$check1.' class="custom-control-input" onchange="cambio(this,1)" value="'.$item->id.'" id="ch1'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch1'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,2)" type="checkbox" value="'.$item->id.'" id="ch2'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check2.' class="custom-control-input" onchange="cambio(this,2)" type="checkbox" value="'.$item->id.'" id="ch2'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch2'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,3)" type="checkbox" value="'.$item->id.'" id="ch3'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check3.' class="custom-control-input" onchange="cambio(this,3)" type="checkbox" value="'.$item->id.'" id="ch3'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch3'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,4)" type="checkbox" value="'.$item->id.'" id="ch4'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check4.' class="custom-control-input" onchange="cambio(this,4)" type="checkbox" value="'.$item->id.'" id="ch4'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch4'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,5)" type="checkbox" value="'.$item->id.'" id="ch5'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check5.' class="custom-control-input" onchange="cambio(this,5)" type="checkbox" value="'.$item->id.'" id="ch5'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch5'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input '.$disabled.' '.$check.' class="custom-control-input" onchange="cambio(this,6)" type="checkbox" value="'.$item->id.'" id="ch6'.$item->id.'">
-                                                        <label class="custom-control-label text-white"></label>
+                                                        <input '.$disabled.' '.$check6.' class="custom-control-input" onchange="cambio(this,6)" type="checkbox" value="'.$item->id.'" id="ch6'.$item->id.'">
+                                                        <label class="custom-control-label text-white" for="ch6'.$item->id.'"></label>
                                                     </div>
                                                 </td>
                                                 </tr>';
@@ -209,7 +231,7 @@ use App\Models\modulos;
             idusuario.focus();
         }
     }
-    function cambio(input)
+    function cambio(input,opcion)
     {
         var idusuario = $("#idusuario").val();
         if(idusuario>0){
@@ -219,7 +241,7 @@ use App\Models\modulos;
             $.ajax({
                 url:"{{route('autorizacion.update')}}",
                 type:"get",
-                data:"idpermiso="+id+"&idusuario="+idusuario+"&autorizacion="+autorizacion,
+                data:"idpermiso="+id+"&idusuario="+idusuario+"&autorizacion="+autorizacion+"&opcion="+opcion,
                 success:function(r)
                 {
                     if(r==1){
@@ -230,7 +252,7 @@ use App\Models\modulos;
                         alertify.error("No se ha podido guardar");
                     }
                 }
-            })
+            });
         }else{
             bootbox.alert({title:"Notificación",message:"Por favor selecciona un usuario"});
             idusuario.focus();

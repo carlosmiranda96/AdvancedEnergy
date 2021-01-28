@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class autorizacionusuarios extends Model
 {
     use HasFactory;
-    protected $fillable = ['idusuario','idpermiso'];
+    protected $fillable = ['idusuario','idpermiso','ver','crear','editar','eliminar','excel','pdf'];
 }

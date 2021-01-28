@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Registro;
+use App\Mail\Restablecer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -45,13 +46,14 @@ class UsuariosController extends Controller
         $estado = 1;
         $idrol = 2;
         $clave = $request->password;
+        $hora = date('d/m/Y h:i:s');
         if(isset($enviar)){
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|unique:users'
             ]);
             //crear toquen para usuario
-            $toquen = substr(Crypt::encryptString($request->email),0,20);
+            $toquen = substr(Crypt::encryptString($hora),0,20);
             $estado = 0;
             $clave = 123456;
         }else{
@@ -87,7 +89,31 @@ class UsuariosController extends Controller
         }
         return redirect()->route('usuarios.index')->with('mensaje','Datos guardados correctamente');
     }
-
+    public function restablecer(Request $request)
+    {
+        //Restablecer por ID de usuario
+        $idusuario = $request->id;
+        $mail = User::find($idusuario)->email;
+        if(isset($mail)){
+            Mail::to($mail)->send(new Restablecer($idusuario));
+            echo "Correo enviado";
+        }else{
+            echo "No hay correo disponible";
+        }
+        
+    }
+    public function restablecer2(Request $request)
+    {
+       //Restablecer por correo de usuario
+       $email = $request->email;
+       $mail = User::where('email',$email)->first();
+       if(isset($mail)){
+           Mail::to($mail)->send(new Restablecer($mail->id));
+           echo "Solicitud recibida!!!<br>Se te ha enviado un correo electronico para restablecer la contraseña!!";
+       }else{
+           echo "Correo no válido!!";
+       }
+    }
     /**
      * Display the specified resource.
      *
@@ -180,6 +206,28 @@ class UsuariosController extends Controller
             }
         }else{
             return redirect()->route('usuarios.clave',$id)->with('mensaje','No coinciden las claves ingresadas');
+        }
+    }
+    public function updateclave2(Request $request)
+    {
+        if($request->password==$request->password2)
+        {
+            $usuario = User::find($request->id);
+            if($usuario){
+                $hora = date('d/m/Y h:i:s');
+                $toquen = substr(Crypt::encryptString($hora),0,20);
+                //Actualizar usuario
+                $usuario->password = Crypt::encryptString($request->password);
+                //ACTIVAR LA CUENTA
+                $usuario->estado = 1;
+                $usuario->remember_token = $toquen;
+                $usuario->update();
+                echo "1";
+            }else{
+                echo "No se ha encontrado el usuario";
+            }
+        }else{
+            echo "La clave no se ha podido actualizar";
         }
     }
     /**

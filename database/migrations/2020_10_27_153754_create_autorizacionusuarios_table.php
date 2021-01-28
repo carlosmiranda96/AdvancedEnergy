@@ -18,6 +18,12 @@ class CreateAutorizacionusuariosTable extends Migration
             $table->timestamps();
             $table->integer('idusuario');
             $table->integer('idpermiso');
+            $table->boolean('ver')->nullable();
+            $table->boolean('crear')->nullable();
+            $table->boolean('editar')->nullable();
+            $table->boolean('eliminar')->nullable();
+            $table->boolean('excel')->nullable();
+            $table->boolean('pdf')->nullable();
         });
     }
 

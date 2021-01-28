@@ -92,37 +92,78 @@ class AutorizacionController extends Controller
      */
     public function update(Request $request)
     {
-        $idpermiso = $request->idpermiso;
+        $idpermiso = $request->idpermiso;//Menu
         $idusuario = $request->idusuario;
+        $permiso = $request->opcion;
         if(isset($idpermiso))
         {
-            if(isset($request->autorizacion) && $request->autorizacion=="true"){
-                $autorizacion = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$idpermiso)->first();
-                if(!isset($autorizacion)){
-                    //AGREGAR PERMISO
-                    autorizacionusuarios::create([
-                        'idusuario' => $idusuario,
-                        'idpermiso' => $idpermiso
-                    ]);
-                    $this->agregarDependencia($idusuario,$idpermiso);
-                    echo "1";
-                }else{
-                    echo "2";
-                }
+            $opcion = 0;
+            if(isset($request->autorizacion) && $request->autorizacion=="true")
+            {
+                $opcion = 1;
+            }
+            $autorizacion = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$idpermiso)->first();
+            if(!isset($autorizacion)){
+                //AGREGAR PERMISO
+                $autorizacion = new autorizacionusuarios;
+                $autorizacion->idusuario = $idusuario;
+                $autorizacion->idpermiso = $idpermiso;
+                $autorizacion->ver = 0;
+                $autorizacion->crear = 0;
+                $autorizacion->editar = 0;
+                $autorizacion->eliminar = 0;
+                $autorizacion->excel = 0;
+                $autorizacion->pdf = 0;
+                $this->addOpcion($autorizacion,$permiso,$opcion)->save();
+                $this->agregarDependencia($idusuario,$idpermiso);
+                echo "1";
             }else{
-                //ELIMINAR PERMISO
-                $borrar = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$idpermiso)->first();
-                if(isset($borrar)){
-                    $borrar->delete();
-                    $this->eliminarDependencia($idusuario,$idpermiso);
-                    echo "1";
+                //ACTUALIZAR PERMISO OPCION
+                $guardado = $this->addOpcion($autorizacion,$permiso,$opcion);
+                $autorizacion = $guardado;
+                $autorizacion->save();
+                if($guardado->ver==0 && $guardado->crear==0 && $guardado->editar==0 && $guardado->eliminar==0 && $guardado->excel==0 && $guardado->pdf==0){
+                    //ELIMINAR PERMISO
+                    $borrar = autorizacionusuarios::where('idusuario',$idusuario)->where('idpermiso',$idpermiso)->first();
+                    if(isset($borrar)){
+                        $borrar->delete();
+                        $this->eliminarDependencia($idusuario,$idpermiso);
+                        echo "1";
+                    }else{
+                        echo "0";
+                    }
                 }else{
-                    echo "0";
-                }
+                    echo "1";
+                }                
             }
         }else{
             echo "0";
         }
+    }
+    private function addOpcion(autorizacionusuarios $objeto,$permiso,$opcion)
+    {
+        switch($permiso)
+        {
+            case 1:
+                $objeto->ver = $opcion;
+                break;
+            case 2:
+                $objeto->crear = $opcion;
+                break;
+            case 3:
+                $objeto->editar = $opcion;
+                break;
+            case 4:
+                $objeto->eliminar = $opcion;
+                break;
+            case 5:
+                $objeto->excel = $opcion;
+                break;
+            case 6:
+                $objeto->pdf = $opcion;
+                break;
+        }
+        return $objeto;
     }
     /**
      * Remove the specified resource from storage.
@@ -147,7 +188,13 @@ class AutorizacionController extends Controller
                 //AGREGAR PERMISO
                 autorizacionusuarios::create([
                     'idusuario' => $idusuario,
-                    'idpermiso' => $dependencia
+                    'idpermiso' => $dependencia,
+                    'ver' => 0,
+                    'crear' => 0,
+                    'editar' => 0,
+                    'eliminar' => 0,
+                    'excel' => 0,
+                    'pdf' => 0
                 ]);
                 $this->agregarDependencia($idusuario,$dependencia);
             }

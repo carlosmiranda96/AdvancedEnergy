@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-01-2021 a las 01:23:42
+-- Tiempo de generación: 28-01-2021 a las 01:24:46
 -- Versión del servidor: 10.4.16-MariaDB
 -- Versión de PHP: 7.4.12
 
@@ -32,28 +32,14 @@ CREATE TABLE `autorizacionusuarios` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `idusuario` int(11) NOT NULL,
-  `idpermiso` int(11) NOT NULL
+  `idpermiso` int(11) NOT NULL,
+  `ver` tinyint(1) DEFAULT NULL,
+  `crear` tinyint(1) DEFAULT NULL,
+  `editar` tinyint(1) DEFAULT NULL,
+  `eliminar` tinyint(1) DEFAULT NULL,
+  `excel` tinyint(1) DEFAULT NULL,
+  `pdf` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `autorizacionusuarios`
---
-
-INSERT INTO `autorizacionusuarios` (`id`, `created_at`, `updated_at`, `idusuario`, `idpermiso`) VALUES
-(35, '2021-01-22 04:47:57', '2021-01-22 04:47:57', 3, 16),
-(36, '2021-01-22 04:47:57', '2021-01-22 04:47:57', 3, 6),
-(37, '2021-01-22 04:48:00', '2021-01-22 04:48:00', 3, 20),
-(38, '2021-01-22 04:48:00', '2021-01-22 04:48:00', 3, 19),
-(46, '2021-01-22 04:59:04', '2021-01-22 04:59:04', 3, 32),
-(47, '2021-01-22 04:59:04', '2021-01-22 04:59:04', 3, 14),
-(48, '2021-01-22 04:59:56', '2021-01-22 04:59:56', 3, 33),
-(49, '2021-01-22 05:09:29', '2021-01-22 05:09:29', 3, 23),
-(50, '2021-01-22 05:09:29', '2021-01-22 05:09:29', 3, 22),
-(51, '2021-01-22 05:09:29', '2021-01-22 05:09:29', 3, 24),
-(53, '2021-01-22 05:28:40', '2021-01-22 05:28:40', 3, 63),
-(54, '2021-01-22 05:41:49', '2021-01-22 05:41:49', 3, 21),
-(58, '2021-01-22 05:45:11', '2021-01-22 05:45:11', 3, 5),
-(62, '2021-01-22 06:10:12', '2021-01-22 06:10:12', 3, 17);
 
 -- --------------------------------------------------------
 
@@ -332,7 +318,8 @@ CREATE TABLE `empleado_users` (
 INSERT INTO `empleado_users` (`id`, `created_at`, `updated_at`, `idusuario`, `idempleado`) VALUES
 (1, '2021-01-06 20:17:14', '2021-01-07 23:25:47', 2, 4),
 (2, '2021-01-07 23:25:58', '2021-01-07 23:25:58', 1, 5),
-(6, '2021-01-22 05:24:01', '2021-01-22 05:24:01', 3, 3);
+(6, '2021-01-22 05:24:01', '2021-01-22 05:24:01', 3, 3),
+(10, '2021-01-27 22:10:34', '2021-01-27 22:10:34', 7, 62);
 
 -- --------------------------------------------------------
 
@@ -825,7 +812,8 @@ INSERT INTO `marcacionesempleados` (`id`, `created_at`, `updated_at`, `idemplead
 (84, '2021-01-20 22:47:24', '2021-01-20 22:47:24', 5, 1, 'Salida', '2021-01-20', '16:47:24', NULL, 1, 13.6699978, -89.294731),
 (85, '2021-01-20 23:04:28', '2021-01-20 23:04:28', 5, 1, 'Entrada', '2021-01-20', '17:04:28', NULL, 1, 13.6699978, -89.294731),
 (86, '2021-01-21 00:09:55', '2021-01-21 00:09:55', 5, 1, 'Salida', '2021-01-20', '18:09:55', NULL, 1, 13.6699978, -89.294731),
-(87, '2021-01-21 18:25:42', '2021-01-21 18:25:42', 5, 1, 'Salida', '2021-01-21', '12:25:42', NULL, 1, 13.670018899999999, -89.29421169999999);
+(87, '2021-01-21 18:25:42', '2021-01-21 18:25:42', 5, 1, 'Salida', '2021-01-21', '12:25:42', NULL, 1, 13.670018899999999, -89.29421169999999),
+(88, '2021-01-27 18:53:31', '2021-01-27 18:53:31', 5, 1, 'Salida', '2021-01-27', '12:53:31', NULL, 1, 13.670018899999999, -89.29421169999999);
 
 -- --------------------------------------------------------
 
@@ -1033,11 +1021,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`, `name`, `email`, `foto`, `idrol`) VALUES
-('7RpIoXoEy27AqZCIBYFuUHWkMLkDVlG2xR7YSZqd', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHBzOi8vbG9jYWxob3N0L0FkdmFuY2VkRW5lcmd5L21vZHVsb3MiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiVTlVd3hxN1AweVV5VURwSmNmUERNbHBEV09QRlBiNHNxT2NadWFZRCI7czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjY3OiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL1VTNHA5ckluMFFXaUw1OXJQSUdCM3d4WXBLRmF1Um15NlJ4U254QloucG5nIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjI6IjE3IjtzOjY6ImJ1c2NhciI7YjoxO30=', 1611703768, NULL, NULL, NULL, NULL),
-('BaVXfjO8VVB1aNB3NI3ym06LUUiMQve9wRicoQsn', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6ImN1M0pkWVlzSmo1V290ZFE3S0VNOUc0N0Z5dWFwR1ZJM3YyWFluYzQiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM3OiJodHRwczovL2xvY2FsaG9zdC9BZHZhbmNlZEVuZXJneS9tYWlsIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjIwOiJzdXBlcnZpc29yQGdtYWlsLmNvbSI7czo0OiJmb3RvIjtzOjY3OiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL1VTNHA5ckluMFFXaUw1OXJQSUdCM3d4WXBLRmF1Um15NlJ4U254QloucG5nIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtpOjU7czo2OiJidXNjYXIiO2I6MTt9', 1611706923, NULL, NULL, NULL, NULL),
-('eS8SXVmoPfM4uuFK0PZV6OUA3QizRho71R98iImW', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZDAwV3BNZkdRbTc0TGVKRW00NU92VHJwT2g5Vzh5YTc1alNBcGlwaiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHBzOi8vbG9jYWxob3N0L0FkdmFuY2VkRW5lcmd5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1611704213, NULL, NULL, NULL, NULL),
-('g78jvtrEru1VmSg9QT2sLeepy0VH5x7QRixq8pQj', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiell0OUFPNUdyMkE2SGNYc0ptQXJSMVhlemNMS2lSaWIxVzBVYXp6diI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvQWR2YW5jZWRFbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611323388, NULL, NULL, NULL, NULL),
-('y5TfMEfgPDbiUOKrtF4lwbRtrDn8r9bAOFzK3giz', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6Ijh6c21jbEM1Z1ZRRGgzQW03RGxSNTdFbzJCWXRYYzExd3FpYnlNVHMiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwczovLzE5Mi4xNjguMi4xNzkvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjM7czo0OiJuYW1lIjtzOjE3OiJBbGV4YW5kZXIgTWlyYW5kYSI7czo1OiJlbWFpbCI7czoyODoiYW1pcmFuZGFAYWUtZW5lcmdpYXNvbGFyLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjE6IjUiO3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611274387, NULL, NULL, NULL, NULL);
+('tgenY5mOBNRngQISH9Echg0TY28Irc1l4YGO7iqt', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IkFRUDZHVFFjcVlhUk5OMkYxR25qWHJqc3p2YUJuV2hXUFozbWlkOXAiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjU5OiJodHRwczovL2xvY2FsaG9zdC9BZHZhbmNlZEVuZXJneS9hdXRvcml6YWNpb25zL3VzdWFyaW8/aWQ9NyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czozMDoic3VwZXJ2aXNvckBhZS1lbmVyZ2lhc29sYXIuY29tIjtzOjQ6ImZvdG8iO3M6Njc6InN0b3JhZ2UvYXBwL2ZvdG9wZXJmaWwvVVM0cDlySW4wUVdpTDU5clBJR0Izd3hZcEtGYXVSbXk2UnhTbnhCWi5wbmciO3M6NToiaWRyb2wiO2k6MTtzOjc6Im1lbnVfaWQiO3M6MjoiMjAiO3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611793466, NULL, NULL, NULL, NULL),
+('ZXfkSt9EJzo7upkWIgi5YAjimE96ryC4EgYGHdBd', NULL, '192.168.2.246', 'Mozilla/5.0 (Linux; Android 10; SM-A217M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZHlXWEU0ZVZWOHFaTXNLTjZwUWVYekZnenNCMXk4eVVLR0FYUWhLSiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHBzOi8vMTkyLjE2OC4yLjE3OS9BZHZhbmNlZEVuZXJneSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1611786623, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1279,7 +1264,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `foto`, `remember_token`, `created_at`, `updated_at`, `idrol`, `estado`) VALUES
-(1, 'Supervisor', 'supervisor@gmail.com', NULL, 'eyJpdiI6ImVWd2VETWt2amROT05kbUtFdDEzRmc9PSIsInZhbHVlIjoiSmcwWDhWdHRJc3FoN1RHSnJWcWZYQT09IiwibWFjIjoiMDVjYWZkM2U0MWZiNjkwYWE1MTZhMmRjNWY5MGVhOWZiNzVjZGY4MWM3YTQyMzBmOWJkYTdkNTA4OTgxYTg2OSJ9', 'fotoperfil/US4p9rIn0QWiL59rPIGB3wxYpKFauRmy6RxSnxBZ.png', NULL, NULL, '2021-01-06 05:38:42', 1, 1);
+(1, 'Supervisor', 'supervisor@ae-energiasolar.com', NULL, 'eyJpdiI6ImVWd2VETWt2amROT05kbUtFdDEzRmc9PSIsInZhbHVlIjoiSmcwWDhWdHRJc3FoN1RHSnJWcWZYQT09IiwibWFjIjoiMDVjYWZkM2U0MWZiNjkwYWE1MTZhMmRjNWY5MGVhOWZiNzVjZGY4MWM3YTQyMzBmOWJkYTdkNTA4OTgxYTg2OSJ9', 'fotoperfil/US4p9rIn0QWiL59rPIGB3wxYpKFauRmy6RxSnxBZ.png', NULL, NULL, '2021-01-28 00:51:43', 1, 1),
+(7, 'Carlos', 'amiranda@ae-energiasolar.com', NULL, 'eyJpdiI6ImpZSFFRd2xycEdsUTRvVHVQZWxhVkE9PSIsInZhbHVlIjoiaFBjRTlRMWNIRTdFVHJIV1FjbkVEUT09IiwibWFjIjoiYjY2NjlhOWRkZmUzZmY2NDJjYmU3MGEwMjQ5OGE0OWRmNzdlOTVhYzQ5YzlkYzM3ZWU3ZGY5NDg4NjM3M2YxMyJ9', 'fotoperfil/perfilDefault.jpg', 'eyJpdiI6ImdKbWJjR05q', '2021-01-27 20:29:48', '2021-01-28 00:15:05', 2, 1),
+(8, 'Carlos Prueba', 'carlos.miranda96@gmail.com', NULL, 'eyJpdiI6IjZGSzZ0SDNCQXlRNEFrVnhuUy9ubXc9PSIsInZhbHVlIjoiYlBYdkFXWlYwV1cvYUgxbUVxb0NBdz09IiwibWFjIjoiZjE2NmFjMmNmZDNhYzZlZjc0N2JmYmI5Y2Q0Mzk1ODcwMWQxNTRhMzZhZjU5YjY1Yjk5MTgwMjkzZjM2MzQ5NCJ9', 'fotoperfil/perfilDefault.jpg', 'eyJpdiI6IlVPZVlYTVlr', '2021-01-28 04:14:16', '2021-01-28 04:15:43', 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -1506,7 +1493,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `autorizacionusuarios`
 --
 ALTER TABLE `autorizacionusuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT de la tabla `cargos`
@@ -1566,7 +1553,7 @@ ALTER TABLE `empleado_referencias`
 -- AUTO_INCREMENT de la tabla `empleado_users`
 --
 ALTER TABLE `empleado_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `equiposfotos`
@@ -1644,7 +1631,7 @@ ALTER TABLE `grupohorariosds`
 -- AUTO_INCREMENT de la tabla `marcacionesempleados`
 --
 ALTER TABLE `marcacionesempleados`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -1698,7 +1685,7 @@ ALTER TABLE `ubicacions`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
