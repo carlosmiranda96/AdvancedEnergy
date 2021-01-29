@@ -1,6 +1,6 @@
 <?php
-    use App\Models\autorizacionusuarios;
-    use App\Models\modulos;
+use App\Models\empleadoUser;
+use App\Models\modulos;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,9 +46,6 @@
                             <div class="sb-sidenav-menu-heading">Menu principal</div>
                             <?php
                                 menu(1,0);
-                                function obtenernivel($nivel,$id){
-
-                                }
                                 session()->put('buscar',true);
                                 function menu($nivel,$dependencia)
                                 {
@@ -57,8 +54,15 @@
                                         $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
                                     }else{
                                         $idusuario = session('user_id');
-                                        $menu = modulos::join('autorizacionusuarios','modulos.id','autorizacionusuarios.idpermiso')->select('modulos.*')->where('idusuario',$idusuario)
+                                        $empleado = empleadoUser::join('empleados','idempleado','empleados.id')->where('idusuario',$idusuario)->first();
+                                        if(isset($empleado->idgrupo)&&$empleado->idgrupo!=0)
+                                        {
+                                            $menu = modulos::join('autorizaciongrupos','modulos.id','autorizaciongrupos.idpermiso')->select('modulos.*')->where('idgrupo',$empleado->idgrupo)
                                         ->where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('modulos.orden')->get();
+                                        }else{
+                                            $menu = modulos::join('autorizacionusuarios','modulos.id','autorizacionusuarios.idpermiso')->select('modulos.*')->where('idusuario',$idusuario)
+                                        ->where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('modulos.orden')->get();
+                                        }
                                     }
                                     if(isset($menu)){
                                         $nivel++;                                    
@@ -178,7 +182,8 @@
         <script src="{{asset('vendor/alertify/alertify.min.js')}}"></script>
         @yield('script')
         <script>
-            function cerrarsesion(){
+            function cerrarsesion()
+            {
                 bootbox.confirm({ 
                     size: "small",
                     title:'Notificación',
@@ -200,7 +205,7 @@
                     success:function(r){
                         window.location.href = ruta;
                     }
-                })
+                });
             }
         </script>
     </body>

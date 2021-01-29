@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AutorizacionController;
+use App\Http\Controllers\AutorizacionGrupoController;
+use App\Http\Controllers\AutorizacionUserController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\DiasController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\EquiposhistorialController;
 use App\Http\Controllers\MarcacionesempleadosController;
 use App\Http\Controllers\EstadocivilController;
 use App\Http\Controllers\GeneroController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\GrupohorariosController;
 use App\Http\Controllers\GrupohorariosdController;
 use App\Http\Controllers\IngenieriaController;
@@ -105,13 +107,15 @@ Route::group(['middleware' => 'sesion'], function() {
 });
 
 //RUTAS DE ADMINISTRADOR
-Route::group(['middleware' => 'admin'], function() {
+Route::group(['middleware' => 'admin'], function()
+{
     Route::resource('cargos',CargoController::class);
     Route::resource('ubicacion',UbicacionesController::class);
     Route::resource('dias',DiasController::class);
     Route::resource('diasFeriados',DiasferiadosController::class);
     Route::resource('grupohorario',GrupohorariosController::class);
     Route::resource('empleados',EmpleadosController::class);
+    Route::post('empleado/grupo',[EmpleadosController::class,'updateGrupo'])->name('empleado.updategrupo');
 
     Route::resource('empleadodocumento',EmpleadodocumentoController::class);
     Route::post('empleadodocumentos/subiradjunto',[EmpleadodocumentoController::class,'subiradjunto'])->name('empleadodocumento.subiradjunto');
@@ -126,9 +130,11 @@ Route::group(['middleware' => 'admin'], function() {
     Route::resource('grupohorariosd',GrupohorariosdController::class);
     Route::resource('usuarios',UsuariosController::class);
     Route::POST('usuario/restablecer',[UsuariosController::class,'restablecer'])->name('usuario.restablecer');
-
     Route::get('usuarios/password/{id}',[UsuariosController::class,'cambiarclave'])->name('usuarios.clave');
     Route::put('usuarios/password/update/{id}',[UsuariosController::class,'updateclave'])->name('usuarios.updateclave');
+
+    Route::resource('grupo',GrupoController::class);
+
     Route::resource('modulos',modulosController::class);
 
     Route::get('menu/crear',[modulosController::class,'crear'])->name('modulos.crear');
@@ -136,10 +142,12 @@ Route::group(['middleware' => 'admin'], function() {
 
     Route::resource('permisos',PermisosController::class);
     
-    Route::resource('autorizacion',AutorizacionController::class);
-    Route::get('autorizacions/usuario',[AutorizacionController::class,'usuario'])->name('autorizacion.usuario');
-    Route::get('autorizacions/update',[AutorizacionController::class,'update'])->name('autorizacion.update');
-    Route::get('autorizacions/grupo',[AutorizacionController::class,'grupo'])->name('autorizacion.grupo');
+    Route::resource('autorizacion',AutorizacionUserController::class);
+    Route::get('autorizacions/usuario',[AutorizacionUserController::class,'index'])->name('autorizacion.usuario');//Por usuario
+    Route::get('autorizacions/usuario/update',[AutorizacionUserController::class,'update'])->name('autorizacion.usuario.update');
+
+    Route::get('autorizacions/grupo',[AutorizacionGrupoController::class,'index'])->name('autorizacion.grupo');//Por grupo
+    Route::get('autorizacions/grupo/update',[AutorizacionGrupoController::class,'update'])->name('autorizacion.grupo.update');//Por grupo
 
     Route::resource('pais',PaisController::class);
     Route::get('svpais/departamento',[PaisController::class,'getDepartamento'])->name('pais.departamento');

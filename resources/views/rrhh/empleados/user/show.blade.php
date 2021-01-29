@@ -96,12 +96,15 @@
                             </div>
                             <div class="col-12">
                                 <label>Grupo</label>
-                                <select class="form-control">
+                                <select class="form-control" id="grupo">
                                     <option value="0">Seleccione</option>
+                                    @foreach($grupo as $item)
+                                    <option value="{{$item->id}}" @if($item->id==$empleadogrupo) {{'selected'}} @endif>{{$item->grupo}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-12 mt-3">
-                                <button class="btn btn-sm btn-primary float-right"><i class="fas fa-save"></i> Guardar</button>
+                                <button class="btn btn-sm btn-primary float-right" onclick="guardarGrupo()"><i class="fas fa-save"></i> Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -118,6 +121,33 @@
         },function(){
 
         });
+    }
+    function guardarGrupo()
+    {
+        var grupo = $("#grupo").val();
+        if(grupo==0){
+            bootbox.alert({
+                title:"Notificación",
+                message:"Seleccione un grupo",
+                callback:function(){
+                    $("#grupo").focus();
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                type:"POST",
+                url:"{{route('empleado.updategrupo')}}",
+                data:"_token={{csrf_token()}}&grupo="+grupo+"&idempleado={{$empleados->id}}",
+                success:function(r){
+                    alertify.success(r);
+                },
+                error:function(){
+                    alert("No se puede conectar");
+                }
+            })
+        }
     }
 </script>
 @stop

@@ -1,48 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 27-01-2021 a las 00:29:51
--- Versión del servidor: 10.4.16-MariaDB
--- Versión de PHP: 7.4.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `advanced`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `modulos`
---
-
-CREATE TABLE `modulos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `modulo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ruta` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `icono` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nivel` int(11) DEFAULT NULL,
-  `dependencia` int(11) DEFAULT NULL,
-  `orden` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `modulos`
---
-
 INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icono`, `nivel`, `dependencia`, `orden`) VALUES
 (1, NULL, NULL, 'General', 'general', '<i class=\"fas fa-qrcode fa-3x\"></i>', NULL, NULL, NULL),
 (2, NULL, NULL, 'RRHH', 'rrhh', '<i class=\"fas fa-users fa-3x\"></i>', NULL, NULL, NULL),
@@ -105,30 +60,5 @@ INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icon
 (60, '2021-01-06 09:10:08', '2021-01-12 02:41:52', 'Asistencia', 'reportes,60', NULL, 3, 59, 1),
 (61, '2021-01-06 11:26:05', '2021-01-06 11:26:05', 'Productos', NULL, NULL, 2, 9, 1),
 (62, '2021-01-06 11:26:16', '2021-01-06 11:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2),
-(63, '2021-01-22 05:28:28', '2021-01-22 05:28:28', 'Accesos directos', NULL, NULL, 3, 16, 3),
-(64, '2021-01-27 05:27:53', '2021-01-27 05:27:53', 'Config de correo', 'correo.config', NULL, 3, 16, 4);
+(63, '2021-01-22 05:28:28', '2021-01-22 05:28:28', 'Accesos directos', NULL, NULL, 3, 16, 3);
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `modulos`
---
-ALTER TABLE `modulos`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `modulos`
---
-ALTER TABLE `modulos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

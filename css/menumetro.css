@@ -1,4 +1,4 @@
-@import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
+/*@import "https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";*/
 *{
   margin: 0;
   padding: 0;
@@ -56,4 +56,31 @@ body{
 
 .i5{
   background: #FFC20E;
+}
+
+/*MENU CLIC DERECHO*/
+#rmenu ul{
+  list-style: none;
+  list-style-type: none;
+  list-style-position: outside;
+  padding: 0;
+  margin: 0;
+}
+
+#rmenu li{
+  padding-left: 10px;
+  line-height: 30px;
+  font-size: 16px;
+  cursor:pointer;
+}
+#rmenu li:hover{
+  background-color: #2E9A73;
+}
+
+#rmenu{
+  width:200px;
+  position:fixed;
+  background-color: #0E5155;
+  color: white;
+  border: 1px solid white;
 }

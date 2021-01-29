@@ -85,6 +85,16 @@ class EmpleadosController extends Controller
         ]);
         return redirect()->route('empleadodocumento.show',empleados::latest('id')->first())->with('mensaje','Datos guardados correctamente');
     }
+    public function updateGrupo(Request $request)
+    {
+        $idempleado = $request->idempleado;
+        $idgrupo = $request->grupo;
+
+        $empleado = empleados::find($idempleado);
+        $empleado->idgrupo = $idgrupo;
+        $empleado->save();
+        echo "Datos guardados";
+    }
 
     /**
      * Display the specified resource.

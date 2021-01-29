@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\autorizacionusuarios;
-use App\Models\permisos;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use App\Models\modulos;
 
-class AutorizacionController extends Controller
+class AutorizacionUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $autorizacionusuarios = autorizacionusuarios::leftJoin('users','idusuario','users.id')->select('users.id','name as usuario')->groupby('users.id','name')->paginate(5);
-        return view('admin.autorizacion.lista',compact('autorizacionusuarios'));
+        $usuarios = User::get();
+        $idusuario = 0;
+        if(isset($request->id)){
+            $idusuario = $request->id;
+        }
+        return view('admin.autorizacion.usuario.lista',compact('usuarios','idusuario'));
     }
 
     /**
@@ -24,22 +26,7 @@ class AutorizacionController extends Controller
      */
     public function create()
     {
-        $usuarios = User::get();
-        return view('admin.autorizacion.create',compact('usuarios'));
-    }
-    public function usuario(Request $request)
-    {
-        $usuarios = User::get();
-        $idusuario = 0;
-        if(isset($request->id)){
-            $idusuario = $request->id;
-        }
-        return view('admin.autorizacion.lista',compact('usuarios','idusuario'));
-    }
-    public function grupo()
-    {
-        $autorizacionusuarios = autorizacionusuarios::leftJoin('users','idusuario','users.id')->select('users.id','name as usuario')->groupby('users.id','name')->paginate(5);
-        return view('admin.autorizacion.lista',compact('autorizacionusuarios'));
+
     }
     /**
      * Store a newly created resource in storage.

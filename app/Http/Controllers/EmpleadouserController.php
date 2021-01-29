@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\empleados;
 use App\Models\empleadoUser;
+use App\Models\grupo;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -54,8 +55,13 @@ class EmpleadouserController extends Controller
     public function show($id)
     {
         $empleados = empleados::find($id);
+        $empleadogrupo = 0;
+        if(isset($empleados->idgrupo)){
+            $empleadogrupo = $empleados->idgrupo;
+        }
         $empleadouser = empleadouser::join('users','idusuario','users.id')->select('empleado_users.*','users.name')->where('idempleado',$id)->paginate();
-        return view('rrhh.empleados.user.show',compact('empleados','empleadouser'));
+        $grupo = grupo::all();
+        return view('rrhh.empleados.user.show',compact('empleados','empleadouser','grupo','empleadogrupo'));
     }
 
     /**

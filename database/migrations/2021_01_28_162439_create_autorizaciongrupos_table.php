@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAutorizacionusuariosTable extends Migration
+class CreateAutorizaciongruposTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateAutorizacionusuariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('autorizacionusuarios', function (Blueprint $table) {
+        Schema::create('autorizaciongrupos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('idusuario');
+            $table->integer('idgrupo');
             $table->integer('idpermiso');
             $table->boolean('ver');
             $table->boolean('crear');
@@ -34,6 +34,6 @@ class CreateAutorizacionusuariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('autorizacionusuarios');
+        Schema::dropIfExists('autorizaciongrupos');
     }
 }

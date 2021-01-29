@@ -59,6 +59,13 @@
         </div>
     </div>
 </div>
+<div id="rmenu">
+    <ul>
+        <li id="copiar">Copiar</li>
+        <li id="mover">Mover</li>
+        <li id="eliminar">Eliminar</li>
+    </ul>
+</div>
 @stop
 @section('css')
 <link rel="stylesheet" href="{{asset('css/menumetro.css')}}">
@@ -96,6 +103,7 @@
                     if(r==1)
                     {
                         dialogo.modal('hide');
+                        location.reload();
                     }else{
                         bootbox.dialog({
                             title:"Notificación",
@@ -127,5 +135,69 @@
             }
         });
     };
+    /*
+    if (document.addEventListener) {
+        document.addEventListener('contextmenu', function(e) {
+            alert("Menu clic derecho"); //here you draw your own menu
+            e.preventDefault();
+        }, false);
+    }else
+    {
+        document.attachEvent('oncontextmenu', function(){
+            alert("Menu clic derecho 2");
+            window.event.returnValue = false;
+        });
+    }*/
+
+    $(document).ready(function(){
+             
+             //Ocultamos el menú al cargar la página
+             $("#rmenu").hide();
+             //$("#rmenu").css({'display':'block', 'left':'141px', 'top':'171px'});
+             /* mostramos el menú si hacemos click derecho
+             con el ratón */
+             $(document).bind("contextmenu", function(e){
+                var ancho = $(window).width();
+                var alto = $(window).height();
+                    //alert("a:"+ancho+",a:"+alto+"---"+e.pageX+" + "+e.pageY);
+                   $("#rmenu").css({'display':'block', 'left':e.pageX+'px', 'top':e.pageY+'px'});
+                   return false;
+             });
+              
+              
+             //cuando hagamos click, el menú desaparecerá
+             $(document).click(function(e){
+                   if(e.button == 0){
+                         $("#rmenu").css("display", "none");
+                   }
+             });
+              
+             //si pulsamos escape, el menú desaparecerá
+             $(document).keydown(function(e){
+                   if(e.keyCode == 27){
+                         $("#rmenu").css("display", "none");
+                   }
+             });
+              
+             //controlamos los botones del menú
+             $("#rmenu").click(function(e){
+                    
+                   // El switch utiliza los IDs de los <li> del menú
+                   switch(e.target.id){
+                         case "copiar":
+                               alert("copiado!");
+                               break;      
+                         case "mover":
+                               alert("movido!");
+                               break;
+                         case "eliminar":
+                               alert("eliminado!");
+                               break;
+                   }
+                    
+             });
+              
+                          
+       }); 
 </script>
 @stop

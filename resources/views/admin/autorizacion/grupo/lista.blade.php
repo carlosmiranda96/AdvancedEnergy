@@ -7,7 +7,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Autorizaciones por usuario</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Autorizaciones por grupo</h6>
         </div>
         <div class="card-body">
             @if (session('mensaje'))
@@ -19,11 +19,11 @@
             </div>
             @endif
             <div class="form-group">
-                <label>Usuario</label>
-                <select class="form-control" name="idusuario" id="idusuario" autocomplete="off" autofocus>
+                <label>Grupo</label>
+                <select class="form-control" name="idgrupo" id="idgrupo" autocomplete="off" autofocus>
                     <option value="0">Seleccione</option>
-                    @foreach ($usuarios as $item1)
-                        <option @if($idusuario==$item1->id){{'selected'}} @endif value="{{$item1->id}}">{{$item1->name}}</option>
+                    @foreach ($grupo as $item1)
+                        <option @if($idgrupo==$item1->id){{'selected'}} @endif value="{{$item1->id}}">{{$item1->grupo}}</option>
                     @endforeach
                     </select>
             </div>
@@ -45,12 +45,12 @@
                         </thead>
                                 <?php
 
-use App\Models\autorizacionusuarios;
+use App\Models\autorizaciongrupo;
 use App\Models\modulos;
 
-                                menu2(1,0,$idusuario);
+                                menu2(1,0,$idgrupo);
 
-                                function menu2($nivel,$dependencia,$iduser){
+                                function menu2($nivel,$dependencia,$idgrupo){
                                     $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
 
                                     $nivel++;
@@ -79,9 +79,9 @@ use App\Models\modulos;
                                                 <td colspan="6"></td>
                                                 </tr>';
                                             }
-                                            menu2($nivel,$item->id,$iduser);
+                                            menu2($nivel,$item->id,$idgrupo);
                                         }else{
-                                            if($iduser>0){
+                                            if($idgrupo>0){
                                                 $disabled =  "";
                                             }else{
                                                 $disabled = "disabled";
@@ -92,7 +92,7 @@ use App\Models\modulos;
                                             $check4 = "";
                                             $check5 = "";
                                             $check6 = "";
-                                            $permiso = autorizacionusuarios::where('idusuario',$iduser)->where('idpermiso',$item->id)->first();
+                                            $permiso = autorizaciongrupo::where('idgrupo',$idgrupo)->where('idpermiso',$item->id)->first();
                                             if(isset($permiso)){
                                                 if($permiso->ver==1){
                                                     $check1 = "checked";
@@ -213,39 +213,21 @@ use App\Models\modulos;
 @stop
 @section('script')
 <script>
-    function eliminar(key){
-        alertify.confirm("Notificación","¿Desea eliminar todos los permisos del usuario seleccionado?",function(){
-            $("#frmeliminar"+key).submit();
-        },function(){
-
-        });
-    }
-    function seleccionar(id)
-    {
-        var idusuario = $("#idusuario").val();
-        if(idusuario>0){
-            $("#ch1"+id).prop('checked',!$("#ch1"+id).prop('checked'));
-            $("#ch1"+id).change();
-        }else{
-            bootbox.alert({title:"Notificación",message:"Por favor selecciona un usuario"});
-            idusuario.focus();
-        }
-    }
     function cambio(input,opcion)
     {
-        var idusuario = $("#idusuario").val();
-        if(idusuario>0){
+        var idgrupo = $("#idgrupo").val();
+        if(idgrupo>0){
             //ACTUALIZAR EN BASE DE DATOS
             var id = $(input).val();
             var autorizacion = $(input).prop('checked');
             $.ajax({
-                url:"{{route('autorizacion.update')}}",
+                url:"{{route('autorizacion.grupo.update')}}",
                 type:"get",
-                data:"idpermiso="+id+"&idusuario="+idusuario+"&autorizacion="+autorizacion+"&opcion="+opcion,
+                data:"idpermiso="+id+"&idgrupo="+idgrupo+"&autorizacion="+autorizacion+"&opcion="+opcion,
                 success:function(r)
                 {
                     if(r==1){
-                        alertify.success("Dato guardado");
+                        //alertify.success("Dato guardado");
                     }else if(r==2){
                         alertify.success("Dato ya ha sido guardado");
                     }else{
@@ -255,12 +237,12 @@ use App\Models\modulos;
             });
         }else{
             bootbox.alert({title:"Notificación",message:"Por favor selecciona un usuario"});
-            idusuario.focus();
+            idgrupo.focus();
         }
     }
-    $("#idusuario").on("change",function()
+    $("#idgrupo").on("change",function()
     {
-        window.location = "{{route('autorizacion.usuario')}}?id="+$(this).val();
+        window.location = "{{route('autorizacion.grupo')}}?id="+$(this).val();
     });
 </script>
 @stop
