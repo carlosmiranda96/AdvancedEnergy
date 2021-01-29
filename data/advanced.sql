@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-01-2021 a las 01:24:46
+-- Tiempo de generación: 29-01-2021 a las 01:18:25
 -- Versión del servidor: 10.4.16-MariaDB
 -- Versión de PHP: 7.4.12
 
@@ -24,6 +24,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `autorizaciongrupos`
+--
+
+CREATE TABLE `autorizaciongrupos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `idgrupo` int(11) NOT NULL,
+  `idpermiso` int(11) NOT NULL,
+  `ver` tinyint(1) NOT NULL,
+  `crear` tinyint(1) NOT NULL,
+  `editar` tinyint(1) NOT NULL,
+  `eliminar` tinyint(1) NOT NULL,
+  `excel` tinyint(1) NOT NULL,
+  `pdf` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `autorizaciongrupos`
+--
+
+INSERT INTO `autorizaciongrupos` (`id`, `created_at`, `updated_at`, `idgrupo`, `idpermiso`, `ver`, `crear`, `editar`, `eliminar`, `excel`, `pdf`) VALUES
+(1, '2021-01-28 22:43:13', '2021-01-28 22:50:39', 1, 5, 1, 0, 0, 0, 0, 0),
+(5, '2021-01-28 22:50:53', '2021-01-28 22:50:53', 1, 28, 1, 0, 0, 0, 0, 0),
+(6, '2021-01-28 22:50:53', '2021-01-28 22:50:53', 1, 7, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `autorizacionusuarios`
 --
 
@@ -33,12 +62,12 @@ CREATE TABLE `autorizacionusuarios` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `idusuario` int(11) NOT NULL,
   `idpermiso` int(11) NOT NULL,
-  `ver` tinyint(1) DEFAULT NULL,
-  `crear` tinyint(1) DEFAULT NULL,
-  `editar` tinyint(1) DEFAULT NULL,
-  `eliminar` tinyint(1) DEFAULT NULL,
-  `excel` tinyint(1) DEFAULT NULL,
-  `pdf` tinyint(1) DEFAULT NULL
+  `ver` tinyint(1) NOT NULL,
+  `crear` tinyint(1) NOT NULL,
+  `editar` tinyint(1) NOT NULL,
+  `eliminar` tinyint(1) NOT NULL,
+  `excel` tinyint(1) NOT NULL,
+  `pdf` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -125,87 +154,89 @@ CREATE TABLE `empleados` (
   `idestadocivil` int(11) NOT NULL,
   `idmunicipio` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL,
-  `toquen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `toquen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `idgrupo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id`, `created_at`, `updated_at`, `fechaingreso`, `codigo`, `nombre1`, `nombre2`, `apellido1`, `apellido2`, `apellido3`, `nombreCompleto`, `foto`, `direccion`, `correo`, `telefono`, `celular`, `fechanacimiento`, `idgenero`, `idestadocivil`, `idmunicipio`, `estado`, `toquen`) VALUES
-(1, '2020-12-11 05:03:17', '2021-01-22 05:00:36', '2016-04-01', 'AE-001', 'Alejandro', 'Eduardo', 'Bellas', 'Mayer', NULL, 'Alejandro Eduardo Bellas Mayer', 'fotoempleado/DqS3r4jlizX6NqPPRwQOSrY1nCGUXfCPUpLuYQgF.jpeg', NULL, NULL, '73997030', NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImVKaFZaMWlz'),
-(2, '2020-12-11 05:04:26', '2020-12-11 05:04:58', '2016-04-01', 'AE-002', 'Hasdy', 'Salvador', 'Muñoz', 'Montoya', NULL, 'Hasdy Salvador Muñoz Montoya', 'fotoempleado/AkktZ9n7CVspPiXmqWz31yJzJ4U71iOllgabakXN.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 0, 'eyJpdiI6Ik5UeXgvYldJ'),
-(3, '2020-12-11 05:06:45', '2020-12-11 05:06:45', '2017-08-01', 'AE-003', 'Denis', 'Iván', 'Herrera', NULL, NULL, 'Denis Iván Herrera', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImxtQkhnTUFN'),
-(4, '2020-12-11 05:07:59', '2020-12-11 05:07:59', '2017-08-01', 'AE-004', 'Jose', 'Carlos', 'Calderón', 'Melendez', NULL, 'Jose Carlos Calderón Melendez', 'fotoempleado/PZdIJ5lAKxKvfB48n0z4KTDWmNc1wwZvmKCPjc6J.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImRMMVpTWlBM'),
-(5, '2020-12-11 05:09:37', '2020-12-11 05:09:37', '2017-08-01', 'AE-005', 'José', 'Miguel', 'Rodríguez', 'Romero', NULL, 'José Miguel Rodríguez Romero', 'fotoempleado/NGcoUkp6FUnJhtu8aqGgozuvcm5sKFMkihDbrCsG.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjRMZ2pmTmpt'),
-(6, '2020-12-11 05:10:42', '2020-12-11 05:10:42', '2017-09-07', 'AE-006', 'Santos', 'Alexander', 'Ramirez', 'Rivera', NULL, 'Santos Alexander Ramirez Rivera', 'fotoempleado/Pp6vBFdylGSgU6SEFPkyPwTKhTzMu27RNSsjTbEg.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkZEQVd1QSt5'),
-(7, '2020-12-11 05:11:31', '2020-12-11 05:11:31', '2017-10-09', 'AE-007', 'Francisco', 'Antonio', 'Cardona', 'Bernal', NULL, 'Francisco Antonio Cardona Bernal', 'fotoempleado/EoclcejOq74jaDd2ZyAbvpcTQ05RxdmAEUOnkxIY.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InlNTmJuL3NS'),
-(8, '2020-12-11 05:12:31', '2020-12-11 05:12:31', '2017-12-04', 'AE-008', 'Ana', 'Beatriz', 'Castillo', 'Hernández', NULL, 'Ana Beatriz Castillo Hernández', 'fotoempleado/nVF0DkPrSjlrMc570dem5lDfcFsIFyQxe5Rhg92M.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6InBnemFrOGwr'),
-(9, '2020-12-11 05:13:18', '2020-12-11 05:13:18', '2018-01-01', 'AE-009', 'Abimael', 'Fernando', 'Pérez', 'Pérez', NULL, 'Abimael Fernando Pérez Pérez', 'fotoempleado/pIFeIaF6DDPpZMFawxSYOO8psqakT7dZqHAc4cfX.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlM4V1BLQzAz'),
-(10, '2020-12-11 05:14:21', '2020-12-11 05:14:21', '2018-01-01', 'AE-010', 'Aura', 'Raquel', 'Hernández', NULL, 'Fernández', 'Aura Raquel Hernández de Fernández', 'fotoempleado/5oHPWyUJSef5BUWKQp8Xx1PLtppIdQxN73gTVL7M.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6Im9Kc1UweUtL'),
-(11, '2020-12-11 05:15:07', '2020-12-11 05:15:07', '2018-01-01', 'AE-011', 'Dennis', 'Mardoqueo', 'Oxlaj', 'Oliva', NULL, 'Dennis Mardoqueo Oxlaj Oliva', 'fotoempleado/bqNbDmPspTkB8LOP6kMStpJYUyJctMW2NCidJiIG.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkhaV0VTRmRl'),
-(12, '2020-12-11 05:16:50', '2020-12-11 05:17:00', '2018-01-01', 'AE-012', 'Diego', 'Samuel', 'Terraza', 'Cobo', NULL, 'Diego Samuel Terraza Cobo', 'fotoempleado/JiMHwH6x8WXShiJiBxwNoullJ4LwyxKzweWGukw7.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkdZOE13d1ZU'),
-(13, '2020-12-11 05:18:00', '2020-12-11 05:18:00', '2018-01-01', 'AE-013', 'Hugo', 'Horacio', 'Martínez', 'Muyuz', NULL, 'Hugo Horacio Martínez Muyuz', 'fotoempleado/CZ0dtnsB805VJQlGQo1ZdAywb4zMJj5koZj1DTIU.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjFGRE54Sytq'),
-(14, '2020-12-11 05:18:49', '2020-12-11 05:18:49', '2018-02-20', 'AE-014', 'Edwin', 'René', 'Rivas', 'Miranda', NULL, 'Edwin René Rivas Miranda', 'fotoempleado/1EhcAxcr3zKDHpddLCh1ZFUJ6iwRx0j1Ax0dgrvh.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkhmVzVuY2xq'),
-(15, '2020-12-11 05:19:44', '2020-12-11 05:19:44', '2018-04-25', 'AE-015', 'Elvis', 'Antonio', 'García', 'Pérez', NULL, 'Elvis Antonio García Pérez', 'fotoempleado/4QETCUp2DIulYHkFLqlDBHJToy9Ucglns1QFzpHq.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik15SThiYXlR'),
-(16, '2020-12-11 05:21:48', '2020-12-11 05:21:48', '2018-06-01', 'AE-016', 'Alberto', 'José', 'Girón', 'Garcés', 'Marcilla', 'Alberto José Girón Garcés de Marcilla', 'fotoempleado/0fl6FJjRpomjGPvqln8YFoqoBf2yONFwsA04Vmag.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IllmZFkvMVNU'),
-(17, '2020-12-11 05:22:44', '2020-12-11 05:22:44', '2018-07-02', 'AE-017', 'David', 'Antonio', 'Rosales', 'Vásquez', NULL, 'David Antonio Rosales Vásquez', 'fotoempleado/mJ6JismthLnyu1sMwzG6pGWGCPT6L61HdgWv6gbc.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkN2NUwxczk2'),
-(18, '2020-12-11 05:23:49', '2020-12-11 05:23:49', '2018-07-02', 'AE-018', 'Roberto', 'Carlos', 'Vásquez', 'Rosales', NULL, 'Roberto Carlos Vásquez Rosales', 'fotoempleado/qhDgXyhDsIYJt3FLuMt0amvYbXG0BeaF4AzmlIhS.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImdhWkEwdThZ'),
-(19, '2020-12-11 05:24:33', '2020-12-11 05:24:33', '2018-09-03', 'AE-019', 'Javier', 'Antonio', 'Castillo', 'Hernández', NULL, 'Javier Antonio Castillo Hernández', 'fotoempleado/RfXTWeMt6oEBdY0pHuS6omf0jTyeApANRG2wwGfh.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InNSL0tZWExq'),
-(20, '2020-12-11 05:25:22', '2020-12-11 05:25:22', '2018-09-08', 'AE-020', 'Walter', 'Enrique', 'Soriano', 'Cruz', NULL, 'Walter Enrique Soriano Cruz', 'fotoempleado/EZaRZUgVktunSCpiwyK3q2GNzxOonZn0CeYppNXf.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ilo3N09OZU1n'),
-(21, '2020-12-11 05:26:46', '2020-12-11 05:26:46', '2018-09-14', 'AE-021', 'José', 'David de Jesús', 'Sandoval', 'López', NULL, 'José David de Jesús Sandoval López', 'fotoempleado/lXZjAQDtbLZjl1nHL4EswqXKjcrKesYSDgTeQgfH.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkVKNk1HWjcz'),
-(22, '2020-12-11 05:27:44', '2020-12-11 05:27:44', '2018-09-17', 'AE-022', 'Yanira', 'Evelyn', 'Peña', NULL, NULL, 'Yanira Evelyn Peña', 'fotoempleado/JFyMY3nFm0Q3iGePGvfyZX34ky8u4rkgGVS4AoK0.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjFnWjVMTjJ2'),
-(23, '2020-12-11 05:28:18', '2020-12-11 05:41:40', '2018-10-05', 'AE-023', 'Nelvin', 'Daniel', 'Arias', 'Diaz', NULL, 'Nelvin Daniel Arias Diaz', 'fotoempleado/kpeIEOaZ0rnFcSt4w38ivPQjZLQ5q9Yu24Tdoh1m.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InlDcmt1MGtj'),
-(24, '2020-12-11 05:29:20', '2020-12-11 05:29:20', '2018-10-22', 'AE-024', 'Emérita', 'Sarai', 'Monterroza', NULL, 'Gamez', 'Emérita Sarai Monterroza de Gamez', 'fotoempleado/yV4rJI6iHUsc40R8wuS4kMlpUBmMO63GOibFLw8n.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6IjBnMVdwN1M3'),
-(25, '2020-12-11 05:30:06', '2020-12-11 05:30:06', '2018-10-22', 'AE-025', 'Manuel', 'Antonio', 'Rodas', 'Rodriguez', NULL, 'Manuel Antonio Rodas Rodriguez', 'fotoempleado/yqKc3O5bWZKu2ujfi3eiWjHSM8cRxLooNPenycVA.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6IlRjUFQrTk9a'),
-(26, '2020-12-11 05:42:49', '2020-12-11 05:42:49', '2018-10-29', 'AE-026', 'Jacquelinne', 'Marili', 'Osorio', 'Castillo', NULL, 'Jacquelinne Marili Osorio Castillo', 'fotoempleado/GAcbfHMnXFUanyZ9QAVRCIRueBMwguHs2DoOZBTa.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6Ino5MEMySjQy'),
-(27, '2020-12-11 05:43:32', '2020-12-11 05:43:32', '2018-11-26', 'AE-027', 'Carlos', 'Alfredo', 'Méndez', 'Portillo', NULL, 'Carlos Alfredo Méndez Portillo', 'fotoempleado/UZeBRMst4JznMpfm1kElbIWny1Kx9zglCDJr7tuM.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Inc2Z09NT3Zs'),
-(28, '2020-12-11 05:44:23', '2020-12-11 05:44:23', '2018-11-26', 'AE-028', 'José', 'Tomás', 'Aquino', 'Morales', NULL, 'José Tomás Aquino Morales', 'fotoempleado/maq5XFeiYR5Ngw8n1ElbryDvvSeA5JCxiQHpoIBm.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlZJZFJudTcz'),
-(29, '2020-12-11 05:45:07', '2020-12-11 05:45:07', '2018-11-26', 'AE-029', 'Lázaro', NULL, 'Carias', NULL, NULL, 'Lázaro Carias', 'fotoempleado/Oo3p0jPq3UhoXsjQPJrOUiccvpX60xqOCnq3weze.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjUraEZjS0xo'),
-(30, '2020-12-11 05:45:57', '2020-12-11 05:45:57', '2018-12-28', 'AE-030', 'Marcos', 'Enrique', 'Rivas', 'Tejada', NULL, 'Marcos Enrique Rivas Tejada', 'fotoempleado/VDh1kP4J0qNyqtkB49gdNilvaOJDdHzw8OFqhqqS.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlpQc2JQaTRL'),
-(31, '2020-12-11 05:46:50', '2020-12-11 05:46:50', '2019-01-21', 'AE-031', 'José', 'Angel', 'Guadrón', 'Guevara', NULL, 'José Angel Guadrón Guevara', 'fotoempleado/os3QMXO4E57t2NuoX0IZBO7ABrYZ7fg5ZSkdTm9Z.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImxqeGFYN0VP'),
-(32, '2020-12-11 05:48:15', '2020-12-11 05:48:15', '2019-02-01', 'AE-032', 'Christian', 'Rafael', 'Mejía', 'Chevez', NULL, 'Christian Rafael Mejía Chevez', 'fotoempleado/djwUSXV3CJWNkxjLuQkXY0DTCwKbGilQNmpuM6xP.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjhpWGltT2lm'),
-(33, '2020-12-11 05:49:09', '2020-12-11 05:49:09', '2019-02-27', 'AE-033', 'Jairo', 'Isaac', 'Donis', 'Palma', NULL, 'Jairo Isaac Donis Palma', 'fotoempleado/SeZlS02QU7HDq4CnylKqJC31shZkNKl1JgmtKC3b.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImJDK1JkTjJW'),
-(34, '2020-12-11 05:50:09', '2020-12-11 05:50:09', '2019-02-28', 'AE-034', 'Carlos', 'Humberto', 'Fernández', 'Polanco', NULL, 'Carlos Humberto Fernández Polanco', 'fotoempleado/xMfnKsFyo6xMq2kudhpbgvojoGKZYbATeSAVI6jT.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlNxV0E2L0Fi'),
-(35, '2020-12-11 05:51:03', '2020-12-11 05:51:03', '2019-04-04', 'AE-035', 'Héctor', 'David', 'Romero', 'Aguilar', NULL, 'Héctor David Romero Aguilar', 'fotoempleado/PLOZ0DBkR9g4R2O9jex4A9qr0a81XCWknUoZZVH6.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImhRYjdhbmQ2'),
-(36, '2020-12-11 05:52:01', '2020-12-11 05:52:01', '2019-04-22', 'AE-036', 'Wilber', 'Alcides', 'Castillo', 'Nufio', NULL, 'Wilber Alcides Castillo Nufio', 'fotoempleado/YoMpnBr18WyrRaa6vUKuBg8i1wtNVXGUABJghoBK.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Im5acjh4RzlU'),
-(37, '2020-12-11 05:52:55', '2020-12-11 05:52:55', '2019-05-07', 'AE-037', 'Luis', 'Ernesto', 'Sandoval', 'Martínez', NULL, 'Luis Ernesto Sandoval Martínez', 'fotoempleado/GoUXZ7xrMCosnXAitLPsvm9duNAdgj712kb8U1ay.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlRqdFZremJ2'),
-(38, '2020-12-11 05:53:43', '2020-12-11 05:53:43', '2019-05-30', 'AE-038', 'Douglas', 'Omar', 'Montano', 'Hernández', NULL, 'Douglas Omar Montano Hernández', 'fotoempleado/U0wopzVnXLrpNWdvSEORZEh1SLaXvGGsEIn6Xq3p.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjR0dGhJRHZK'),
-(39, '2020-12-11 05:55:05', '2020-12-11 05:55:05', '2019-06-06', 'AE-039', 'Fernando', 'José', 'Alvarado', 'Vaquero', NULL, 'Fernando José Alvarado Vaquero', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkpyS0ZWMThP'),
-(40, '2020-12-11 05:55:38', '2020-12-11 05:55:38', '2019-08-01', 'AE-040', 'Edgar', 'Dennys', 'Pérez', 'Chicas', NULL, 'Edgar Dennys Pérez Chicas', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InJIUHRPVUM3'),
-(41, '2020-12-11 05:56:16', '2020-12-11 05:56:16', '2019-08-01', 'AE-041', 'Elías', 'Israel', 'Carias', 'Patriz', NULL, 'Elías Israel Carias Patriz', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ikw2ZWZBSHZF'),
-(42, '2020-12-11 05:56:53', '2020-12-11 05:56:53', '2019-08-01', 'AE-042', 'Luis', 'Alonso', 'Valdez', NULL, NULL, 'Luis Alonso Valdez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6Inc2WnhORFFD'),
-(43, '2020-12-11 05:57:42', '2020-12-11 05:57:42', '2019-09-23', 'AE-043', 'Amilcar', 'Heriberto', 'Rosales', 'Flores', NULL, 'Amilcar Heriberto Rosales Flores', 'fotoempleado/ssbGYhlOApwyDlfD0vSjFMRo2lPGPjiiSSbilWeb.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ii9LOHBRWGhx'),
-(44, '2020-12-11 05:58:34', '2020-12-11 05:58:34', '2019-10-21', 'AE-044', 'José', 'Erick', 'Duán', 'Soriano', NULL, 'José Erick Duán Soriano', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkczV1UyRkJh'),
-(45, '2020-12-11 05:59:27', '2020-12-11 05:59:27', '2019-11-25', 'AE-045', 'Vilma', 'Haydee', 'Portillo', NULL, 'Oliva', 'Vilma Haydee Portillo de Oliva', 'fotoempleado/qmixXwQXqTqnI1iSOKZZPeb470BR9gY7JBMdc6QT.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6IklhK1IyK1Bq'),
-(46, '2020-12-11 06:00:07', '2020-12-11 06:00:07', '2019-12-16', 'AE-046', 'Rafael', 'Stanley', 'Pérez', NULL, NULL, 'Rafael Stanley Pérez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkNCUm8wNGV3'),
-(47, '2020-12-11 06:01:06', '2020-12-11 06:01:06', '2019-12-16', 'AE-047', 'Roberto', 'Alfonso', 'Tobar', 'Hernández', NULL, 'Roberto Alfonso Tobar Hernández', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Imp6Qnp3QzBD'),
-(48, '2020-12-11 06:01:37', '2020-12-11 06:01:37', '2019-12-16', 'AE-048', 'Ventura', 'Navidad', 'Cruz', NULL, NULL, 'Ventura Navidad Cruz', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik44YmdVczk5'),
-(49, '2020-12-11 06:03:27', '2020-12-11 06:03:27', '2020-02-10', 'AE-049', 'Rosa', 'Elena', 'Lovo', 'Ayala', NULL, 'Rosa Elena Lovo Ayala', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjVrN2pBNmZL'),
-(50, '2020-12-11 06:04:09', '2020-12-11 06:04:09', '2020-02-21', 'AE-050', 'José', 'Arturo', 'Ordoñez', NULL, NULL, 'José Arturo Ordoñez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkY1djgxMVYy'),
-(51, '2020-12-11 06:05:19', '2020-12-11 06:06:50', '2020-03-04', 'AE-051', 'Amílcar', 'Enrique', 'Marroquín', 'Villalta', NULL, 'Amílcar Enrique Marroquín Villalta', 'fotoempleado/4xJmmlpNtk2Zrdx8pad5IaFBBHYpQFTnIsLdVsAr.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik9qeitZcmNM'),
-(52, '2020-12-11 06:07:42', '2020-12-11 06:07:42', '2020-03-16', 'AE-052', 'Segio', 'Alejandro', 'Meléndez', 'Carillo', NULL, 'Segio Alejandro Meléndez Carillo', 'fotoempleado/i6nPgMThxco0oZm4GGlAwRsXgHKsKMcQc6bVQpQz.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IldFSW4zNVFL'),
-(53, '2020-12-11 06:08:23', '2020-12-11 06:08:23', '2020-03-17', 'AE-053', 'Ernesto', 'Antonio', 'Castro', 'Sánchez', NULL, 'Ernesto Antonio Castro Sánchez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik1ncDA0TEY4'),
-(54, '2020-12-11 06:09:15', '2020-12-11 06:09:15', '2020-04-16', 'AE-054', 'Luis', 'Mario', 'Alarcón', 'Aguirre', NULL, 'Luis Mario Alarcón Aguirre', 'fotoempleado/vXbS6WNwMS4oFg0CaxwB3V5TpGIqK7AckclqbvUo.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjlOMGlSOXc1'),
-(55, '2020-12-11 06:10:11', '2020-12-11 06:10:11', '2020-06-16', 'AE-055', 'Jaime', 'Alexander', 'Martínez', 'Martínez', NULL, 'Jaime Alexander Martínez Martínez', 'fotoempleado/21OP9zraJya5Eqn8QVfU9TRAuMLPdbkBSH5P5Zox.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ijc4ZHlaZDVY'),
-(56, '2020-12-11 06:11:21', '2020-12-11 06:11:21', '2020-07-01', 'AE-056', 'Ana', 'Beatriz', 'Girón', 'Lavagnino', NULL, 'Ana Beatriz Girón Lavagnino', 'fotoempleado/0Lep35ANGjZoEwt8BrqpQnCOTXMUnRr3lSdIEjdR.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6InhMTzFLQjdW'),
-(57, '2020-12-11 06:12:06', '2020-12-11 06:12:06', '2020-07-06', 'AE-057', 'Eduardo', 'Jeremías', 'Martínez', 'Contreras', NULL, 'Eduardo Jeremías Martínez Contreras', 'fotoempleado/egBpilIYpOjGDaSq2yfR18DYdwY4270jHcprnkj7.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InhjcjY0SHpI'),
-(58, '2020-12-11 06:12:50', '2020-12-11 06:12:50', '2020-07-20', 'AE-058', 'Oscar', 'Ernesto', 'López', 'Ortiz', NULL, 'Oscar Ernesto López Ortiz', 'fotoempleado/T8HDoZgzAYR0dHwpPIW6lUcTKnUWTFu0oGsOP25B.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImpNMjVGcjRO'),
-(59, '2020-12-11 06:13:44', '2020-12-11 06:13:44', '2020-07-23', 'AE-059', 'Karla', 'Michelle', 'Galdámez', 'Vásquez', NULL, 'Karla Michelle Galdámez Vásquez', 'fotoempleado/cRab6dDzjAX7kGsOe78rw91XqP0aGGsQKnudZM9z.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkZSUWNiN1Yz'),
-(60, '2020-12-11 06:15:08', '2020-12-11 06:15:08', '2020-07-23', 'AE-060', 'Oscar', 'Miguel', 'Vargas', 'Nájera', NULL, 'Oscar Miguel Vargas Nájera', 'fotoempleado/NPtCPG1Md6lqmshVAXuYeBU4BQHm6IucUs8ol2CJ.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InoyaVdxZ2l2'),
-(61, '2020-12-11 06:16:02', '2020-12-11 06:16:02', '2020-07-24', 'AE-061', 'Oscar', 'Julián', 'Portillo', 'Arbues', NULL, 'Oscar Julián Portillo Arbues', 'fotoempleado/RwTzGrMcDryuxTUTF5NrTiTNOUruPfOW9dwEtIZq.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjJuSGZhT29T'),
-(62, '2020-12-11 06:16:44', '2020-12-11 06:16:44', '2020-08-01', 'AE-062', 'Rubén', 'Eliazar', 'López', 'Ortiz', NULL, 'Rubén Eliazar López Ortiz', 'fotoempleado/F3GzAk7aFvi5xxncniyve6ViStTu6yN4LnshWelV.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImZlYlJHdEor'),
-(63, '2020-12-11 06:17:25', '2020-12-11 06:17:25', '2020-08-15', 'AE-063', 'Juan', 'Carlos', 'Santos', 'Cruz', NULL, 'Juan Carlos Santos Cruz', 'fotoempleado/8FtpUUdHsHClRFX1CwRxDbsCVA2R6tMHFcB0wPaR.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlpVanJ1dENZ'),
-(64, '2020-12-11 06:18:15', '2020-12-11 06:18:15', '2020-08-17', 'AE-064', 'Gerardo', 'Enrique', 'Payés', 'Cruz', NULL, 'Gerardo Enrique Payés Cruz', 'fotoempleado/O6upH3I16aPZclMj8mNOOBDZEUiE6arFGSh5z1ry.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlloTTVFYUZF'),
-(65, '2020-12-11 06:19:10', '2020-12-11 06:19:10', '2020-08-17', 'AE-065', 'Nelson', 'Moisés', 'Elías', 'López', NULL, 'Nelson Moisés Elías López', 'fotoempleado/CuYb5YCdPYsCSRtjkVvwakY9ZU9XvcSRpT4mH68k.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlZFWTRoNlFh'),
-(66, '2020-12-11 06:20:01', '2020-12-11 06:20:01', '2020-08-18', 'AE-066', 'Jose', 'Luis', 'Pérez', 'Sion', NULL, 'Jose Luis Pérez Sion', 'fotoempleado/lYvaJQLg8hnmrNTykvdHnWniJuC8ccqZOwMlzpww.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InRXYWRVam5a'),
-(67, '2020-12-11 06:20:45', '2020-12-11 06:20:45', '2020-08-19', 'AE-067', 'Julio', 'Gerson', 'Calderón', 'Flores', NULL, 'Julio Gerson Calderón Flores', 'fotoempleado/mN0rmBq1o1BbbGMhI6GsM4bdbPwiACosZkMcH00t.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjBHVFc2Zlcr'),
-(68, '2020-12-11 06:21:51', '2020-12-11 06:21:51', '2020-09-01', 'AE-068', 'Wilber', 'Alexis', 'Hernández', 'Sánchez', NULL, 'Wilber Alexis Hernández Sánchez', 'fotoempleado/Z49aSn8bG0PQJcRp8rRbikHmA4615zlaowOeSpWT.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InpOdXUwSWk1'),
-(69, '2020-12-11 06:22:43', '2020-12-11 06:22:43', '2020-09-04', 'AE-069', 'Rene', 'Samuel', 'Sandoval', 'Martínez', NULL, 'Rene Samuel Sandoval Martínez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6ImFhVkNFeGRM'),
-(70, '2020-12-11 06:23:23', '2020-12-11 06:23:23', '2020-10-01', 'AE-070', 'David', 'Daniel', 'Hidalgo', 'Pineda', NULL, 'David Daniel Hidalgo Pineda', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjZZVHRkMWth'),
-(71, '2020-12-11 06:24:14', '2020-12-11 06:24:14', '2020-10-14', 'AE-071', 'José', 'Rogelio', 'Rubio', 'Méndez', NULL, 'José Rogelio Rubio Méndez', 'fotoempleado/TSIPbpKQrNBbazsvsq0JjmHprYfIVn31OBomWznX.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InRiaTZqYUo0'),
-(72, '2020-12-11 06:24:58', '2020-12-11 06:24:58', '2020-10-21', 'AE-072', 'Brenda', 'Margarita', 'Mendoza', NULL, 'Cañas', 'Brenda Margarita Mendoza de Cañas', 'fotoempleado/pcWWZFabFoSnMvtAPtO5R6irC2lzN8fuPh78wKyW.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6ImVibVBCWE83'),
-(73, '2020-12-11 06:25:36', '2020-12-11 06:25:36', '2020-10-26', 'AE-073', 'Carlos', 'Alexander', 'Miranda', 'Oliva', NULL, 'Carlos Alexander Miranda Oliva', 'fotoempleado/XsrCc6bMuwJjxNExPvfsbR8HRNuvgr6UvpipFG6M.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ino4ajZxVkR1');
+INSERT INTO `empleados` (`id`, `created_at`, `updated_at`, `fechaingreso`, `codigo`, `nombre1`, `nombre2`, `apellido1`, `apellido2`, `apellido3`, `nombreCompleto`, `foto`, `direccion`, `correo`, `telefono`, `celular`, `fechanacimiento`, `idgenero`, `idestadocivil`, `idmunicipio`, `estado`, `toquen`, `idgrupo`) VALUES
+(1, '2020-12-11 11:03:17', '2020-12-11 11:03:17', '2016-04-01', 'AE-001', 'Alejandro', 'Eduardo', 'Bellas', 'Mayer', NULL, 'Alejandro Eduardo Bellas Mayer', 'fotoempleado/DqS3r4jlizX6NqPPRwQOSrY1nCGUXfCPUpLuYQgF.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImVKaFZaMWlz', NULL),
+(2, '2020-12-11 11:04:26', '2020-12-11 11:04:58', '2016-04-01', 'AE-002', 'Hasdy', 'Salvador', 'Muñoz', 'Montoya', NULL, 'Hasdy Salvador Muñoz Montoya', 'fotoempleado/AkktZ9n7CVspPiXmqWz31yJzJ4U71iOllgabakXN.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 0, 'eyJpdiI6Ik5UeXgvYldJ', NULL),
+(3, '2020-12-11 11:06:45', '2020-12-11 11:06:45', '2017-08-01', 'AE-003', 'Denis', 'Iván', 'Herrera', NULL, NULL, 'Denis Iván Herrera', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImxtQkhnTUFN', NULL),
+(4, '2020-12-11 11:07:59', '2020-12-11 11:07:59', '2017-08-01', 'AE-004', 'Jose', 'Carlos', 'Calderón', 'Melendez', NULL, 'Jose Carlos Calderón Melendez', 'fotoempleado/PZdIJ5lAKxKvfB48n0z4KTDWmNc1wwZvmKCPjc6J.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImRMMVpTWlBM', NULL),
+(5, '2020-12-11 11:09:37', '2020-12-11 11:09:37', '2017-08-01', 'AE-005', 'José', 'Miguel', 'Rodríguez', 'Romero', NULL, 'José Miguel Rodríguez Romero', 'fotoempleado/NGcoUkp6FUnJhtu8aqGgozuvcm5sKFMkihDbrCsG.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjRMZ2pmTmpt', NULL),
+(6, '2020-12-11 11:10:42', '2020-12-11 11:10:42', '2017-09-07', 'AE-006', 'Santos', 'Alexander', 'Ramirez', 'Rivera', NULL, 'Santos Alexander Ramirez Rivera', 'fotoempleado/Pp6vBFdylGSgU6SEFPkyPwTKhTzMu27RNSsjTbEg.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkZEQVd1QSt5', NULL),
+(7, '2020-12-11 11:11:31', '2020-12-11 11:11:31', '2017-10-09', 'AE-007', 'Francisco', 'Antonio', 'Cardona', 'Bernal', NULL, 'Francisco Antonio Cardona Bernal', 'fotoempleado/EoclcejOq74jaDd2ZyAbvpcTQ05RxdmAEUOnkxIY.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InlNTmJuL3NS', NULL),
+(8, '2020-12-11 11:12:31', '2020-12-11 11:12:31', '2017-12-04', 'AE-008', 'Ana', 'Beatriz', 'Castillo', 'Hernández', NULL, 'Ana Beatriz Castillo Hernández', 'fotoempleado/nVF0DkPrSjlrMc570dem5lDfcFsIFyQxe5Rhg92M.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6InBnemFrOGwr', NULL),
+(9, '2020-12-11 11:13:18', '2020-12-11 11:13:18', '2018-01-01', 'AE-009', 'Abimael', 'Fernando', 'Pérez', 'Pérez', NULL, 'Abimael Fernando Pérez Pérez', 'fotoempleado/pIFeIaF6DDPpZMFawxSYOO8psqakT7dZqHAc4cfX.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlM4V1BLQzAz', NULL),
+(10, '2020-12-11 11:14:21', '2020-12-11 11:14:21', '2018-01-01', 'AE-010', 'Aura', 'Raquel', 'Hernández', NULL, 'Fernández', 'Aura Raquel Hernández de Fernández', 'fotoempleado/5oHPWyUJSef5BUWKQp8Xx1PLtppIdQxN73gTVL7M.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6Im9Kc1UweUtL', NULL),
+(11, '2020-12-11 11:15:07', '2020-12-11 11:15:07', '2018-01-01', 'AE-011', 'Dennis', 'Mardoqueo', 'Oxlaj', 'Oliva', NULL, 'Dennis Mardoqueo Oxlaj Oliva', 'fotoempleado/bqNbDmPspTkB8LOP6kMStpJYUyJctMW2NCidJiIG.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkhaV0VTRmRl', NULL),
+(12, '2020-12-11 11:16:50', '2020-12-11 11:17:00', '2018-01-01', 'AE-012', 'Diego', 'Samuel', 'Terraza', 'Cobo', NULL, 'Diego Samuel Terraza Cobo', 'fotoempleado/JiMHwH6x8WXShiJiBxwNoullJ4LwyxKzweWGukw7.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkdZOE13d1ZU', NULL),
+(13, '2020-12-11 11:18:00', '2020-12-11 11:18:00', '2018-01-01', 'AE-013', 'Hugo', 'Horacio', 'Martínez', 'Muyuz', NULL, 'Hugo Horacio Martínez Muyuz', 'fotoempleado/CZ0dtnsB805VJQlGQo1ZdAywb4zMJj5koZj1DTIU.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjFGRE54Sytq', NULL),
+(14, '2020-12-11 11:18:49', '2020-12-11 11:18:49', '2018-02-20', 'AE-014', 'Edwin', 'René', 'Rivas', 'Miranda', NULL, 'Edwin René Rivas Miranda', 'fotoempleado/1EhcAxcr3zKDHpddLCh1ZFUJ6iwRx0j1Ax0dgrvh.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkhmVzVuY2xq', NULL),
+(15, '2020-12-11 11:19:44', '2020-12-11 11:19:44', '2018-04-25', 'AE-015', 'Elvis', 'Antonio', 'García', 'Pérez', NULL, 'Elvis Antonio García Pérez', 'fotoempleado/4QETCUp2DIulYHkFLqlDBHJToy9Ucglns1QFzpHq.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik15SThiYXlR', NULL),
+(16, '2020-12-11 11:21:48', '2020-12-11 11:21:48', '2018-06-01', 'AE-016', 'Alberto', 'José', 'Girón', 'Garcés', 'Marcilla', 'Alberto José Girón Garcés de Marcilla', 'fotoempleado/0fl6FJjRpomjGPvqln8YFoqoBf2yONFwsA04Vmag.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IllmZFkvMVNU', NULL),
+(17, '2020-12-11 11:22:44', '2020-12-11 11:22:44', '2018-07-02', 'AE-017', 'David', 'Antonio', 'Rosales', 'Vásquez', NULL, 'David Antonio Rosales Vásquez', 'fotoempleado/mJ6JismthLnyu1sMwzG6pGWGCPT6L61HdgWv6gbc.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkN2NUwxczk2', NULL),
+(18, '2020-12-11 11:23:49', '2020-12-11 11:23:49', '2018-07-02', 'AE-018', 'Roberto', 'Carlos', 'Vásquez', 'Rosales', NULL, 'Roberto Carlos Vásquez Rosales', 'fotoempleado/qhDgXyhDsIYJt3FLuMt0amvYbXG0BeaF4AzmlIhS.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImdhWkEwdThZ', NULL),
+(19, '2020-12-11 11:24:33', '2020-12-11 11:24:33', '2018-09-03', 'AE-019', 'Javier', 'Antonio', 'Castillo', 'Hernández', NULL, 'Javier Antonio Castillo Hernández', 'fotoempleado/RfXTWeMt6oEBdY0pHuS6omf0jTyeApANRG2wwGfh.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InNSL0tZWExq', NULL),
+(20, '2020-12-11 11:25:22', '2020-12-11 11:25:22', '2018-09-08', 'AE-020', 'Walter', 'Enrique', 'Soriano', 'Cruz', NULL, 'Walter Enrique Soriano Cruz', 'fotoempleado/EZaRZUgVktunSCpiwyK3q2GNzxOonZn0CeYppNXf.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ilo3N09OZU1n', NULL),
+(21, '2020-12-11 11:26:46', '2020-12-11 11:26:46', '2018-09-14', 'AE-021', 'José', 'David de Jesús', 'Sandoval', 'López', NULL, 'José David de Jesús Sandoval López', 'fotoempleado/lXZjAQDtbLZjl1nHL4EswqXKjcrKesYSDgTeQgfH.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkVKNk1HWjcz', NULL),
+(22, '2020-12-11 11:27:44', '2020-12-11 11:27:44', '2018-09-17', 'AE-022', 'Yanira', 'Evelyn', 'Peña', NULL, NULL, 'Yanira Evelyn Peña', 'fotoempleado/JFyMY3nFm0Q3iGePGvfyZX34ky8u4rkgGVS4AoK0.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjFnWjVMTjJ2', NULL),
+(23, '2020-12-11 11:28:18', '2020-12-11 11:41:40', '2018-10-05', 'AE-023', 'Nelvin', 'Daniel', 'Arias', 'Diaz', NULL, 'Nelvin Daniel Arias Diaz', 'fotoempleado/kpeIEOaZ0rnFcSt4w38ivPQjZLQ5q9Yu24Tdoh1m.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InlDcmt1MGtj', NULL),
+(24, '2020-12-11 11:29:20', '2020-12-11 11:29:20', '2018-10-22', 'AE-024', 'Emérita', 'Sarai', 'Monterroza', NULL, 'Gamez', 'Emérita Sarai Monterroza de Gamez', 'fotoempleado/yV4rJI6iHUsc40R8wuS4kMlpUBmMO63GOibFLw8n.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6IjBnMVdwN1M3', NULL),
+(25, '2020-12-11 11:30:06', '2020-12-11 11:30:06', '2018-10-22', 'AE-025', 'Manuel', 'Antonio', 'Rodas', 'Rodriguez', NULL, 'Manuel Antonio Rodas Rodriguez', 'fotoempleado/yqKc3O5bWZKu2ujfi3eiWjHSM8cRxLooNPenycVA.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6IlRjUFQrTk9a', NULL),
+(26, '2020-12-11 11:42:49', '2020-12-11 11:42:49', '2018-10-29', 'AE-026', 'Jacquelinne', 'Marili', 'Osorio', 'Castillo', NULL, 'Jacquelinne Marili Osorio Castillo', 'fotoempleado/GAcbfHMnXFUanyZ9QAVRCIRueBMwguHs2DoOZBTa.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6Ino5MEMySjQy', NULL),
+(27, '2020-12-11 11:43:32', '2020-12-11 11:43:32', '2018-11-26', 'AE-027', 'Carlos', 'Alfredo', 'Méndez', 'Portillo', NULL, 'Carlos Alfredo Méndez Portillo', 'fotoempleado/UZeBRMst4JznMpfm1kElbIWny1Kx9zglCDJr7tuM.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Inc2Z09NT3Zs', NULL),
+(28, '2020-12-11 11:44:23', '2020-12-11 11:44:23', '2018-11-26', 'AE-028', 'José', 'Tomás', 'Aquino', 'Morales', NULL, 'José Tomás Aquino Morales', 'fotoempleado/maq5XFeiYR5Ngw8n1ElbryDvvSeA5JCxiQHpoIBm.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlZJZFJudTcz', NULL),
+(29, '2020-12-11 11:45:07', '2020-12-11 11:45:07', '2018-11-26', 'AE-029', 'Lázaro', NULL, 'Carias', NULL, NULL, 'Lázaro Carias', 'fotoempleado/Oo3p0jPq3UhoXsjQPJrOUiccvpX60xqOCnq3weze.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjUraEZjS0xo', NULL),
+(30, '2020-12-11 11:45:57', '2020-12-11 11:45:57', '2018-12-28', 'AE-030', 'Marcos', 'Enrique', 'Rivas', 'Tejada', NULL, 'Marcos Enrique Rivas Tejada', 'fotoempleado/VDh1kP4J0qNyqtkB49gdNilvaOJDdHzw8OFqhqqS.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlpQc2JQaTRL', NULL),
+(31, '2020-12-11 11:46:50', '2020-12-11 11:46:50', '2019-01-21', 'AE-031', 'José', 'Angel', 'Guadrón', 'Guevara', NULL, 'José Angel Guadrón Guevara', 'fotoempleado/os3QMXO4E57t2NuoX0IZBO7ABrYZ7fg5ZSkdTm9Z.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImxqeGFYN0VP', NULL),
+(32, '2020-12-11 11:48:15', '2020-12-11 11:48:15', '2019-02-01', 'AE-032', 'Christian', 'Rafael', 'Mejía', 'Chevez', NULL, 'Christian Rafael Mejía Chevez', 'fotoempleado/djwUSXV3CJWNkxjLuQkXY0DTCwKbGilQNmpuM6xP.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjhpWGltT2lm', NULL),
+(33, '2020-12-11 11:49:09', '2020-12-11 11:49:09', '2019-02-27', 'AE-033', 'Jairo', 'Isaac', 'Donis', 'Palma', NULL, 'Jairo Isaac Donis Palma', 'fotoempleado/SeZlS02QU7HDq4CnylKqJC31shZkNKl1JgmtKC3b.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImJDK1JkTjJW', NULL),
+(34, '2020-12-11 11:50:09', '2020-12-11 11:50:09', '2019-02-28', 'AE-034', 'Carlos', 'Humberto', 'Fernández', 'Polanco', NULL, 'Carlos Humberto Fernández Polanco', 'fotoempleado/xMfnKsFyo6xMq2kudhpbgvojoGKZYbATeSAVI6jT.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlNxV0E2L0Fi', NULL),
+(35, '2020-12-11 11:51:03', '2020-12-11 11:51:03', '2019-04-04', 'AE-035', 'Héctor', 'David', 'Romero', 'Aguilar', NULL, 'Héctor David Romero Aguilar', 'fotoempleado/PLOZ0DBkR9g4R2O9jex4A9qr0a81XCWknUoZZVH6.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImhRYjdhbmQ2', NULL),
+(36, '2020-12-11 11:52:01', '2020-12-11 11:52:01', '2019-04-22', 'AE-036', 'Wilber', 'Alcides', 'Castillo', 'Nufio', NULL, 'Wilber Alcides Castillo Nufio', 'fotoempleado/YoMpnBr18WyrRaa6vUKuBg8i1wtNVXGUABJghoBK.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Im5acjh4RzlU', NULL),
+(37, '2020-12-11 11:52:55', '2020-12-11 11:52:55', '2019-05-07', 'AE-037', 'Luis', 'Ernesto', 'Sandoval', 'Martínez', NULL, 'Luis Ernesto Sandoval Martínez', 'fotoempleado/GoUXZ7xrMCosnXAitLPsvm9duNAdgj712kb8U1ay.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlRqdFZremJ2', NULL),
+(38, '2020-12-11 11:53:43', '2020-12-11 11:53:43', '2019-05-30', 'AE-038', 'Douglas', 'Omar', 'Montano', 'Hernández', NULL, 'Douglas Omar Montano Hernández', 'fotoempleado/U0wopzVnXLrpNWdvSEORZEh1SLaXvGGsEIn6Xq3p.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjR0dGhJRHZK', NULL),
+(39, '2020-12-11 11:55:05', '2020-12-11 11:55:05', '2019-06-06', 'AE-039', 'Fernando', 'José', 'Alvarado', 'Vaquero', NULL, 'Fernando José Alvarado Vaquero', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkpyS0ZWMThP', NULL),
+(40, '2020-12-11 11:55:38', '2020-12-11 11:55:38', '2019-08-01', 'AE-040', 'Edgar', 'Dennys', 'Pérez', 'Chicas', NULL, 'Edgar Dennys Pérez Chicas', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InJIUHRPVUM3', NULL),
+(41, '2020-12-11 11:56:16', '2020-12-11 11:56:16', '2019-08-01', 'AE-041', 'Elías', 'Israel', 'Carias', 'Patriz', NULL, 'Elías Israel Carias Patriz', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ikw2ZWZBSHZF', NULL),
+(42, '2020-12-11 11:56:53', '2020-12-11 11:56:53', '2019-08-01', 'AE-042', 'Luis', 'Alonso', 'Valdez', NULL, NULL, 'Luis Alonso Valdez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6Inc2WnhORFFD', NULL),
+(43, '2020-12-11 11:57:42', '2020-12-11 11:57:42', '2019-09-23', 'AE-043', 'Amilcar', 'Heriberto', 'Rosales', 'Flores', NULL, 'Amilcar Heriberto Rosales Flores', 'fotoempleado/ssbGYhlOApwyDlfD0vSjFMRo2lPGPjiiSSbilWeb.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ii9LOHBRWGhx', NULL),
+(44, '2020-12-11 11:58:34', '2020-12-11 11:58:34', '2019-10-21', 'AE-044', 'José', 'Erick', 'Duán', 'Soriano', NULL, 'José Erick Duán Soriano', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkczV1UyRkJh', NULL),
+(45, '2020-12-11 11:59:27', '2020-12-11 11:59:27', '2019-11-25', 'AE-045', 'Vilma', 'Haydee', 'Portillo', NULL, 'Oliva', 'Vilma Haydee Portillo de Oliva', 'fotoempleado/qmixXwQXqTqnI1iSOKZZPeb470BR9gY7JBMdc6QT.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6IklhK1IyK1Bq', NULL),
+(46, '2020-12-11 12:00:07', '2020-12-11 12:00:07', '2019-12-16', 'AE-046', 'Rafael', 'Stanley', 'Pérez', NULL, NULL, 'Rafael Stanley Pérez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkNCUm8wNGV3', NULL),
+(47, '2020-12-11 12:01:06', '2020-12-11 12:01:06', '2019-12-16', 'AE-047', 'Roberto', 'Alfonso', 'Tobar', 'Hernández', NULL, 'Roberto Alfonso Tobar Hernández', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Imp6Qnp3QzBD', NULL),
+(48, '2020-12-11 12:01:37', '2020-12-11 12:01:37', '2019-12-16', 'AE-048', 'Ventura', 'Navidad', 'Cruz', NULL, NULL, 'Ventura Navidad Cruz', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik44YmdVczk5', NULL),
+(49, '2020-12-11 12:03:27', '2020-12-11 12:03:27', '2020-02-10', 'AE-049', 'Rosa', 'Elena', 'Lovo', 'Ayala', NULL, 'Rosa Elena Lovo Ayala', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjVrN2pBNmZL', NULL),
+(50, '2020-12-11 12:04:09', '2020-12-11 12:04:09', '2020-02-21', 'AE-050', 'José', 'Arturo', 'Ordoñez', NULL, NULL, 'José Arturo Ordoñez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkY1djgxMVYy', NULL),
+(51, '2020-12-11 12:05:19', '2020-12-11 12:06:50', '2020-03-04', 'AE-051', 'Amílcar', 'Enrique', 'Marroquín', 'Villalta', NULL, 'Amílcar Enrique Marroquín Villalta', 'fotoempleado/4xJmmlpNtk2Zrdx8pad5IaFBBHYpQFTnIsLdVsAr.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik9qeitZcmNM', NULL),
+(52, '2020-12-11 12:07:42', '2020-12-11 12:07:42', '2020-03-16', 'AE-052', 'Segio', 'Alejandro', 'Meléndez', 'Carillo', NULL, 'Segio Alejandro Meléndez Carillo', 'fotoempleado/i6nPgMThxco0oZm4GGlAwRsXgHKsKMcQc6bVQpQz.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IldFSW4zNVFL', NULL),
+(53, '2020-12-11 12:08:23', '2020-12-11 12:08:23', '2020-03-17', 'AE-053', 'Ernesto', 'Antonio', 'Castro', 'Sánchez', NULL, 'Ernesto Antonio Castro Sánchez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ik1ncDA0TEY4', NULL),
+(54, '2020-12-11 12:09:15', '2020-12-11 12:09:15', '2020-04-16', 'AE-054', 'Luis', 'Mario', 'Alarcón', 'Aguirre', NULL, 'Luis Mario Alarcón Aguirre', 'fotoempleado/vXbS6WNwMS4oFg0CaxwB3V5TpGIqK7AckclqbvUo.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjlOMGlSOXc1', NULL),
+(55, '2020-12-11 12:10:11', '2020-12-11 12:10:11', '2020-06-16', 'AE-055', 'Jaime', 'Alexander', 'Martínez', 'Martínez', NULL, 'Jaime Alexander Martínez Martínez', 'fotoempleado/21OP9zraJya5Eqn8QVfU9TRAuMLPdbkBSH5P5Zox.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ijc4ZHlaZDVY', NULL),
+(56, '2020-12-11 12:11:21', '2020-12-11 12:11:21', '2020-07-01', 'AE-056', 'Ana', 'Beatriz', 'Girón', 'Lavagnino', NULL, 'Ana Beatriz Girón Lavagnino', 'fotoempleado/0Lep35ANGjZoEwt8BrqpQnCOTXMUnRr3lSdIEjdR.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6InhMTzFLQjdW', NULL),
+(57, '2020-12-11 12:12:06', '2020-12-11 12:12:06', '2020-07-06', 'AE-057', 'Eduardo', 'Jeremías', 'Martínez', 'Contreras', NULL, 'Eduardo Jeremías Martínez Contreras', 'fotoempleado/egBpilIYpOjGDaSq2yfR18DYdwY4270jHcprnkj7.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InhjcjY0SHpI', NULL),
+(58, '2020-12-11 12:12:50', '2020-12-11 12:12:50', '2020-07-20', 'AE-058', 'Oscar', 'Ernesto', 'López', 'Ortiz', NULL, 'Oscar Ernesto López Ortiz', 'fotoempleado/T8HDoZgzAYR0dHwpPIW6lUcTKnUWTFu0oGsOP25B.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImpNMjVGcjRO', NULL),
+(59, '2020-12-11 12:13:44', '2020-12-11 12:13:44', '2020-07-23', 'AE-059', 'Karla', 'Michelle', 'Galdámez', 'Vásquez', NULL, 'Karla Michelle Galdámez Vásquez', 'fotoempleado/cRab6dDzjAX7kGsOe78rw91XqP0aGGsQKnudZM9z.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IkZSUWNiN1Yz', NULL),
+(60, '2020-12-11 12:15:08', '2020-12-11 12:15:08', '2020-07-23', 'AE-060', 'Oscar', 'Miguel', 'Vargas', 'Nájera', NULL, 'Oscar Miguel Vargas Nájera', 'fotoempleado/NPtCPG1Md6lqmshVAXuYeBU4BQHm6IucUs8ol2CJ.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InoyaVdxZ2l2', NULL),
+(61, '2020-12-11 12:16:02', '2020-12-11 12:16:02', '2020-07-24', 'AE-061', 'Oscar', 'Julián', 'Portillo', 'Arbues', NULL, 'Oscar Julián Portillo Arbues', 'fotoempleado/RwTzGrMcDryuxTUTF5NrTiTNOUruPfOW9dwEtIZq.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjJuSGZhT29T', NULL),
+(62, '2020-12-11 12:16:44', '2021-01-28 22:51:53', '2020-08-01', 'AE-062', 'Rubén', 'Eliazar', 'López', 'Ortiz', NULL, 'Rubén Eliazar López Ortiz', 'fotoempleado/F3GzAk7aFvi5xxncniyve6ViStTu6yN4LnshWelV.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6ImZlYlJHdEor', '1'),
+(63, '2020-12-11 12:17:25', '2020-12-11 12:17:25', '2020-08-15', 'AE-063', 'Juan', 'Carlos', 'Santos', 'Cruz', NULL, 'Juan Carlos Santos Cruz', 'fotoempleado/8FtpUUdHsHClRFX1CwRxDbsCVA2R6tMHFcB0wPaR.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlpVanJ1dENZ', NULL),
+(64, '2020-12-11 12:18:15', '2020-12-11 12:18:15', '2020-08-17', 'AE-064', 'Gerardo', 'Enrique', 'Payés', 'Cruz', NULL, 'Gerardo Enrique Payés Cruz', 'fotoempleado/O6upH3I16aPZclMj8mNOOBDZEUiE6arFGSh5z1ry.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlloTTVFYUZF', NULL),
+(65, '2020-12-11 12:19:10', '2020-12-11 12:19:10', '2020-08-17', 'AE-065', 'Nelson', 'Moisés', 'Elías', 'López', NULL, 'Nelson Moisés Elías López', 'fotoempleado/CuYb5YCdPYsCSRtjkVvwakY9ZU9XvcSRpT4mH68k.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IlZFWTRoNlFh', NULL),
+(66, '2020-12-11 12:20:01', '2020-12-11 12:20:01', '2020-08-18', 'AE-066', 'Jose', 'Luis', 'Pérez', 'Sion', NULL, 'Jose Luis Pérez Sion', 'fotoempleado/lYvaJQLg8hnmrNTykvdHnWniJuC8ccqZOwMlzpww.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InRXYWRVam5a', NULL),
+(67, '2020-12-11 12:20:45', '2020-12-11 12:20:45', '2020-08-19', 'AE-067', 'Julio', 'Gerson', 'Calderón', 'Flores', NULL, 'Julio Gerson Calderón Flores', 'fotoempleado/mN0rmBq1o1BbbGMhI6GsM4bdbPwiACosZkMcH00t.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjBHVFc2Zlcr', NULL),
+(68, '2020-12-11 12:21:51', '2020-12-11 12:21:51', '2020-09-01', 'AE-068', 'Wilber', 'Alexis', 'Hernández', 'Sánchez', NULL, 'Wilber Alexis Hernández Sánchez', 'fotoempleado/Z49aSn8bG0PQJcRp8rRbikHmA4615zlaowOeSpWT.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InpOdXUwSWk1', NULL),
+(69, '2020-12-11 12:22:43', '2020-12-11 12:22:43', '2020-09-04', 'AE-069', 'Rene', 'Samuel', 'Sandoval', 'Martínez', NULL, 'Rene Samuel Sandoval Martínez', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6ImFhVkNFeGRM', NULL),
+(70, '2020-12-11 12:23:23', '2020-12-11 12:23:23', '2020-10-01', 'AE-070', 'David', 'Daniel', 'Hidalgo', 'Pineda', NULL, 'David Daniel Hidalgo Pineda', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6IjZZVHRkMWth', NULL),
+(71, '2020-12-11 12:24:14', '2020-12-11 12:24:14', '2020-10-14', 'AE-071', 'José', 'Rogelio', 'Rubio', 'Méndez', NULL, 'José Rogelio Rubio Méndez', 'fotoempleado/TSIPbpKQrNBbazsvsq0JjmHprYfIVn31OBomWznX.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InRiaTZqYUo0', NULL),
+(72, '2020-12-11 12:24:58', '2020-12-11 12:24:58', '2020-10-21', 'AE-072', 'Brenda', 'Margarita', 'Mendoza', NULL, 'Cañas', 'Brenda Margarita Mendoza de Cañas', 'fotoempleado/pcWWZFabFoSnMvtAPtO5R6irC2lzN8fuPh78wKyW.jpeg', NULL, NULL, NULL, NULL, NULL, 2, 1, 110, 1, 'eyJpdiI6ImVibVBCWE83', NULL),
+(73, '2020-12-11 12:25:36', '2020-12-11 12:25:36', '2020-10-26', 'AE-073', 'Carlos', 'Alexander', 'Miranda', 'Oliva', NULL, 'Carlos Alexander Miranda Oliva', 'fotoempleado/XsrCc6bMuwJjxNExPvfsbR8HRNuvgr6UvpipFG6M.jpeg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6Ino4ajZxVkR1', NULL),
+(74, '2020-12-22 05:58:33', '2020-12-22 05:58:33', '2020-12-16', 'AE-074', 'Carlos', 'Alfredo', 'Rodriguez', 'Deodanes', NULL, 'Carlos Alfredo Rodriguez Deodanes', 'fotoempleado/perfilDefault.jpg', NULL, NULL, NULL, NULL, NULL, 1, 1, 110, 1, 'eyJpdiI6InFKekg3Rkhp', NULL);
 
 -- --------------------------------------------------------
 
@@ -225,16 +256,6 @@ CREATE TABLE `empleado_documentos` (
   `foto` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `empleado_documentos`
---
-
-INSERT INTO `empleado_documentos` (`id`, `created_at`, `updated_at`, `idempleado`, `idtipodocumento`, `numerodocumento`, `fechaexpedicion`, `fechavencimiento`, `foto`) VALUES
-(1, '2021-01-06 05:36:04', '2021-01-06 05:36:04', 3, 1, '06142045-8', NULL, NULL, NULL),
-(3, '2021-01-06 20:17:49', '2021-01-06 20:17:49', 4, 1, '1234574-5', NULL, NULL, NULL),
-(4, '2021-01-21 04:30:08', '2021-01-21 04:30:08', 5, 1, '1235456-8', NULL, NULL, NULL),
-(6, '2021-01-22 05:01:20', '2021-01-22 05:01:20', 1, 1, '12345678-9', NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -248,13 +269,6 @@ CREATE TABLE `empleado_documentos_fotos` (
   `idempleadodocumento` int(11) NOT NULL,
   `foto` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `empleado_documentos_fotos`
---
-
-INSERT INTO `empleado_documentos_fotos` (`id`, `created_at`, `updated_at`, `idempleadodocumento`, `foto`) VALUES
-(1, '2021-01-06 05:36:36', '2021-01-06 05:36:36', 1, '1609889796.png');
 
 -- --------------------------------------------------------
 
@@ -290,13 +304,6 @@ CREATE TABLE `empleado_referencias` (
   `idempleado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `empleado_referencias`
---
-
-INSERT INTO `empleado_referencias` (`id`, `created_at`, `updated_at`, `tipo`, `nombre`, `contacto`, `idempleado`) VALUES
-(1, '2021-01-22 05:02:47', '2021-01-22 05:02:47', 'Personal', 'Carlos Oliva', '22559988', 3);
-
 -- --------------------------------------------------------
 
 --
@@ -316,10 +323,8 @@ CREATE TABLE `empleado_users` (
 --
 
 INSERT INTO `empleado_users` (`id`, `created_at`, `updated_at`, `idusuario`, `idempleado`) VALUES
-(1, '2021-01-06 20:17:14', '2021-01-07 23:25:47', 2, 4),
-(2, '2021-01-07 23:25:58', '2021-01-07 23:25:58', 1, 5),
-(6, '2021-01-22 05:24:01', '2021-01-22 05:24:01', 3, 3),
-(10, '2021-01-27 22:10:34', '2021-01-27 22:10:34', 7, 62);
+(1, '2021-01-28 16:27:12', '2021-01-28 16:27:12', 1, 65),
+(2, '2021-01-28 16:54:06', '2021-01-28 16:54:06', 2, 62);
 
 -- --------------------------------------------------------
 
@@ -360,17 +365,6 @@ CREATE TABLE `equiposhistorials` (
   `uso` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `equiposhistorials`
---
-
-INSERT INTO `equiposhistorials` (`id`, `created_at`, `updated_at`, `instante`, `idequipotrabajo`, `idempleado`, `kilometraje`, `combustible`, `extinguidor`, `botiquin`, `equiposeguridad`, `observaciones`, `idusuario`, `latitud`, `longitud`, `uso`) VALUES
-(1, '2021-01-07 15:59:25', '2021-01-07 15:59:25', '2021-01-07 15:59:25', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13.6698395, -89.2941542, NULL),
-(2, '2021-01-07 16:01:28', '2021-01-07 16:01:28', '2021-01-07 16:01:28', 2, 3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13.6698395, -89.2941542, NULL),
-(8, '2021-01-11 16:11:25', '2021-01-11 22:11:39', '2021-01-11 16:11:25', 3, 62, 4578689, '1/4', 1, 1, 1, 'Prueba', 1, 13.6698658, -89.29412909999999, 'Oficina'),
-(9, '2021-01-13 15:10:06', '2021-01-13 21:10:18', '2021-01-13 15:10:06', 2, 63, 45678, 'LLENO', 1, 1, 1, NULL, 1, 13.670018899999999, -89.29421169999999, 'Proyecto'),
-(10, '2021-01-13 15:10:29', '2021-01-13 21:10:40', '2021-01-13 15:10:29', 1, 65, 45678, 'LLENO', 1, 1, 1, NULL, 1, 13.670018899999999, -89.29421169999999, 'Proyecto');
-
 -- --------------------------------------------------------
 
 --
@@ -388,15 +382,6 @@ CREATE TABLE `equipostrabajos` (
   `año` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `equipostrabajos`
---
-
-INSERT INTO `equipostrabajos` (`id`, `created_at`, `updated_at`, `codigo`, `placa`, `marca`, `modelo`, `año`, `descripcion`) VALUES
-(1, '2021-01-06 04:40:37', '2021-01-06 04:40:37', 'EQ-01', 'P-12345', 'Honda', 'Doble Cabina', '2021', 'Vehiculo de gerencia'),
-(2, '2021-01-07 20:56:19', '2021-01-07 20:56:19', 'EQ-02', 'P-80020', 'Panel', 'Blanco', '2020', 'KIa'),
-(3, '2021-01-07 20:56:33', '2021-01-07 20:56:33', 'EQ-03', 'P-123456', 'Honda', 'Gris', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -461,38 +446,19 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `formuas` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `fecha` date NOT NULL,
-  `nombrecompleto` varchar(100) NOT NULL,
-  `dui` varchar(20) DEFAULT NULL,
-  `idgenero` int(11) DEFAULT NULL,
-  `empresa` varchar(50) DEFAULT NULL,
-  `otraempresa` varchar(50) DEFAULT NULL,
-  `proyecto` varchar(80) DEFAULT NULL,
-  `temperatura` float DEFAULT NULL,
-  `comentarios` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `formuas`
---
-
-INSERT INTO `formuas` (`id`, `created_at`, `updated_at`, `fecha`, `nombrecompleto`, `dui`, `idgenero`, `empresa`, `otraempresa`, `proyecto`, `temperatura`, `comentarios`) VALUES
-(29, '2021-01-07 03:40:29', '2021-01-07 03:40:29', '2021-01-06', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', 35.2, NULL),
-(30, '2021-01-07 20:29:18', '2021-01-07 20:29:18', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', 35.2, NULL),
-(31, '2021-01-07 20:34:15', '2021-01-07 20:34:15', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', NULL, NULL),
-(32, '2021-01-07 20:40:45', '2021-01-07 20:40:45', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', NULL, NULL),
-(33, '2021-01-07 20:46:18', '2021-01-07 20:46:18', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', 35.6, NULL),
-(34, '2021-01-07 20:50:35', '2021-01-07 20:50:35', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', 35.5, NULL),
-(35, '2021-01-07 20:51:20', '2021-01-07 20:51:20', '2021-01-07', 'Denis Iván Herrera', '06142045-8', NULL, 'Advanced Energy', NULL, 'Administración', NULL, NULL),
-(36, '2021-01-12 02:32:52', '2021-01-12 02:32:52', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
-(37, '2021-01-12 02:32:58', '2021-01-12 02:32:58', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
-(38, '2021-01-12 02:34:24', '2021-01-12 02:34:24', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
-(39, '2021-01-12 02:34:29', '2021-01-12 02:34:29', '2021-01-11', 'Prueba', '456789', 1, 'Advanced Energy', NULL, 'Administración', 35.7, NULL),
-(40, '2021-01-14 22:15:03', '2021-01-14 22:15:03', '2021-01-14', 'José Miguel Rodríguez Romero', '135678-8', 1, 'Advanced Energy', NULL, 'Administracion', 35.7, NULL),
-(41, '2021-01-21 04:30:26', '2021-01-21 04:30:26', '2021-01-20', 'José Miguel Rodríguez Romero', '1235456-8', 1, 'Advanced Energy', NULL, 'Administración', 35, NULL);
+  `nombrecompleto` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dui` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `idgenero` int(11) NOT NULL,
+  `empresa` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `otraempresa` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `proyecto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `temperatura` double(8,2) DEFAULT NULL,
+  `comentarios` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -501,162 +467,13 @@ INSERT INTO `formuas` (`id`, `created_at`, `updated_at`, `fecha`, `nombrecomplet
 --
 
 CREATE TABLE `formubs` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `idformua` int(11) NOT NULL,
-  `idformuc` int(11) DEFAULT NULL,
-  `respuesta` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `formubs`
---
-
-INSERT INTO `formubs` (`id`, `created_at`, `updated_at`, `idformua`, `idformuc`, `respuesta`) VALUES
-(183, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(184, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(185, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(186, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(187, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(188, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(189, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(190, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(191, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(192, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(193, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(194, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(195, '2021-01-07 03:40:29', '2021-01-07 03:40:29', 29, NULL, 'NO'),
-(196, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(197, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(198, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(199, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(200, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(201, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(202, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(203, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(204, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(205, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(206, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(207, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(208, '2021-01-07 20:29:18', '2021-01-07 20:29:18', 30, NULL, 'NO'),
-(209, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(210, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(211, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(212, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(213, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(214, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(215, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(216, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(217, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(218, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(219, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(220, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(221, '2021-01-07 20:34:15', '2021-01-07 20:34:15', 31, NULL, 'NO'),
-(222, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(223, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(224, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(225, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(226, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(227, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(228, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(229, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(230, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(231, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(232, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(233, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(234, '2021-01-07 20:40:45', '2021-01-07 20:40:45', 32, NULL, 'NO'),
-(235, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(236, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(237, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(238, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(239, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(240, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(241, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(242, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(243, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(244, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(245, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(246, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(247, '2021-01-07 20:46:18', '2021-01-07 20:46:18', 33, NULL, 'NO'),
-(248, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(249, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(250, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(251, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(252, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(253, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(254, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(255, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(256, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(257, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(258, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(259, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(260, '2021-01-07 20:50:35', '2021-01-07 20:50:35', 34, NULL, 'NO'),
-(261, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(262, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(263, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(264, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 0, NULL),
-(265, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 0, NULL),
-(266, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, 0, NULL),
-(267, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(268, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(269, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(270, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(271, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(272, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(273, '2021-01-07 20:51:20', '2021-01-07 20:51:20', 35, NULL, 'NO'),
-(274, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 1, 'SI'),
-(275, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 2, 'SI'),
-(276, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 3, 'SI'),
-(277, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 4, 'SI'),
-(278, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 5, 'SI'),
-(279, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 6, 'SI'),
-(280, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 7, 'SI'),
-(281, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 8, 'SI'),
-(282, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 9, 'SI'),
-(283, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 10, 'SI'),
-(284, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 11, 'SI'),
-(285, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 12, 'SI'),
-(286, '2021-01-12 02:34:24', '2021-01-12 02:34:24', 38, 13, 'SI'),
-(287, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 1, 'SI'),
-(288, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 2, 'SI'),
-(289, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 3, 'SI'),
-(290, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 4, 'SI'),
-(291, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 5, 'SI'),
-(292, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 6, 'SI'),
-(293, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 7, 'SI'),
-(294, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 8, 'SI'),
-(295, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 9, 'SI'),
-(296, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 10, 'SI'),
-(297, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 11, 'SI'),
-(298, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 12, 'SI'),
-(299, '2021-01-12 02:34:29', '2021-01-12 02:34:29', 39, 13, 'SI'),
-(300, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 1, 'NO'),
-(301, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 2, 'SI'),
-(302, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 3, 'SI'),
-(303, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 4, 'SI'),
-(304, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 5, 'SI'),
-(305, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 6, 'SI'),
-(306, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 7, 'SI'),
-(307, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 8, 'SI'),
-(308, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 9, 'SI'),
-(309, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 10, 'SI'),
-(310, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 11, 'SI'),
-(311, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 12, 'SI'),
-(312, '2021-01-14 22:15:03', '2021-01-14 22:15:03', 40, 13, 'SI'),
-(313, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 1, 'SI'),
-(314, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 2, 'SI'),
-(315, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 3, 'SI'),
-(316, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 4, 'SI'),
-(317, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 5, 'SI'),
-(318, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 6, 'SI'),
-(319, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 7, 'SI'),
-(320, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 8, 'SI'),
-(321, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 9, 'SI'),
-(322, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 10, 'SI'),
-(323, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 11, 'SI'),
-(324, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 12, 'SI'),
-(325, '2021-01-21 04:30:26', '2021-01-21 04:30:26', 41, 13, 'SI');
+  `idformuc` int(11) NOT NULL,
+  `respuesta` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -665,12 +482,12 @@ INSERT INTO `formubs` (`id`, `created_at`, `updated_at`, `idformua`, `idformuc`,
 --
 
 CREATE TABLE `formucs` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `sintoma` varchar(200) NOT NULL,
-  `puntos` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `sintoma` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `puntos` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `formucs`
@@ -744,6 +561,26 @@ CREATE TABLE `grupohorariosds` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `grupos`
+--
+
+CREATE TABLE `grupos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `grupo` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `grupos`
+--
+
+INSERT INTO `grupos` (`id`, `created_at`, `updated_at`, `grupo`) VALUES
+(1, '2021-01-28 22:27:48', '2021-01-28 22:27:48', 'Ingenieria');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `marcacionesempleados`
 --
 
@@ -761,59 +598,6 @@ CREATE TABLE `marcacionesempleados` (
   `latitud` double NOT NULL,
   `longitud` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `marcacionesempleados`
---
-
-INSERT INTO `marcacionesempleados` (`id`, `created_at`, `updated_at`, `idempleado`, `idusuario`, `tipo`, `fecha`, `instante`, `observaciones`, `idubicacion`, `latitud`, `longitud`) VALUES
-(30, '2021-01-05 22:29:07', '2021-01-05 22:29:07', 3, 1, 'Salida', '2021-01-05', '16:29:07', NULL, 1, 13.670018899999999, -89.29421169999999),
-(31, '2021-01-05 22:29:15', '2021-01-05 22:29:15', 3, 1, 'Entrada', '2021-01-05', '16:29:15', NULL, 1, 13.670018899999999, -89.29421169999999),
-(32, '2021-01-05 22:29:17', '2021-01-05 22:29:17', 3, 1, 'Salida', '2021-01-05', '16:29:17', NULL, 1, 13.670018899999999, -89.29421169999999),
-(33, '2021-01-05 22:29:20', '2021-01-05 22:29:20', 3, 1, 'Entrada', '2021-01-05', '16:29:20', NULL, 1, 13.670018899999999, -89.29421169999999),
-(34, '2021-01-05 22:29:22', '2021-01-05 22:29:22', 3, 1, 'Salida', '2021-01-05', '16:29:22', NULL, 1, 13.670018899999999, -89.29421169999999),
-(35, '2021-01-05 22:29:24', '2021-01-05 22:29:24', 3, 1, 'Entrada', '2021-01-05', '16:29:24', NULL, 1, 13.670018899999999, -89.29421169999999),
-(36, '2021-01-05 22:29:26', '2021-01-05 22:29:26', 3, 1, 'invalido', '2021-01-05', '16:29:26', NULL, 1, 13.670018899999999, -89.29421169999999),
-(37, '2021-01-06 14:22:54', '2021-01-06 14:22:54', 3, 1, 'Entrada', '2021-01-06', '08:22:54', NULL, 1, 13.6717333, -89.29269099999999),
-(38, '2021-01-06 14:23:09', '2021-01-06 14:23:09', 3, 1, 'Salida', '2021-01-06', '08:23:09', NULL, 1, 13.6717333, -89.29269099999999),
-(39, '2021-01-06 14:23:12', '2021-01-06 14:23:12', 3, 1, 'Entrada', '2021-01-06', '08:23:12', NULL, 1, 13.6717333, -89.29269099999999),
-(40, '2021-01-06 16:16:00', '2021-01-06 16:16:00', 3, 1, 'Salida', '2021-01-06', '10:16:00', NULL, 1, 13.6717333, -89.29269099999999),
-(41, '2021-01-06 16:16:03', '2021-01-06 16:16:03', 3, 1, 'Entrada', '2021-01-06', '10:16:03', NULL, 1, 13.6717333, -89.29269099999999),
-(42, '2021-01-06 16:18:27', '2021-01-06 16:18:27', 3, 1, 'Salida', '2021-01-06', '10:18:27', NULL, 1, 13.6717333, -89.29269099999999),
-(43, '2021-01-07 14:30:19', '2021-01-07 14:30:19', 3, 1, 'Entrada', '2021-01-07', '08:30:19', NULL, 1, 13.6698367, -89.2941534),
-(44, '2021-01-07 14:35:32', '2021-01-07 14:35:32', 3, 1, 'Salida', '2021-01-07', '08:35:32', NULL, 1, 13.6698367, -89.2941534),
-(45, '2021-01-07 14:36:38', '2021-01-07 14:36:38', 3, 1, 'Entrada', '2021-01-07', '08:36:38', NULL, 1, 13.6698367, -89.2941534),
-(46, '2021-01-07 14:36:40', '2021-01-07 14:36:40', 3, 1, 'Salida', '2021-01-07', '08:36:40', NULL, 1, 13.6698367, -89.2941534),
-(47, '2021-01-07 14:36:43', '2021-01-07 14:36:43', 3, 1, 'Entrada', '2021-01-07', '08:36:43', NULL, 1, 13.6698367, -89.2941534),
-(48, '2021-01-07 15:27:29', '2021-01-07 15:27:29', 4, 1, 'Entrada', '2021-01-07', '09:27:29', NULL, 1, 13.670018899999999, -89.29421169999999),
-(49, '2021-01-07 15:27:44', '2021-01-07 15:27:44', 4, 1, 'Salida', '2021-01-07', '09:27:44', NULL, 1, 13.670018899999999, -89.29421169999999),
-(50, '2021-01-07 15:28:27', '2021-01-07 15:28:27', 4, 1, 'Entrada', '2021-01-07', '09:28:27', NULL, 1, 13.670018899999999, -89.29421169999999),
-(51, '2021-01-07 15:47:37', '2021-01-07 15:47:37', 4, 1, 'Salida', '2021-01-07', '09:47:37', NULL, 1, 13.670018899999999, -89.29421169999999),
-(52, '2021-01-07 15:55:28', '2021-01-07 15:55:28', 4, 1, 'Entrada', '2021-01-07', '09:55:28', NULL, 1, 13.6698395, -89.2941542),
-(53, '2021-01-07 16:40:56', '2021-01-07 16:40:56', 4, 1, 'Salida', '2021-01-07', '10:40:56', NULL, 1, 13.670018899999999, -89.29421169999999),
-(54, '2021-01-07 16:42:05', '2021-01-07 16:42:05', 1, 3, 'Entrada', '2021-01-07', '10:42:05', NULL, 1, 13.6698391, -89.2941576),
-(55, '2021-01-07 17:26:17', '2021-01-07 17:26:17', 5, 1, 'Entrada', '2021-01-07', '11:26:17', NULL, 1, 13.670018899999999, -89.29421169999999),
-(56, '2021-01-07 17:43:20', '2021-01-07 17:43:20', 5, 1, 'Salida', '2021-01-07', '11:43:20', NULL, 1, 13.669816299999999, -89.2939152),
-(57, '2021-01-07 17:55:48', '2021-01-07 17:55:48', 5, 1, 'Entrada', '2021-01-07', '11:55:48', NULL, 1, 13.670018899999999, -89.29421169999999),
-(58, '2021-01-07 18:23:27', '2021-01-07 18:23:27', 5, 1, 'Salida', '2021-01-07', '12:23:27', NULL, 1, 13.6698423, -89.2939699),
-(59, '2021-01-08 18:08:04', '2021-01-08 18:08:04', 5, 1, 'Salida', '2021-01-08', '12:08:04', NULL, 1, 13.6698749, -89.29412169999999),
-(60, '2021-01-08 18:08:12', '2021-01-08 18:08:12', 5, 1, 'Entrada', '2021-01-08', '12:08:12', NULL, 1, 13.6698749, -89.29412169999999),
-(61, '2021-01-08 18:08:19', '2021-01-08 18:08:19', 5, 1, 'Salida', '2021-01-08', '12:08:19', NULL, 1, 13.6698749, -89.29412169999999),
-(62, '2021-01-11 15:28:52', '2021-01-11 15:28:52', 5, 1, 'Entrada', '2021-01-11', '09:28:52', NULL, 1, 13.670018899999999, -89.29421169999999),
-(63, '2021-01-11 15:37:10', '2021-01-11 15:37:10', 5, 1, 'Salida', '2021-01-11', '09:37:10', NULL, 1, 13.670018899999999, -89.29421169999999),
-(76, '2021-01-13 15:56:32', '2021-01-13 15:56:32', 63, 1, 'Salida', '2021-01-13', '09:56:32', NULL, 1, 13.670018899999999, -89.29421169999999),
-(77, '2021-01-13 15:59:59', '2021-01-13 15:59:59', 65, 1, 'Entrada', '2021-01-13', '09:59:59', NULL, 1, 13.670018899999999, -89.29421169999999),
-(78, '2021-01-13 18:13:20', '2021-01-13 18:13:20', 65, 1, 'Salida', '2021-01-13', '12:13:20', NULL, 1, 13.669797899999999, -89.2938848),
-(79, '2021-01-13 18:13:45', '2021-01-13 18:13:45', 65, 1, 'Entrada', '2021-01-13', '12:13:45', NULL, 1, 13.669797899999999, -89.2938848),
-(80, '2021-01-13 18:22:09', '2021-01-13 18:22:09', 63, 1, 'Entrada', '2021-01-13', '12:22:09', NULL, 1, 13.669868000000001, -89.29412789999999),
-(81, '2021-01-13 18:22:30', '2021-01-13 18:22:30', 65, 1, 'Salida', '2021-01-13', '12:22:30', NULL, 1, 13.669868000000001, -89.29412789999999),
-(82, '2021-01-13 18:22:41', '2021-01-13 18:22:41', 63, 1, 'Salida', '2021-01-13', '12:22:41', NULL, 1, 13.669868000000001, -89.29412789999999),
-(83, '2021-01-14 16:09:01', '2021-01-14 16:09:01', 5, 1, 'Entrada', '2021-01-14', '10:09:01', NULL, 1, 13.66987, -89.2941599),
-(84, '2021-01-20 22:47:24', '2021-01-20 22:47:24', 5, 1, 'Salida', '2021-01-20', '16:47:24', NULL, 1, 13.6699978, -89.294731),
-(85, '2021-01-20 23:04:28', '2021-01-20 23:04:28', 5, 1, 'Entrada', '2021-01-20', '17:04:28', NULL, 1, 13.6699978, -89.294731),
-(86, '2021-01-21 00:09:55', '2021-01-21 00:09:55', 5, 1, 'Salida', '2021-01-20', '18:09:55', NULL, 1, 13.6699978, -89.294731),
-(87, '2021-01-21 18:25:42', '2021-01-21 18:25:42', 5, 1, 'Salida', '2021-01-21', '12:25:42', NULL, 1, 13.670018899999999, -89.29421169999999),
-(88, '2021-01-27 18:53:31', '2021-01-27 18:53:31', 5, 1, 'Salida', '2021-01-27', '12:53:31', NULL, 1, 13.670018899999999, -89.29421169999999);
 
 -- --------------------------------------------------------
 
@@ -838,31 +622,35 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (4, '2020_10_27_152110_create_empleados_table', 1),
 (5, '2020_10_27_152523_create_cargos_table', 1),
 (6, '2020_10_27_153754_create_autorizacionusuarios_table', 1),
-(7, '2020_10_27_153817_create_permisos_table', 1),
-(8, '2020_10_27_153851_create_marcacionesempleados_table', 1),
-(9, '2020_10_27_153905_create_equiposhistorials_table', 1),
-(10, '2020_10_27_154018_create_grupohorarios_table', 1),
-(11, '2020_10_27_154054_create_equipostrabajos_table', 1),
-(12, '2020_10_27_154106_create_equiposfotos_table', 1),
-(13, '2020_10_27_160014_create_ubicacions_table', 1),
-(14, '2020_10_28_135203_create_sessions_table', 1),
-(15, '2020_11_06_195359_create_dias_table', 1),
-(16, '2020_11_06_195417_create_grupohorariosds_table', 1),
-(17, '2020_11_06_220014_create_departamentos_table', 1),
-(18, '2020_11_11_040837_create_modulos_table', 1),
-(19, '2020_11_11_042215_create_svdepartamentos_table', 1),
-(20, '2020_11_11_042234_create_svmunicipios_table', 1),
-(21, '2020_11_11_042437_create_tipodocumentos_table', 1),
-(22, '2020_11_11_042500_create_empleado_documentos_table', 1),
-(23, '2020_11_11_152250_create_estadocivils_table', 1),
-(24, '2020_11_11_152307_create_generos_table', 1),
-(25, '2020_11_13_170031_create_empleado_users_table', 1),
-(26, '2020_11_13_170137_create_empleado_empresas_table', 1),
-(27, '2020_11_13_170653_create_empleado_referencias_table', 1),
-(28, '2020_11_26_160626_create_pais_table', 1),
-(29, '2020_11_26_160941_create_dias_feriados_table', 1),
-(30, '2020_11_26_215240_create_empleado_documentos_fotos_table', 1),
-(31, '2020_12_18_182744_create_equipo_mantenimientos_table', 1);
+(7, '2020_10_27_153851_create_marcacionesempleados_table', 1),
+(8, '2020_10_27_153905_create_equiposhistorials_table', 1),
+(9, '2020_10_27_154018_create_grupohorarios_table', 1),
+(10, '2020_10_27_154054_create_equipostrabajos_table', 1),
+(11, '2020_10_27_154106_create_equiposfotos_table', 1),
+(12, '2020_10_27_160014_create_ubicacions_table', 1),
+(13, '2020_10_28_135203_create_sessions_table', 1),
+(14, '2020_11_06_195359_create_dias_table', 1),
+(15, '2020_11_06_195417_create_grupohorariosds_table', 1),
+(16, '2020_11_06_220014_create_departamentos_table', 1),
+(17, '2020_11_11_040837_create_modulos_table', 1),
+(18, '2020_11_11_042215_create_svdepartamentos_table', 1),
+(19, '2020_11_11_042234_create_svmunicipios_table', 1),
+(20, '2020_11_11_042437_create_tipodocumentos_table', 1),
+(21, '2020_11_11_042500_create_empleado_documentos_table', 1),
+(22, '2020_11_11_152250_create_estadocivils_table', 1),
+(23, '2020_11_11_152307_create_generos_table', 1),
+(24, '2020_11_13_170031_create_empleado_users_table', 1),
+(25, '2020_11_13_170137_create_empleado_empresas_table', 1),
+(26, '2020_11_13_170653_create_empleado_referencias_table', 1),
+(27, '2020_11_26_160626_create_pais_table', 1),
+(28, '2020_11_26_160941_create_dias_feriados_table', 1),
+(29, '2020_11_26_215240_create_empleado_documentos_fotos_table', 1),
+(30, '2020_12_18_182744_create_equipo_mantenimientos_table', 1),
+(31, '2021_01_06_061831_create_formucs_table', 1),
+(32, '2021_01_11_020131_create_formubs_table', 1),
+(33, '2021_01_11_020243_create_formuas_table', 1),
+(34, '2021_01_28_145304_create_grupos_table', 1),
+(35, '2021_01_28_162439_create_autorizaciongrupos_table', 1);
 
 -- --------------------------------------------------------
 
@@ -891,64 +679,64 @@ INSERT INTO `modulos` (`id`, `created_at`, `updated_at`, `modulo`, `ruta`, `icon
 (2, NULL, NULL, 'RRHH', 'rrhh', '<i class=\"fas fa-users fa-3x\"></i>', NULL, NULL, NULL),
 (3, NULL, NULL, 'Ingenieria', 'ingenieria.index', '<i class=\"fab fa-wpforms fa-3x\"></i>', NULL, NULL, NULL),
 (4, NULL, NULL, 'Reportes', 'reportes', '<i class=\"fas fa-file-signature fa-3x\"></i>', NULL, NULL, NULL),
-(5, '2021-01-06 03:36:19', '2021-01-06 03:39:01', 'Inicio', 'inicio', '<i class=\"fas fa-home\"></i>', 1, 0, 1),
-(6, '2021-01-06 03:36:35', '2021-01-06 03:39:44', 'Gestión', NULL, '<i class=\"fas fa-user-cog\"></i>', 1, 0, 2),
-(7, '2021-01-06 03:37:03', '2021-01-06 03:40:22', 'General', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 3),
-(8, '2021-01-06 03:37:12', '2021-01-06 03:45:11', 'Finanzas', NULL, '<i class=\"fas fa-dollar-sign\"></i>', 1, 0, 4),
-(9, '2021-01-06 03:37:26', '2021-01-06 03:45:39', 'Bodega e Inventario', NULL, '<i class=\"fas fa-dolly-flatbed\"></i>', 1, 0, 5),
-(10, '2021-01-06 03:37:37', '2021-01-06 03:45:56', 'Ingenieria', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 6),
-(11, '2021-01-06 03:37:47', '2021-01-06 03:46:06', 'Proyectos y supervisión', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 7),
-(12, '2021-01-06 03:37:57', '2021-01-06 03:46:11', 'Operación y mantenimiento', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 8),
-(13, '2021-01-06 03:38:04', '2021-01-06 03:46:21', 'Obra civil', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 9),
-(14, '2021-01-06 03:38:20', '2021-01-06 03:46:37', 'Recursos humanos', NULL, '<i class=\"fas fa-users\"></i>', 1, 0, 10),
-(15, '2021-01-06 03:38:38', '2021-01-06 03:46:59', 'Informes', NULL, '<i class=\"far fa-file-alt\"></i>', 1, 0, 11),
-(16, '2021-01-06 03:47:26', '2021-01-06 03:47:26', 'Inicio', NULL, NULL, 2, 6, 1),
-(17, '2021-01-06 03:47:52', '2021-01-06 03:47:52', 'Estructura de menú', 'modulos.index', NULL, 3, 16, 1),
-(19, '2021-01-06 03:49:20', '2021-01-06 03:49:20', 'Autorizaciones', NULL, NULL, 3, 16, 2),
-(20, '2021-01-06 03:49:41', '2021-01-06 03:49:41', 'Por usuario', 'autorizacion.usuario', NULL, 4, 19, 1),
-(21, '2021-01-06 03:49:53', '2021-01-06 03:49:53', 'Por grupo', 'autorizacion.grupo', NULL, 4, 19, 2),
-(22, '2021-01-06 03:50:36', '2021-01-06 03:50:36', 'General', NULL, NULL, 2, 6, 2),
-(23, '2021-01-06 03:51:01', '2021-01-06 03:51:01', 'Usuarios', 'usuarios.index', NULL, 3, 22, 1),
-(24, '2021-01-06 03:51:35', '2021-01-06 03:51:35', 'Grupos', NULL, NULL, 3, 22, 2),
-(25, '2021-01-06 03:53:18', '2021-01-06 03:53:18', 'Gestión vehiculos', NULL, NULL, 2, 7, 1),
-(26, '2021-01-06 03:53:29', '2021-01-06 03:53:29', 'Calendario', NULL, NULL, 2, 7, 2),
-(27, '2021-01-06 03:53:36', '2021-01-06 03:53:36', 'Correo', NULL, NULL, 2, 7, 3),
-(28, '2021-01-06 03:53:48', '2021-01-07 21:10:11', 'Aplicación', 'load.aplicacion', NULL, 2, 7, 4),
-(29, '2021-01-06 03:54:04', '2021-01-06 09:52:44', 'Vehiculos', 'equipos.index', NULL, 3, 25, 1),
-(30, '2021-01-06 03:55:47', '2021-01-06 03:55:47', 'Mantenimientos', NULL, NULL, 3, 25, 2),
-(31, '2021-01-06 03:55:59', '2021-01-06 03:55:59', 'Control de vehiculos', NULL, NULL, 3, 25, 3),
-(32, '2021-01-06 03:56:37', '2021-01-13 21:15:34', 'Asistencia', 'marcaciones', NULL, 2, 14, 1),
-(33, '2021-01-06 03:56:49', '2021-01-06 03:56:49', 'Empleados', 'empleados.index', NULL, 2, 14, 2),
-(34, '2021-01-06 03:57:21', '2021-01-06 03:57:21', 'Vacaciones', NULL, NULL, 2, 14, 3),
-(35, '2021-01-06 03:57:27', '2021-01-06 03:57:27', 'Permisos', NULL, NULL, 2, 14, 4),
-(36, '2021-01-06 03:57:43', '2021-01-06 03:57:43', 'Formularios', NULL, NULL, 2, 14, 5),
-(37, '2021-01-06 03:57:52', '2021-01-06 10:59:50', 'Covid-19', 'formulario.covid', NULL, 3, 36, 1),
-(38, '2021-01-06 03:58:59', '2021-01-06 03:58:59', 'Ubicación', NULL, NULL, 2, 6, 3),
-(39, '2021-01-06 03:59:08', '2021-01-06 03:59:08', 'Empleado', NULL, NULL, 2, 6, 4),
-(40, '2021-01-06 03:59:14', '2021-01-06 03:59:14', 'Empresa', NULL, NULL, 2, 6, 5),
-(41, '2021-01-06 03:59:28', '2021-01-06 03:59:28', 'Recursos humanos', NULL, NULL, 2, 6, 6),
-(42, '2021-01-06 03:59:42', '2021-01-06 03:59:42', 'Herramientas', NULL, NULL, 2, 6, 7),
-(43, '2021-01-06 03:59:50', '2021-01-06 03:59:50', 'Formularios', NULL, NULL, 3, 42, 1),
-(44, '2021-01-06 04:00:32', '2021-01-06 04:00:32', 'Departamentos', 'departamento.index', NULL, 3, 40, 1),
-(45, '2021-01-06 04:01:25', '2021-01-06 04:01:25', 'Cargos', 'cargos.index', NULL, 3, 40, 2),
-(46, '2021-01-06 04:01:43', '2021-01-06 04:01:43', 'Proyectos', 'ubicacion.index', NULL, 3, 40, 3),
-(47, '2021-01-06 08:59:53', '2021-01-06 08:59:53', 'Paises', 'pais.index', NULL, 3, 38, 1),
-(48, '2021-01-06 09:00:14', '2021-01-06 09:00:14', 'Departamentos', 'svdepartamento.index', NULL, 3, 38, 2),
-(49, '2021-01-06 09:03:35', '2021-01-06 09:03:35', 'Municipios', 'svmunicipio.index', NULL, 3, 38, 3),
-(50, '2021-01-06 09:04:20', '2021-01-06 09:04:20', 'Tipo documento', 'tipodocumento.index', NULL, 3, 39, 1),
-(51, '2021-01-06 09:04:32', '2021-01-06 09:04:32', 'Estado civil', 'estadocivil.index', NULL, 3, 39, 2),
-(52, '2021-01-06 09:04:49', '2021-01-06 09:04:49', 'Genero', 'genero.index', NULL, 3, 39, 3),
-(53, '2021-01-06 09:05:39', '2021-01-06 09:05:39', 'Dias laborales', 'dias.index', NULL, 3, 41, 1),
-(54, '2021-01-06 09:06:00', '2021-01-06 09:06:00', 'Dias feriados', 'diasFeriados.index', NULL, 3, 41, 2),
-(55, '2021-01-06 09:06:38', '2021-01-06 09:06:38', 'Horarios laborales', 'grupohorario.index', NULL, 3, 41, 3),
-(56, '2021-01-06 09:08:47', '2021-01-06 09:08:47', 'General', NULL, NULL, 2, 15, 1),
-(57, '2021-01-06 09:09:19', '2021-01-06 09:09:19', 'Gestión vehiculos', NULL, NULL, 3, 56, 1),
-(58, '2021-01-06 09:09:33', '2021-01-12 03:04:49', 'Control vehiculos', 'reportes,58', NULL, 4, 57, 1),
-(59, '2021-01-06 09:09:52', '2021-01-06 09:09:52', 'Recursos humanos', NULL, NULL, 2, 15, 2),
-(60, '2021-01-06 09:10:08', '2021-01-12 02:41:52', 'Asistencia', 'reportes,60', NULL, 3, 59, 1),
-(61, '2021-01-06 11:26:05', '2021-01-06 11:26:05', 'Productos', NULL, NULL, 2, 9, 1),
-(62, '2021-01-06 11:26:16', '2021-01-06 11:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2),
-(63, '2021-01-22 05:28:28', '2021-01-22 05:28:28', 'Accesos directos', NULL, NULL, 3, 16, 3);
+(5, '2021-01-06 09:36:19', '2021-01-06 09:39:01', 'Inicio', 'inicio', '<i class=\"fas fa-home\"></i>', 1, 0, 1),
+(6, '2021-01-06 09:36:35', '2021-01-06 09:39:44', 'Gestión', NULL, '<i class=\"fas fa-user-cog\"></i>', 1, 0, 2),
+(7, '2021-01-06 09:37:03', '2021-01-06 09:40:22', 'General', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 3),
+(8, '2021-01-06 09:37:12', '2021-01-06 09:45:11', 'Finanzas', NULL, '<i class=\"fas fa-dollar-sign\"></i>', 1, 0, 4),
+(9, '2021-01-06 09:37:26', '2021-01-06 09:45:39', 'Bodega e Inventario', NULL, '<i class=\"fas fa-dolly-flatbed\"></i>', 1, 0, 5),
+(10, '2021-01-06 09:37:37', '2021-01-06 09:45:56', 'Ingenieria', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 6),
+(11, '2021-01-06 09:37:47', '2021-01-06 09:46:06', 'Proyectos y supervisión', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 7),
+(12, '2021-01-06 09:37:57', '2021-01-06 09:46:11', 'Operación y mantenimiento', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 8),
+(13, '2021-01-06 09:38:04', '2021-01-06 09:46:21', 'Obra civil', NULL, '<i class=\"far fa-window-maximize\"></i>', 1, 0, 9),
+(14, '2021-01-06 09:38:20', '2021-01-06 09:46:37', 'Recursos humanos', NULL, '<i class=\"fas fa-users\"></i>', 1, 0, 10),
+(15, '2021-01-06 09:38:38', '2021-01-06 09:46:59', 'Informes', NULL, '<i class=\"far fa-file-alt\"></i>', 1, 0, 11),
+(16, '2021-01-06 09:47:26', '2021-01-06 09:47:26', 'Inicio', NULL, NULL, 2, 6, 1),
+(17, '2021-01-06 09:47:52', '2021-01-06 09:47:52', 'Estructura de menú', 'modulos.index', NULL, 3, 16, 1),
+(19, '2021-01-06 09:49:20', '2021-01-06 09:49:20', 'Autorizaciones', NULL, NULL, 3, 16, 2),
+(20, '2021-01-06 09:49:41', '2021-01-06 09:49:41', 'Por usuario', 'autorizacion.usuario', NULL, 4, 19, 1),
+(21, '2021-01-06 09:49:53', '2021-01-06 09:49:53', 'Por grupo', 'autorizacion.grupo', NULL, 4, 19, 2),
+(22, '2021-01-06 09:50:36', '2021-01-06 09:50:36', 'General', NULL, NULL, 2, 6, 2),
+(23, '2021-01-06 09:51:01', '2021-01-06 09:51:01', 'Usuarios', 'usuarios.index', NULL, 3, 22, 1),
+(24, '2021-01-06 09:51:35', '2021-01-28 22:27:39', 'Grupos', 'grupo.index', NULL, 3, 22, 2),
+(25, '2021-01-06 09:53:18', '2021-01-06 09:53:18', 'Gestión vehiculos', NULL, NULL, 2, 7, 1),
+(26, '2021-01-06 09:53:29', '2021-01-06 09:53:29', 'Calendario', NULL, NULL, 2, 7, 2),
+(27, '2021-01-06 09:53:36', '2021-01-06 09:53:36', 'Correo', NULL, NULL, 2, 7, 3),
+(28, '2021-01-06 09:53:48', '2021-01-08 03:10:11', 'Aplicación', 'load.aplicacion', NULL, 2, 7, 4),
+(29, '2021-01-06 09:54:04', '2021-01-06 15:52:44', 'Vehiculos', 'equipos.index', NULL, 3, 25, 1),
+(30, '2021-01-06 09:55:47', '2021-01-06 09:55:47', 'Mantenimientos', NULL, NULL, 3, 25, 2),
+(31, '2021-01-06 09:55:59', '2021-01-06 09:55:59', 'Control de vehiculos', NULL, NULL, 3, 25, 3),
+(32, '2021-01-06 09:56:37', '2021-01-14 03:15:34', 'Asistencia', 'marcaciones', NULL, 2, 14, 1),
+(33, '2021-01-06 09:56:49', '2021-01-06 09:56:49', 'Empleados', 'empleados.index', NULL, 2, 14, 2),
+(34, '2021-01-06 09:57:21', '2021-01-06 09:57:21', 'Vacaciones', NULL, NULL, 2, 14, 3),
+(35, '2021-01-06 09:57:27', '2021-01-06 09:57:27', 'Permisos', NULL, NULL, 2, 14, 4),
+(36, '2021-01-06 09:57:43', '2021-01-06 09:57:43', 'Formularios', NULL, NULL, 2, 14, 5),
+(37, '2021-01-06 09:57:52', '2021-01-06 16:59:50', 'Covid-19', 'formulario.covid', NULL, 3, 36, 1),
+(38, '2021-01-06 09:58:59', '2021-01-06 09:58:59', 'Ubicación', NULL, NULL, 2, 6, 3),
+(39, '2021-01-06 09:59:08', '2021-01-06 09:59:08', 'Empleado', NULL, NULL, 2, 6, 4),
+(40, '2021-01-06 09:59:14', '2021-01-06 09:59:14', 'Empresa', NULL, NULL, 2, 6, 5),
+(41, '2021-01-06 09:59:28', '2021-01-06 09:59:28', 'Recursos humanos', NULL, NULL, 2, 6, 6),
+(42, '2021-01-06 09:59:42', '2021-01-06 09:59:42', 'Herramientas', NULL, NULL, 2, 6, 7),
+(43, '2021-01-06 09:59:50', '2021-01-06 09:59:50', 'Formularios', NULL, NULL, 3, 42, 1),
+(44, '2021-01-06 10:00:32', '2021-01-06 10:00:32', 'Departamentos', 'departamento.index', NULL, 3, 40, 1),
+(45, '2021-01-06 10:01:25', '2021-01-06 10:01:25', 'Cargos', 'cargos.index', NULL, 3, 40, 2),
+(46, '2021-01-06 10:01:43', '2021-01-06 10:01:43', 'Proyectos', 'ubicacion.index', NULL, 3, 40, 3),
+(47, '2021-01-06 14:59:53', '2021-01-06 14:59:53', 'Paises', 'pais.index', NULL, 3, 38, 1),
+(48, '2021-01-06 15:00:14', '2021-01-06 15:00:14', 'Departamentos', 'svdepartamento.index', NULL, 3, 38, 2),
+(49, '2021-01-06 15:03:35', '2021-01-06 15:03:35', 'Municipios', 'svmunicipio.index', NULL, 3, 38, 3),
+(50, '2021-01-06 15:04:20', '2021-01-06 15:04:20', 'Tipo documento', 'tipodocumento.index', NULL, 3, 39, 1),
+(51, '2021-01-06 15:04:32', '2021-01-06 15:04:32', 'Estado civil', 'estadocivil.index', NULL, 3, 39, 2),
+(52, '2021-01-06 15:04:49', '2021-01-06 15:04:49', 'Genero', 'genero.index', NULL, 3, 39, 3),
+(53, '2021-01-06 15:05:39', '2021-01-06 15:05:39', 'Dias laborales', 'dias.index', NULL, 3, 41, 1),
+(54, '2021-01-06 15:06:00', '2021-01-06 15:06:00', 'Dias feriados', 'diasFeriados.index', NULL, 3, 41, 2),
+(55, '2021-01-06 15:06:38', '2021-01-06 15:06:38', 'Horarios laborales', 'grupohorario.index', NULL, 3, 41, 3),
+(56, '2021-01-06 15:08:47', '2021-01-06 15:08:47', 'General', NULL, NULL, 2, 15, 1),
+(57, '2021-01-06 15:09:19', '2021-01-06 15:09:19', 'Gestión vehiculos', NULL, NULL, 3, 56, 1),
+(58, '2021-01-06 15:09:33', '2021-01-12 09:04:49', 'Control vehiculos', 'reportes,58', NULL, 4, 57, 1),
+(59, '2021-01-06 15:09:52', '2021-01-06 15:09:52', 'Recursos humanos', NULL, NULL, 2, 15, 2),
+(60, '2021-01-06 15:10:08', '2021-01-12 08:41:52', 'Asistencia', 'reportes,60', NULL, 3, 59, 1),
+(61, '2021-01-06 17:26:05', '2021-01-06 17:26:05', 'Productos', NULL, NULL, 2, 9, 1),
+(62, '2021-01-06 17:26:16', '2021-01-06 17:26:16', 'Entradas/Salidas', NULL, NULL, 2, 9, 2),
+(63, '2021-01-22 11:28:28', '2021-01-22 11:28:28', 'Accesos directos', NULL, NULL, 3, 16, 3);
 
 -- --------------------------------------------------------
 
@@ -985,21 +773,6 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos`
---
-
-CREATE TABLE `permisos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ruta` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `idmodulo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `sessions`
 --
 
@@ -1021,8 +794,10 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`, `name`, `email`, `foto`, `idrol`) VALUES
-('tgenY5mOBNRngQISH9Echg0TY28Irc1l4YGO7iqt', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IkFRUDZHVFFjcVlhUk5OMkYxR25qWHJqc3p2YUJuV2hXUFozbWlkOXAiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjU5OiJodHRwczovL2xvY2FsaG9zdC9BZHZhbmNlZEVuZXJneS9hdXRvcml6YWNpb25zL3VzdWFyaW8/aWQ9NyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NzoidXNlcl9pZCI7aToxO3M6NDoibmFtZSI7czoxMDoiU3VwZXJ2aXNvciI7czo1OiJlbWFpbCI7czozMDoic3VwZXJ2aXNvckBhZS1lbmVyZ2lhc29sYXIuY29tIjtzOjQ6ImZvdG8iO3M6Njc6InN0b3JhZ2UvYXBwL2ZvdG9wZXJmaWwvVVM0cDlySW4wUVdpTDU5clBJR0Izd3hZcEtGYXVSbXk2UnhTbnhCWi5wbmciO3M6NToiaWRyb2wiO2k6MTtzOjc6Im1lbnVfaWQiO3M6MjoiMjAiO3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611793466, NULL, NULL, NULL, NULL),
-('ZXfkSt9EJzo7upkWIgi5YAjimE96ryC4EgYGHdBd', NULL, '192.168.2.246', 'Mozilla/5.0 (Linux; Android 10; SM-A217M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZHlXWEU0ZVZWOHFaTXNLTjZwUWVYekZnenNCMXk4eVVLR0FYUWhLSiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHBzOi8vMTkyLjE2OC4yLjE3OS9BZHZhbmNlZEVuZXJneSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1611786623, NULL, NULL, NULL, NULL);
+('6HFpDCCj3TFMAP2JIPZ7Pbmj8MWZWUTNvWlly56b', NULL, '192.168.2.246', 'Mozilla/5.0 (Linux; Android 10; SM-A217M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6Ik5DSlpkOFFSR1FoYnhodjdIc2FNUUVpT01WZWlNNU5nemg3V1NvM0ciO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwczovLzE5Mi4xNjguMi4xNzkvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjMwOiJzdXBlcnZpc29yQGFlLWVuZXJnaWFzb2xhci5jb20iO3M6NDoiZm90byI7czo0MDoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9wZXJmaWxEZWZhdWx0LmpwZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7aTo1O3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611879429, NULL, NULL, NULL, NULL),
+('BAsTUl8llhPEgai1KTfVB2FypeQ7X8s5yxj0vYTP', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWTE5cW1ZelBIWU0wSDNsWkg2S1oyU0xGOVlreE40TXFHcFI5U2h5cCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvYWR2YW5jZWRlbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611878166, NULL, NULL, NULL, NULL),
+('g4jjZltY1t4NGPRMNEGIqNjS2YVvF0iSrm8GnJff', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidGdDYjlxOUJYb1RvQXF5N25pOE5mSkVEQnVkWWxFMjdyZU9lZENuZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvYWR2YW5jZWRlbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611879293, NULL, NULL, NULL, NULL),
+('oe5mHzykn6pBBO4YILHYrHY8EM7Y9wvaH75KfEYr', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHBzOi8vbG9jYWxob3N0L0FkdmFuY2VkRW5lcmd5L2luaWNpbyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJhT0FUeDI0TGpDTG1UcFpEYkV5Y1dyM0JId01kY2pxNDhWQmJBV0cxIjtzOjc6InVzZXJfaWQiO2k6MTtzOjQ6Im5hbWUiO3M6MTA6IlN1cGVydmlzb3IiO3M6NToiZW1haWwiO3M6MzA6InN1cGVydmlzb3JAYWUtZW5lcmdpYXNvbGFyLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjE6IjUiO3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611879469, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1231,14 +1006,6 @@ CREATE TABLE `ubicacions` (
   `longitud` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `ubicacions`
---
-
-INSERT INTO `ubicacions` (`id`, `created_at`, `updated_at`, `codigo`, `descripcion`, `latitud`, `longitud`) VALUES
-(1, '2021-01-06 04:02:47', '2021-01-08 00:29:40', 'Admin', 'Administración', 13.669850748462096, -89.29407103989004),
-(2, '2021-01-08 00:30:15', '2021-01-08 00:30:15', 'Opico', 'Opico power', 13.681291951322976, -89.25588168594932);
-
 -- --------------------------------------------------------
 
 --
@@ -1264,13 +1031,18 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `foto`, `remember_token`, `created_at`, `updated_at`, `idrol`, `estado`) VALUES
-(1, 'Supervisor', 'supervisor@ae-energiasolar.com', NULL, 'eyJpdiI6ImVWd2VETWt2amROT05kbUtFdDEzRmc9PSIsInZhbHVlIjoiSmcwWDhWdHRJc3FoN1RHSnJWcWZYQT09IiwibWFjIjoiMDVjYWZkM2U0MWZiNjkwYWE1MTZhMmRjNWY5MGVhOWZiNzVjZGY4MWM3YTQyMzBmOWJkYTdkNTA4OTgxYTg2OSJ9', 'fotoperfil/US4p9rIn0QWiL59rPIGB3wxYpKFauRmy6RxSnxBZ.png', NULL, NULL, '2021-01-28 00:51:43', 1, 1),
-(7, 'Carlos', 'amiranda@ae-energiasolar.com', NULL, 'eyJpdiI6ImpZSFFRd2xycEdsUTRvVHVQZWxhVkE9PSIsInZhbHVlIjoiaFBjRTlRMWNIRTdFVHJIV1FjbkVEUT09IiwibWFjIjoiYjY2NjlhOWRkZmUzZmY2NDJjYmU3MGEwMjQ5OGE0OWRmNzdlOTVhYzQ5YzlkYzM3ZWU3ZGY5NDg4NjM3M2YxMyJ9', 'fotoperfil/perfilDefault.jpg', 'eyJpdiI6ImdKbWJjR05q', '2021-01-27 20:29:48', '2021-01-28 00:15:05', 2, 1),
-(8, 'Carlos Prueba', 'carlos.miranda96@gmail.com', NULL, 'eyJpdiI6IjZGSzZ0SDNCQXlRNEFrVnhuUy9ubXc9PSIsInZhbHVlIjoiYlBYdkFXWlYwV1cvYUgxbUVxb0NBdz09IiwibWFjIjoiZjE2NmFjMmNmZDNhYzZlZjc0N2JmYmI5Y2Q0Mzk1ODcwMWQxNTRhMzZhZjU5YjY1Yjk5MTgwMjkzZjM2MzQ5NCJ9', 'fotoperfil/perfilDefault.jpg', 'eyJpdiI6IlVPZVlYTVlr', '2021-01-28 04:14:16', '2021-01-28 04:15:43', 2, 1);
+(1, 'Supervisor', 'supervisor@ae-energiasolar.com', NULL, 'eyJpdiI6ImVWd2VETWt2amROT05kbUtFdDEzRmc9PSIsInZhbHVlIjoiSmcwWDhWdHRJc3FoN1RHSnJWcWZYQT09IiwibWFjIjoiMDVjYWZkM2U0MWZiNjkwYWE1MTZhMmRjNWY5MGVhOWZiNzVjZGY4MWM3YTQyMzBmOWJkYTdkNTA4OTgxYTg2OSJ9', 'fotoperfil/perfilDefault.jpg', NULL, NULL, NULL, 1, 1),
+(2, 'Carlos Miranda', 'amiranda@ae-energiasolar.com', NULL, 'eyJpdiI6InprYk9NMGJ5SFg1c05HTEJETnE5UWc9PSIsInZhbHVlIjoiVm5GdGJsNFY1VlFYdFNNY3hDMFE1QT09IiwibWFjIjoiMTM3M2RjZTE1YzRmYTM0ZmEwODhjYzBhZDI3YTc4Y2Q1YzAxNGZkZWYwYTdmOGMxMjljZTg1ZGYwZmRkZWI3MiJ9', 'fotoperfil/perfilDefault.jpg', NULL, '2021-01-28 22:53:42', '2021-01-29 05:28:32', 2, 1);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `autorizaciongrupos`
+--
+ALTER TABLE `autorizaciongrupos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `autorizacionusuarios`
@@ -1412,6 +1184,12 @@ ALTER TABLE `grupohorariosds`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `grupos`
+--
+ALTER TABLE `grupos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `marcacionesempleados`
 --
 ALTER TABLE `marcacionesempleados`
@@ -1440,12 +1218,6 @@ ALTER TABLE `pais`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indices de la tabla `permisos`
---
-ALTER TABLE `permisos`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `sessions`
@@ -1490,10 +1262,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `autorizaciongrupos`
+--
+ALTER TABLE `autorizaciongrupos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT de la tabla `autorizacionusuarios`
 --
 ALTER TABLE `autorizacionusuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `cargos`
@@ -1523,19 +1301,19 @@ ALTER TABLE `dias_feriados`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_documentos`
 --
 ALTER TABLE `empleado_documentos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_documentos_fotos`
 --
 ALTER TABLE `empleado_documentos_fotos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_empresas`
@@ -1547,13 +1325,13 @@ ALTER TABLE `empleado_empresas`
 -- AUTO_INCREMENT de la tabla `empleado_referencias`
 --
 ALTER TABLE `empleado_referencias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_users`
 --
 ALTER TABLE `empleado_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `equiposfotos`
@@ -1565,13 +1343,13 @@ ALTER TABLE `equiposfotos`
 -- AUTO_INCREMENT de la tabla `equiposhistorials`
 --
 ALTER TABLE `equiposhistorials`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `equipostrabajos`
 --
 ALTER TABLE `equipostrabajos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo_mantenimientos`
@@ -1595,19 +1373,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `formuas`
 --
 ALTER TABLE `formuas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `formubs`
 --
 ALTER TABLE `formubs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `formucs`
 --
 ALTER TABLE `formucs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `generos`
@@ -1628,34 +1406,34 @@ ALTER TABLE `grupohorariosds`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `grupos`
+--
+ALTER TABLE `grupos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `marcacionesempleados`
 --
 ALTER TABLE `marcacionesempleados`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
 ALTER TABLE `pais`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `permisos`
---
-ALTER TABLE `permisos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `svdepartamentos`
@@ -1679,13 +1457,13 @@ ALTER TABLE `tipodocumentos`
 -- AUTO_INCREMENT de la tabla `ubicacions`
 --
 ALTER TABLE `ubicacions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
