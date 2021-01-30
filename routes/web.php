@@ -34,6 +34,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\SvdepartamentoController;
 use App\Http\Controllers\SvmunicipioController;
 use App\Http\Controllers\TipodocumentoController;
+use App\Http\Controllers\userAccesoController;
 use Illuminate\Support\Facades\Route;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -49,6 +50,21 @@ Route::get('validate',[PageController::class,'validar'])->name('validate');//Val
 Route::post('validate/password/update',[UsuariosController::class,'updateclave2'])->name('usuarios.updateclave2');
 Route::POST('usuario/restablecer2',[UsuariosController::class,'restablecer2'])->name('usuario.restablecer2');
 
+//RUTAS DE API
+Route::get('api/qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('api.getUbicacion');//Obtener ubicacion segun coordenadas
+Route::get('api/asistencia',[PageController::class,'asistencia'])->name('asistencia');//Abre la aplicacion
+
+Route::get('api/escaner',[PageController::class,'escaner'])->name('api.escanear');//Metodo para escanear, QR Empleado, QR Vehiculo, QR Ubicacion
+
+
+//FORMULARIO --COVID
+Route::get('api/form/covid/{toquen}',[formController::class,'covid'])->name('api.form.covid');//Abre formulario covid
+Route::get('api/form/covidenviar',[formController::class,'guardarcovid'])->name('api.form.covid.enviar');//Envia formulario covid
+//FORMULARIO --VEHICULO
+Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
+Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo
+
+
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
     Route::get('api/qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
@@ -62,7 +78,7 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('QR/marcaciones',[PageController::class,'marcaciones'])->name('marcacion');
     Route::get('QR/equipos',[PageController::class,'equipos'])->name('historialequipos');
     Route::get('QR/escaner',[PageController::class,'escaner'])->name('escanear');
-    Route::post('QR/escanerCarnet',[PageController::class,'escanerCarnet'])->name('escanearCarnet');//Escanea el carnet para relacionar user con empleado
+    Route::get('QR/escanerCarnet',[PageController::class,'escanerCarnet'])->name('escanearCarnet');//Escanea el carnet para relacionar user con empleado
     Route::get('QR/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('getUbicacion');
     Route::get('QR/obtenerEmpleado',[PageController::class,'obtenerEmpleado'])->name('getEmpleado');
 
@@ -104,6 +120,8 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('exportar',[PageController::class,'export'])->name('exportar');
 
     Route::get('mail',[PageController::class,'pruebaemail']);
+    //Accesos
+    Route::resource('useraccesos',userAccesoController::class);
 });
 
 //RUTAS DE ADMINISTRADOR

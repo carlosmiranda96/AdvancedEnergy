@@ -96,7 +96,7 @@
         {
             $.ajax({
                 url:"{{route('escanearCarnet')}}",
-                type:"post",
+                type:"get",
                 data:"_token={{csrf_token()}}&contenido="+content,
                 success:function(r)
                 {

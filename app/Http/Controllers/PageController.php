@@ -140,8 +140,15 @@ class PageController extends Controller
 						session()->put('foto','storage/app/'.$usuario->foto);
 						session()->put('idrol',$usuario->idrol);
 						session()->put('menu_id',5);//Seleccionar menu inicio
-					}
-					return "1";			
+						$empleadouser = empleadoUser::where('idusuario',$usuario->id)->first();
+						if($empleadouser){
+							return "1";
+						}else{
+							return "2";
+						}
+					}else{
+						return "1";	
+					}	
 				}else{
 					return "La clave ingresada es incorrecta";
 				}
@@ -155,7 +162,12 @@ class PageController extends Controller
 	public function validarsesion(){
 		if(session('user_id'))
 		{
-			echo 1;
+			$empleadouser = empleadoUser::where('idusuario',session('user_id'))->first();
+			if($empleadouser){
+				return 1;
+			}else{
+				return 2;
+			}
 		}else{
 			echo 0;
 		}
@@ -558,7 +570,8 @@ class PageController extends Controller
 						}
 					}else{
 						$data['id'] = 0;
-						$data['mensaje'] = $error.'<strong>Ubicación no válida</strong><br>Por favor escanea el QR de la ubicación y luego vuelve a escanear tu carnet!</div>';
+						//$data['mensaje'] = $error.'<strong>Ubicación no válida</strong><br>Por favor escanea el QR de la ubicación y luego vuelve a escanear tu carnet!</div>';
+						$data['mensaje'] = $error.'<strong>Ubicación no válida</strong><br></div>';
 					}
 				}else{
 					//LECTOR QR

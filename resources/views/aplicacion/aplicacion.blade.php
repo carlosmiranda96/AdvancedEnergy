@@ -11,6 +11,15 @@
 </div>
 <div class="row">
     <div class="col-12 text-center pt-2">
+        @if(session('name'))
+            <label class="font-gotham-medium color-secondary">Identificado como {{session('name')}} <button onclick="cerrarsesion()" class="btn btn-sm text-white">Cerrar sesión</button></label>
+        @else
+            <label class="font-gotham-medium color-secondary">No identificado</label>
+        @endif
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-center pt-2">
         <label class="font-gotham-medium color-secondary">Ubicación</label>
         <select class="input" id="idubicacion">
         </select>
@@ -44,7 +53,7 @@
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <button onclick="verificarLogin(1)" style="background-color:transparent;border:none;">
+                    <button id="btnasistencia" onclick="verificarLogin(1,this)" style="background-color:transparent;border:none;">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
@@ -57,7 +66,7 @@
             </div>
             <div class="col-12">
                 <div class="card card_amarilla mb-3">
-                    <button onclick="verificarLogin(2)" style="background-color:transparent;border:none;">
+                    <button id="btnqr" onclick="verificarLogin(2,this)" style="background-color:transparent;border:none;">
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
@@ -107,7 +116,11 @@
 </div>
 @stop
 @section('script')
+<script src="{{asset('js/instascan.js')}}"></script>
 <script>
+    var dialogo;
+    var dialogo2;
+    var scanner;
     //METODO PARA OBTENER COORDENADAS GPS
     if(navigator.geolocation){
         //intentamos obtener las coordenadas del usuario
@@ -183,6 +196,27 @@
            }
         });
     }
+    function cerrarsesion(){
+        bootbox.confirm({ 
+            size: "small",
+            title:'Notificación',
+            message: "¿Desea cerrar la sesión?",
+            callback: function(result)
+            {
+                if(result==true){
+                    $.ajax({
+                        url:"{{route('cerrarsesion')}}",
+                        type:"GET",
+                        success:function(r){
+                            //dialogo2.modal('hide');
+                            //scanner.stop();
+                            location.reload();
+                        }
+                    })
+                }
+            }
+        });
+    };
     //METODO PARA OBTENER LA UBICACION EN LA BD DE ACUERDO A LAS COORDENADS OBTENIDAS
     function obtenerUbicacion(lat,lon){
         var datos = {latitud:lat,longitud:lon};
@@ -201,9 +235,14 @@
             }
         });
     }
-    var dialogo;
-    function verificarLogin(id)
+
+    function verificarLogin(id,div)
     {
+        //inhabilita boton por 2 segundos para evitar mas de un clic
+        $(div).prop("disabled",true);
+        setTimeout(function(){
+            $(div).prop("disabled",false);
+        }, 2000);
         $.ajax({
             url:"{{route('validarsesion')}}",
             type:"get",
@@ -224,18 +263,115 @@
                             }
                         }
                     });
-                }else if(id==1){
-                    //Marcar asistencia
-                    asistencia();
-                }else if(id==2){
-                    //Abrir lector QR
-                    window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
+                }else if(r==1){
+                    if(id==1){
+                        //Marcar asistencia
+                        asistencia();
+                    }else if(id==2){
+                        //Abrir lector QR
+                        window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
+                    }
+                }else if(r==2){
+                    alert("Entro");
+                    //escanearCarnet(id);
                 }
             },error:function(){
                 bootbox.alert('Error al conectar');
             }
         })
         
+    }
+    function login(id)
+    {
+        var correo = $("#correo");
+        var clave = $("#clave");
+        if(!correo.val()){
+            alertify.error("Ingrese un correo");
+            correo.focus();
+        }else if(!clave.val()){
+            alertify.error("Ingrese una contraseña");
+            clave.focus();
+        }else{
+            $.ajax({
+                url:"{{asset('validaruser')}}/"+correo.val()+"/"+clave.val(),
+                type:"GET",
+                data:"crear=1",
+                success:function(r)
+                {
+                    if(r==1){
+                        //Empleado esta asignado
+                        if(id==1){
+                            //Marcar asistencia
+                            dialogo.modal('hide');
+                            asistencia();
+                        }else if(id==2){
+                            //Abrir lector QR
+                            window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
+                        }
+                    }else if(r==2){
+                        //Empleado no esta asignado
+                        //bootbox.alert('Empleado no asignado!');
+                        escanearCarnet(id);
+                    }else{
+                        alertify.error(r+"!!");
+                    }
+                }
+            });
+        }
+    }
+    function escanearCarnet(id)
+    {
+        $(document).ready(function(){
+            dialogo2 = bootbox.dialog({
+                title:"Notificación",
+                message:"<h6 class='text-center'>Al parecer, es primera vez que inicias sesión.<br> Como ultimo paso escanea el codigo QR del carnet de la empresa poder utilizar el portal</h6><div class='row'><hr><div ><video style='width:90%;margin-left:5%' id='preview' class='video' playsinline></video></div></div><div class='text-center'><button onclick='cerrarsesion()' class='btn btn-sm btn-danger'>Cerrar Sesión</button></div>",
+                closeButton:false
+            });
+            scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 3, mirror:false });
+            Instascan.Camera.getCameras().then(function (cameras){
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            }
+            else {
+                            
+            }
+            }).catch (function(e){  
+
+            });
+            scanner.addListener('scan',function(content)
+            {
+                $.ajax({
+                    url:"{{route('escanearCarnet')}}",
+                    type:"get",
+                    data:"contenido="+content,
+                    success:function(r)
+                    {
+                        if(r==1)
+                        {
+                            if(id==1){
+                                //Marcar asistencia
+                                dialogo.modal('hide');
+                                dialogo2.modal('hide');
+                                asistencia();
+                            }else if(id==2){
+                                //Abrir lector QR
+                                window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
+                            }
+                        }else{
+                            bootbox.dialog({
+                                title:"Notificación",
+                                message:r,
+                                buttons:{
+                                    ok:{
+                                        label:"Ok"
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
     }
     //Metodo para marcar la asistencia
     function asistencia(){
@@ -273,39 +409,6 @@
                 $("#notificacion").modal('show');
             }
         });
-    }
-    function login(id)
-    {
-        var correo = $("#correo");
-        var clave = $("#clave");
-        if(!correo.val()){
-            alertify.error("Ingrese un correo");
-            correo.focus();
-        }else if(!clave.val()){
-            alertify.error("Ingrese una contraseña");
-            clave.focus();
-        }else{
-            $.ajax({
-                url:"{{asset('validaruser')}}/"+correo.val()+"/"+clave.val(),
-                type:"GET",
-                data:"crear=1",
-                success:function(r)
-                {
-                    if(r==1){
-                        if(id==1){
-                            //Marcar asistencia
-                            dialogo.modal('hide');
-                            asistencia();
-                        }else if(id==2){
-                            //Abrir lector QR
-                            window.location = "{{route('lectorqr',['b'=>$empleado->toquen])}}";
-                        }
-                    }else{
-                        alertify.error(r+"!!");
-                    }
-                }
-            });
-        }
     }
 </script>
 @stop

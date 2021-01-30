@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-01-2021 a las 01:18:25
+-- Tiempo de generación: 29-01-2021 a las 16:58:09
 -- Versión del servidor: 10.4.16-MariaDB
 -- Versión de PHP: 7.4.12
 
@@ -324,7 +324,7 @@ CREATE TABLE `empleado_users` (
 
 INSERT INTO `empleado_users` (`id`, `created_at`, `updated_at`, `idusuario`, `idempleado`) VALUES
 (1, '2021-01-28 16:27:12', '2021-01-28 16:27:12', 1, 65),
-(2, '2021-01-28 16:54:06', '2021-01-28 16:54:06', 2, 62);
+(6, '2021-01-29 15:40:38', '2021-01-29 15:40:38', 2, 62);
 
 -- --------------------------------------------------------
 
@@ -794,10 +794,13 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`, `name`, `email`, `foto`, `idrol`) VALUES
-('6HFpDCCj3TFMAP2JIPZ7Pbmj8MWZWUTNvWlly56b', NULL, '192.168.2.246', 'Mozilla/5.0 (Linux; Android 10; SM-A217M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6Ik5DSlpkOFFSR1FoYnhodjdIc2FNUUVpT01WZWlNNU5nemg3V1NvM0ciO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwczovLzE5Mi4xNjguMi4xNzkvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjMwOiJzdXBlcnZpc29yQGFlLWVuZXJnaWFzb2xhci5jb20iO3M6NDoiZm90byI7czo0MDoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9wZXJmaWxEZWZhdWx0LmpwZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7aTo1O3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611879429, NULL, NULL, NULL, NULL),
-('BAsTUl8llhPEgai1KTfVB2FypeQ7X8s5yxj0vYTP', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWTE5cW1ZelBIWU0wSDNsWkg2S1oyU0xGOVlreE40TXFHcFI5U2h5cCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvYWR2YW5jZWRlbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611878166, NULL, NULL, NULL, NULL),
-('g4jjZltY1t4NGPRMNEGIqNjS2YVvF0iSrm8GnJff', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidGdDYjlxOUJYb1RvQXF5N25pOE5mSkVEQnVkWWxFMjdyZU9lZENuZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3QvYWR2YW5jZWRlbmVyZ3kiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611879293, NULL, NULL, NULL, NULL),
-('oe5mHzykn6pBBO4YILHYrHY8EM7Y9wvaH75KfEYr', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHBzOi8vbG9jYWxob3N0L0FkdmFuY2VkRW5lcmd5L2luaWNpbyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJhT0FUeDI0TGpDTG1UcFpEYkV5Y1dyM0JId01kY2pxNDhWQmJBV0cxIjtzOjc6InVzZXJfaWQiO2k6MTtzOjQ6Im5hbWUiO3M6MTA6IlN1cGVydmlzb3IiO3M6NToiZW1haWwiO3M6MzA6InN1cGVydmlzb3JAYWUtZW5lcmdpYXNvbGFyLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtzOjE6IjUiO3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611879469, NULL, NULL, NULL, NULL);
+('1zNUHYhBMjqsCWERrcTeA9gEg9dApsVTQGAeduOy', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidzlUYmpIWVJDN3VRT0NCZjk5ZGpXelYwb2x0b3p5NHJ2SlJ1YVBBciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Nzk6Imh0dHBzOi8vMTkyLjE2OC4yLjE3OS9BZHZhbmNlZEVuZXJneS9hcGkvYXNpc3RlbmNpYT9hPTYyJmI9ZXlKcGRpSTZJbVpsWWxKSGRFb3IiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611932427, NULL, NULL, NULL, NULL),
+('2XJagOeGp1oH9Q1u0WO57S6jWJDcpTKFkBTxJccK', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiaG5LQlVORjRqSGdYNzlhbk9pbzFPZEJGS0lJNkdKUVVYQXo3Z2RrViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Nzk6Imh0dHBzOi8vMTkyLjE2OC4yLjE3OS9BZHZhbmNlZEVuZXJneS9hcGkvYXNpc3RlbmNpYT9hPTYyJmI9ZXlKcGRpSTZJbVpsWWxKSGRFb3IiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611932433, NULL, NULL, NULL, NULL),
+('5HG8h2FQyrZqpZonkVbkzK5LfyiTTh3kXeURdWPh', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IkZzYlRtR1FkNW5uUjlRWVltNlM1enZWa2x6VVZpN3ZlVUlkbGVZZmoiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwczovLzE5Mi4xNjguMi4xNzkvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjMwOiJzdXBlcnZpc29yQGFlLWVuZXJnaWFzb2xhci5jb20iO3M6NDoiZm90byI7czo0MDoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9wZXJmaWxEZWZhdWx0LmpwZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7aTo1O3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611932430, NULL, NULL, NULL, NULL),
+('9te0Pg9aUH6baqXCzDtStTBYzBII85Hyxnc98Udc', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YToxMDp7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjY6Imh0dHBzOi8vMTkyLjE2OC4yLjE3OS9BZHZhbmNlZEVuZXJneS9hcGkvcXI/Yj1leUpwZGlJNkltWmxZbEpIZEVvciI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJ4U3NxNXFRaWs0dE9FdXFOck11cWJ3M2pHOWNMcHRaNWV5T0NKOGwxIjtzOjc6InVzZXJfaWQiO2k6MTtzOjQ6Im5hbWUiO3M6MTA6IlN1cGVydmlzb3IiO3M6NToiZW1haWwiO3M6MzA6InN1cGVydmlzb3JAYWUtZW5lcmdpYXNvbGFyLmNvbSI7czo0OiJmb3RvIjtzOjQwOiJzdG9yYWdlL2FwcC9mb3RvcGVyZmlsL3BlcmZpbERlZmF1bHQuanBnIjtzOjU6Imlkcm9sIjtpOjE7czo3OiJtZW51X2lkIjtpOjU7czo2OiJidXNjYXIiO2I6MTt9', 1611932346, NULL, NULL, NULL, NULL),
+('HRSWvfvyQVQsT2bfGxsCKBrHDLefleilofKpx0Lu', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cHM6Ly8xOTIuMTY4LjIuMTc5L0FkdmFuY2VkRW5lcmd5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6ImNiZGVycGVrTUZuSzJPWlc3YWcxbHJNYk96U3UzZDQwQlpuNElqcW8iO30=', 1611935808, NULL, NULL, NULL, NULL),
+('m40g2YeZjEIt8zN3LI2mwJjd8uS1EAL407CwbSMp', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6ImR5ZGlxSUt1U092UjNPanhKelliVE12bnpRaFp2d0ZTZlpqRENsY1oiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwczovLzE5Mi4xNjguMi4xNzkvQWR2YW5jZWRFbmVyZ3kvaW5pY2lvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjE7czo0OiJuYW1lIjtzOjEwOiJTdXBlcnZpc29yIjtzOjU6ImVtYWlsIjtzOjMwOiJzdXBlcnZpc29yQGFlLWVuZXJnaWFzb2xhci5jb20iO3M6NDoiZm90byI7czo0MDoic3RvcmFnZS9hcHAvZm90b3BlcmZpbC9wZXJmaWxEZWZhdWx0LmpwZyI7czo1OiJpZHJvbCI7aToxO3M6NzoibWVudV9pZCI7aTo1O3M6NjoiYnVzY2FyIjtiOjE7fQ==', 1611932438, NULL, NULL, NULL, NULL),
+('ZWlCXlaClUeZT0ZIVQKqqloJxgmCwb94iv1T9LIx', NULL, '192.168.2.179', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUlhjSGF6aWttQzBCSEJrSVJXUjd4MHhRaE00c0FaMktYQTBuTDZNbiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Nzk6Imh0dHBzOi8vMTkyLjE2OC4yLjE3OS9BZHZhbmNlZEVuZXJneS9hcGkvYXNpc3RlbmNpYT9hPTYyJmI9ZXlKcGRpSTZJbVpsWWxKSGRFb3IiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1611932440, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1331,7 +1334,7 @@ ALTER TABLE `empleado_referencias`
 -- AUTO_INCREMENT de la tabla `empleado_users`
 --
 ALTER TABLE `empleado_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `equiposfotos`
