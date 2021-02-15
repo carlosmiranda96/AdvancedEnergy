@@ -17,7 +17,7 @@
                     <img class="col-12" src="{{asset('')}}img/logo.png"/>
                   </div>
                   <div class="text-center text-white">
-                    <h5 class="mb-3">¡Bienvenido 2! Ingresa tus credenciales</h5>
+                    <h5 class="mb-3">¡Bienvenido! Ingresa tus credenciales</h5>
                   </div>
                   <form class="user" action="{{route('iniciarsesion')}}" method="post">
                     @csrf
