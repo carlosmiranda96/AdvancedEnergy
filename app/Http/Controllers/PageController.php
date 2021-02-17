@@ -656,7 +656,7 @@ class PageController extends Controller
 		$correo = $request->b;
 		$toquen = $request->c;
 		$usuario = User::where('email',$correo)->where('remember_token',$toquen)->find($idusuario);
-		if(isset($usuario)){
+		if(isset($usuario) && isset($usuario->remember_token)){
 			$valido = true;
 		}else{
 			$valido = false;

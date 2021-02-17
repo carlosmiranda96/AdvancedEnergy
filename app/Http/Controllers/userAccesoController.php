@@ -24,8 +24,8 @@ class userAccesoController extends Controller
     }
     public function getDepartamento(Request $request)
     {
-        $svdepartamento = svdepartamento::orderby('codigo')->where('iduserAcceso',$request->iduserAcceso)->get();
-        echo json_encode($svdepartamento);
+        $userAcceso = userAcceso::orderby('codigo')->where('iduserAcceso',$request->iduserAcceso)->get();
+        echo json_encode($userAcceso);
     }
     /**
      * Store a newly created resource in storage.

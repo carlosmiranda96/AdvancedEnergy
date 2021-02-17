@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
 
 class Restablecer extends Mailable
 {
@@ -31,6 +32,10 @@ class Restablecer extends Mailable
     public function build()
     {
         $usuario = User::find($this->idusuario);
+        $hora = date('d/m/Y h:i:s');
+        $toquen = substr(Crypt::encryptString($hora),0,20);
+        $usuario->remember_token = $toquen;
+        $usuario->save();
         return $this->view('mail.restablecer',compact('usuario'));
     }
 }

@@ -29,12 +29,14 @@ use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\reportes\AsistenciaRPTController;
 use App\Http\Controllers\reportes\EmpleadosRPTController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\SSL\validar;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\SvdepartamentoController;
 use App\Http\Controllers\SvmunicipioController;
 use App\Http\Controllers\TipodocumentoController;
 use App\Http\Controllers\userAccesoController;
+use App\Models\rutas\rutas;
 use Illuminate\Support\Facades\Route;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -64,13 +66,27 @@ Route::get('api/form/covidenviar',[formController::class,'guardarcovid'])->name(
 Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
 Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo
 
+Route::get('.well-known/pki-validation/{txt}',[validar::class,'index'])->name('ssl');
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
+
     Route::get('api/qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
 
     Route::get('cerrarsesion',[PageController::class,'cerrar'])->name('cerrarsesion');
+
+    /*$rutas = rutas::all();
+    foreach($rutas as $item){
+        //$funcion = [PageController::class, 'inicio'];
+        $funcion = "";
+        $funcion = "[PageController::class, 'inicio']";
+        eval("\$funcion = \"$funcion\";");
+        echo $funcion;
+        //Route::get($item->ruta,$funcion)->name($item->nombre);
+    }*/
     Route::get('inicio', [PageController::class, 'inicio'])->name('inicio');
+
+
     Route::get('rrhh',[PageController::class,'rrhh'])->name('rrhh');
 
     Route::get('aplicacion',[PageController::class,'loadaplicacion'])->name('load.aplicacion');
@@ -121,7 +137,7 @@ Route::group(['middleware' => 'sesion'], function() {
 
     Route::get('mail',[PageController::class,'pruebaemail']);
     //Accesos
-    Route::resource('useraccesos',userAccesoController::class);
+    Route::resource('userAcceso',userAccesoController::class);
 });
 
 //RUTAS DE ADMINISTRADOR

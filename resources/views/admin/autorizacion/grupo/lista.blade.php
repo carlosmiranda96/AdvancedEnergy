@@ -45,8 +45,8 @@
                         </thead>
                                 <?php
 
-use App\Models\autorizaciongrupo;
-use App\Models\modulos;
+                                use App\Models\autorizaciongrupo;
+                                use App\Models\modulos;
 
                                 menu2(1,0,$idgrupo);
 
