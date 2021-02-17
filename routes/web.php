@@ -66,7 +66,7 @@ Route::get('api/form/covidenviar',[formController::class,'guardarcovid'])->name(
 Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
 Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo
 
-Route::get('.well-known/pki-validation/{txt}',[validar::class,'index'])->name('ssl');
+Route::get('.well-known/pki-validation/{txt}',[validar::class,'validar'])->name('ssl');
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
