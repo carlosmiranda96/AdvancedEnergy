@@ -23,7 +23,8 @@ class User extends Authenticatable
         'foto',
         'idrol',
         'estado',
-        'remember_token'
+        'remember_token',
+        'ldap'
     ];
 
     /**

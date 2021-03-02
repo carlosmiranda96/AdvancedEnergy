@@ -38,6 +38,7 @@ use App\Http\Controllers\TipodocumentoController;
 use App\Http\Controllers\userAccesoController;
 use App\Models\rutas\rutas;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\formularios\formController;
 
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -61,6 +62,7 @@ Route::get('api/escaner',[PageController::class,'escaner'])->name('api.escanear'
 
 //FORMULARIO --COVID
 Route::get('api/form/covid/{toquen}',[formController::class,'covid'])->name('api.form.covid');//Abre formulario covid
+
 Route::get('api/form/covidenviar',[formController::class,'guardarcovid'])->name('api.form.covid.enviar');//Envia formulario covid
 //FORMULARIO --VEHICULO
 Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
@@ -138,6 +140,8 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('mail',[PageController::class,'pruebaemail']);
     //Accesos
     Route::resource('userAcceso',userAccesoController::class);
+
+    Route::resource('carnet',userAccesoController::class);
 });
 
 //RUTAS DE ADMINISTRADOR

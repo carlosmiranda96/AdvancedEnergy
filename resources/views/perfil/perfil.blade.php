@@ -46,17 +46,32 @@
             <form method="POST" action="{{route('perfil.update',$usuarios->id)}}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
+                @if($usuarios->ldap==1)
+                <p class="text-danger">** Esta es una cuenta de Active directory, algunos campos no pueden ser actualizados</p>
                 <div class="form-group">
                     <label>Nombre</label>
-                    <input type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
+                    <input disabled type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
+                </div>
+                <div class="form-group">
+                    <label>Correo</label>
+                    <input disabled type="text" name="email" value="{{$usuarios->email}}" class="form-control" autocomplete="off"/>
+                </div>
+                @else
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input disabled type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
                     <label>Correo</label>
                     <input type="text" name="email" value="{{$usuarios->email}}" class="form-control" autocomplete="off"/>
                 </div>
+                @endif
+                
                 <div class="form-group">
                     <a href="{{route('usuarios.index')}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>
+                    @if($usuarios->ldap!=1)
                     <a href="{{route('usuarios.clave',$usuarios->id)}}"><div class="btn btn-sm btn-primary"><i class="fas fa-key"></i> Cambiar clave</div></a>
+                    @endif
                     <button class="btn btn-sm btn-warning"><i class="fas fa-redo-alt"></i> Actualizar</button>
                 </div>
             </form>

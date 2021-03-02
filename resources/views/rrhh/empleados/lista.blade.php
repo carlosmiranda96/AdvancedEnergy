@@ -5,16 +5,9 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-primary">Empleados</h1>
     </div>
-    <nav>
-        <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('inicio')}}">Pagina principal</a></li>
-        <li class="breadcrumb-item"><a href="{{route('rrhh')}}">RRHH</a></li>
-        <li class="breadcrumb-item active">Empleados</li>
-        </ol>
-    </nav>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><a href="{{route('rrhh')}}" style="color: #2E9A73"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp&nbspListado de empleados</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Listado de empleados</h6>
         </div>
         <div class="card-body">
             @if (session('mensaje'))

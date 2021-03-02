@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
-
+error_reporting(0);
 class PageController extends Controller
 {
 	public function __construct()
@@ -102,7 +102,12 @@ class PageController extends Controller
 		$validar = $this->validarUser($request->email,$request->password,$request);
 		if($validar=="1")
 		{
-			$usuario = User::where('email',$request->email)->first();
+			if(strpos($request->email,"@",0)!==false)
+			{
+				$usuario = User::where('email',$request->email)->first();
+			}else{
+				$usuario = User::where('name',$request->email)->first();
+			}
 			session()->put('user_id', $usuario->id);
 			session()->put('name', $usuario->name);
 			session()->put('email',$usuario->email);
@@ -126,37 +131,129 @@ class PageController extends Controller
 	}
 	public function validarUser($email,$password,Request $request)
 	{
-		$usuario = User::where('email',$email)->first();
+		if(strpos($email,"@",0)!==false)
+		{
+			$usuario = User::where('email',$email)->first();
+		}else{
+			$usuario = User::where('name',$email)->first();
+		}
 		if(isset($usuario))
 		{
 			if($usuario->estado==1){
-				$decrypted = Crypt::decryptString($usuario->password);
-				if($decrypted==$password && $password!='123456'){
-					if(isset($request->crear))
-					{
-						session()->put('user_id', $usuario->id);
-						session()->put('name', $usuario->name);
-						session()->put('email',$usuario->email);
-						session()->put('foto','storage/app/'.$usuario->foto);
-						session()->put('idrol',$usuario->idrol);
-						session()->put('menu_id',5);//Seleccionar menu inicio
-						$empleadouser = empleadoUser::where('idusuario',$usuario->id)->first();
-						if($empleadouser){
-							return "1";
-						}else{
-							return "2";
-						}
-					}else{
-						return "1";	
-					}	
+				if($usuario->ldap==1){
+					return $this->validarLDAP($email,$password);
 				}else{
-					return "La clave ingresada es incorrecta";
+					$decrypted = Crypt::decryptString($usuario->password);
+					if($decrypted==$password && $password!='123456'){
+						if(isset($request->crear))
+						{
+							session()->put('user_id', $usuario->id);
+							session()->put('name', $usuario->name);
+							session()->put('email',$usuario->email);
+							session()->put('foto','storage/app/'.$usuario->foto);
+							session()->put('idrol',$usuario->idrol);
+							session()->put('menu_id',5);//Seleccionar menu inicio
+							$empleadouser = empleadoUser::where('idusuario',$usuario->id)->first();
+							if($empleadouser){
+								return "1";
+							}else{
+								return "2";
+							}
+						}else{
+							return "1";	
+						}	
+					}else{
+						return "La clave ingresada es incorrecta";
+					}
 				}
 			}else{
 				return "Usuario no activo!!";
 			}
 		}else{
-			return "Usuario ingresado es incorrecto";		
+			return $this->crearLDAP($email,$password);		
+		}
+	}
+	private function crearLDAP($usuario,$contraseña){
+		//VALIDAR LDAP
+		//USUARIO PARA CONSULTA LDAP
+		$configusername = 'administrador';
+		$configpassword = 'AD4dv4nc3d#2020@.';
+		$server = 'ae-energiasolar.local';
+		$domain = '@ae-energiasolar.local';
+		$port = 389;
+		$connection = ldap_connect($server, $port);
+		if(!$connection){
+			return "Usuario ingresado es incorrecto";
+		}else{
+			ldap_set_option($connection , LDAP_OPT_PROTOCOL_VERSION, 3);
+			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
+			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
+			if (!$bind) {
+				return "Usuario ingresado es incorrecto";
+			}else{
+				if(strpos($usuario,"@",0)!==false){
+					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(mail=$usuario)");
+				}else{
+					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(sAMAccountName=$usuario)");
+				}
+				$data = ldap_get_entries($connection, $sr);
+				$usuario = $data[0]['samaccountname'][0];
+				$mail = $data[0]['mail'][0];
+				$bind2 = ldap_bind($connection,$usuario.$domain, $contraseña);
+				if (!$bind2){
+					return "La clave ingresada es incorrecta";
+				}else{
+					if(!isset($mail)){
+						$mail = $usuario.$domain;
+					}
+					$userldap = new User();
+					$userldap->name = $usuario;
+					$userldap->email = $mail;
+					$userldap->password = '';
+					$userldap->foto = 'fotoperfil/perfilDefault.jpg';
+					$userldap->idrol = 2;
+					$userldap->estado = 1;
+					$userldap->ldap = 1;
+					$userldap->save();
+					return "1";
+				}
+				ldap_close($connection);
+			}
+		}
+	}
+	private function validarLDAP($usuario,$contraseña){
+		//VALIDAR LDAP
+		//USUARIO PARA CONSULTA LDAP
+		$configusername = 'administrador';
+		$configpassword = 'AD4dv4nc3d#2020@.';
+		$server = 'ae-energiasolar.local';
+		$domain = '@ae-energiasolar.local';
+		$port = 389;
+		$connection = ldap_connect($server, $port);
+		if(!$connection){
+			return "Usuario ingresado es incorrecto";
+		}else{
+			ldap_set_option($connection , LDAP_OPT_PROTOCOL_VERSION, 3);
+			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
+			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
+			if (!$bind) {
+				return "Usuario ingresado es incorrecto";
+			}else{
+				if(strpos($usuario,"@",0)!==false){
+					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(mail=$usuario)");
+				}else{
+					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(sAMAccountName=$usuario)");
+				}
+				$data = ldap_get_entries($connection, $sr);
+				$usuario = $data[0]['samaccountname'][0];
+				$bind2 = ldap_bind($connection,$usuario.$domain, $contraseña);
+				if (!$bind2){
+					return "La clave ingresada es incorrecta";
+				}else{
+					return "1";
+				}
+				ldap_close($connection);
+			}
 		}
 	}
 	public function validarsesion(){

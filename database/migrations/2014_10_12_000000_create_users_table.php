@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->integer('idrol');
             $table->boolean('estado');
+            $table->boolean('ldap')->nullable();
             //$table->foreign('idempleado')->references('id')->on('empleados');
         });
         

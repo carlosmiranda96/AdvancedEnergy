@@ -27,7 +27,7 @@
                     </div>
                     @endif
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user input" name="email" value="{{$email}}" autofocus placeholder="Correo" required >
+                      <input type="text" class="form-control form-control-user input" name="email" value="{{$email}}" autofocus placeholder="Correo o Usuario" required >
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user input" name="password" value="{{$password}}" placeholder="Clave" required>

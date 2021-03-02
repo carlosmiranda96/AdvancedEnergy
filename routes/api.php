@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\EquiposhistorialController;
-use App\Http\Controllers\formularios\formController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
