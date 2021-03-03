@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
-error_reporting(0);
+//error_reporting(0);
 class PageController extends Controller
 {
 	public function __construct()
