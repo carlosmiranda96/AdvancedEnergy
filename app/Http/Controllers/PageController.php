@@ -173,6 +173,25 @@ class PageController extends Controller
 			return $this->crearLDAP($email,$password);		
 		}
 	}
+	public function user($email,$password,Request $request)
+	{
+		$validar = $this->validarUser($email,$password,$request);
+		$data = NULL;
+		if($validar==1){
+			$data['login'][0]['usuario'] = $email;
+			$data['login'][0]['clave'] = $password;
+			$data['login'][0]['respuesta'] = "1";
+		}else if($validar==2){
+			$data['login'][0]['usuario'] = $email;
+			$data['login'][0]['clave'] = $password;
+			$data['login'][0]['respuesta'] = "2";
+		}else{
+			$data['login'][0]['usuario'] = $email;
+			$data['login'][0]['clave'] = $password;
+			$data['login'][0]['respuesta'] = "Credenciales no válidas";
+		}
+		echo json_encode($data);
+	}
 	private function crearLDAP($usuario,$contraseña){
 		//VALIDAR LDAP
 		//USUARIO PARA CONSULTA LDAP
