@@ -202,13 +202,13 @@ class PageController extends Controller
 		$port = 389;
 		$connection = ldap_connect($server, $port);
 		if(!$connection){
-			return "Usuario ingresado es incorrecto LDAP";
+			return "Error de conexión LDAP";
 		}else{
 			ldap_set_option($connection , LDAP_OPT_PROTOCOL_VERSION, 3);
 			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
 			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
 			if (!$bind) {
-				return "Usuario ingresado es incorrecto LDAP";
+				return "Usuario LDAP ingresado es incorrecto";
 			}else{
 				if(strpos($usuario,"@",0)!==false){
 					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(mail=$usuario)");
@@ -250,13 +250,13 @@ class PageController extends Controller
 		$port = 389;
 		$connection = ldap_connect($server, $port);
 		if(!$connection){
-			return "Usuario ingresado es incorrecto";
+			return "Error de conexión LDAP";
 		}else{
 			ldap_set_option($connection , LDAP_OPT_PROTOCOL_VERSION, 3);
 			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
 			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
 			if (!$bind) {
-				return "Usuario ingresado es incorrecto";
+				return "Usuario LDAP ingresado es incorrecto";
 			}else{
 				if(strpos($usuario,"@",0)!==false){
 					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(mail=$usuario)");
