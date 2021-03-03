@@ -800,5 +800,7 @@ class PageController extends Controller
 				echo "Usuario ingresado es correcto<br>";
 			}
 		}
+
+		echo phpinfo();
 	}
 }
