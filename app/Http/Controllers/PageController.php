@@ -208,7 +208,7 @@ class PageController extends Controller
 			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
 			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
 			if (!$bind) {
-				return "Usuario LDAP ingresado es incorrecto";
+				return "Usuario ingresado es incorrecto (LDAP)";
 			}else{
 				if(strpos($usuario,"@",0)!==false){
 					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(mail=$usuario)");
@@ -256,7 +256,7 @@ class PageController extends Controller
 			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
 			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
 			if (!$bind) {
-				return "Usuario LDAP ingresado es incorrecto";
+				return "Usuario LDAP ingresado no coincide";
 			}else{
 				if(strpos($usuario,"@",0)!==false){
 					$sr = ldap_search($connection,"OU=Usuarios,DC=ae-energiasolar,DC=local", "(mail=$usuario)");
