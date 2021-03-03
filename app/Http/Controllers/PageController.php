@@ -779,4 +779,26 @@ class PageController extends Controller
 		}
 		return view('validarRegistro',compact('valido','idusuario','correo'));
 	}
+	public function ldap(){
+		//VALIDAR LDAP
+		//USUARIO PARA CONSULTA LDAP
+		$configusername = 'administrador';
+		$configpassword = 'AD4dv4nc3d#2020@.';
+		$server = 'ae-energiasolar.local';
+		$domain = '@ae-energiasolar.local';
+		$port = 389;
+		$connection = ldap_connect($server, $port);
+		if(!$connection){
+			echo  "Error de conexión LDAP <br>";
+		}else{
+			ldap_set_option($connection , LDAP_OPT_PROTOCOL_VERSION, 3);
+			ldap_set_option($connection , LDAP_OPT_REFERRALS, 0);
+			$bind = ldap_bind($connection, $configusername.$domain, $configpassword);
+			if (!$bind) {
+				echo "Usuario ingresado es incorrecto<br>";
+			}else{
+				echo "Usuario ingresado es correcto<br>";
+			}
+		}
+	}
 }

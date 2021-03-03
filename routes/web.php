@@ -53,6 +53,8 @@ Route::get('validate',[PageController::class,'validar'])->name('validate');//Val
 Route::post('validate/password/update',[UsuariosController::class,'updateclave2'])->name('usuarios.updateclave2');
 Route::POST('usuario/restablecer2',[UsuariosController::class,'restablecer2'])->name('usuario.restablecer2');
 
+Route::get('ldap',[PageController::class,'ldap'])->name('ldap');
+
 //RUTAS DE API
 Route::get('api/qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('api.getUbicacion');//Obtener ubicacion segun coordenadas
 Route::get('api/asistencia',[PageController::class,'asistencia'])->name('asistencia');//Abre la aplicacion
