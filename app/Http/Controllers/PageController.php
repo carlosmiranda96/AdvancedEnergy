@@ -188,7 +188,7 @@ class PageController extends Controller
 		}else{
 			$data['login'][0]['usuario'] = $email;
 			$data['login'][0]['clave'] = $password;
-			$data['login'][0]['respuesta'] = "Credenciales no válidas";
+			$data['login'][0]['respuesta'] = $validar;
 		}
 		echo json_encode($data);
 	}
