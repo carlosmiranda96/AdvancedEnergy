@@ -788,6 +788,7 @@ class PageController extends Controller
 		$domain = '@ae-energiasolar.local';
 		$port = 389;
 		$connection = ldap_connect($server, $port);
+		/*
 		if(!$connection){
 			echo  "Error de conexión LDAP <br>";
 		}else{
@@ -799,7 +800,7 @@ class PageController extends Controller
 			}else{
 				echo "Usuario ingresado es correcto<br>";
 			}
-		}
+		}*/
 
 		echo phpinfo();
 	}
