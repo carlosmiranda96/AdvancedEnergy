@@ -46,7 +46,6 @@ class EmpleadosController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'codigo' => 'required|unique:empleados',
             'nombre1' => 'required',
             'apellido1' => 'required',
             'nombrecompleto' => 'required',
@@ -61,28 +60,30 @@ class EmpleadosController extends Controller
         }else{
             $foto = "fotoempleado/perfilDefault.jpg";
         }
+        $id = empleados::orderby('id','desc')->first()->id;
+        $id++;
         $toquen = substr(Crypt::encryptString($request->codigo),0,20);
-        empleados::create([
-            'fechaingreso' => $request->fechaingreso,
-            'codigo' => $request->codigo,
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'apellido3' => $request->apellido3,
-            'nombrecompleto' => $request->nombrecompleto,
-            'foto' => $foto,
-            'direccion' => $request->direccion,
-            'correo' => $request->correo,
-            'telefono' => $request->telefono,
-            'celular' => $request->celular,
-            'fechanacimiento' => $request->fechanacimiento,
-            'idgenero' => $request->idgenero,
-            'idestadocivil' => $request->idestadocivil,
-            'idmunicipio' => $request->idmunicipio,
-            'estado' => $request->estado,
-            'toquen' => $toquen
-        ]);
+        $empleado = new empleados;
+        $empleado->fechaingreso = $request->fechaingreso;
+        $empleado->codigo = $id;
+        $empleado->nombre1 = $request->nombre1;
+        $empleado->nombre2 = $request->nombre2;
+        $empleado->apellido1 = $request->apellido1;
+        $empleado->apellido2 = $request->apellido2;
+        $empleado->apellido3 = $request->apellido3;
+        $empleado->nombrecompleto = $request->nombrecompleto;
+        $empleado->foto = $foto;
+        $empleado->direccion = $request->direccion;
+        $empleado->correo = $request->correo;
+        $empleado->telefono = $request->telefono;
+        $empleado->celular = $request->celular;
+        $empleado->fechanacimiento = $request->fechanacimiento;
+        $empleado->idgenero = $request->idgenero;
+        $empleado->idestadocivil = $request->idestadocivil;
+        $empleado->idmunicipio = $request->idmunicipio;
+        $empleado->estado = $request->estado;
+        $empleado->toquen = $toquen;
+        $empleado->save();
         return redirect()->route('empleadodocumento.show',empleados::latest('id')->first())->with('mensaje','Datos guardados correctamente');
     }
     public function updateGrupo(Request $request)
@@ -135,7 +136,6 @@ class EmpleadosController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
-            'codigo' => 'required|unique:empleados,codigo,'.$id.',id',
             'nombre1' => 'required',
             'apellido1' => 'required',
             'nombrecompleto' => 'required',

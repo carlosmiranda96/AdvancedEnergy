@@ -129,6 +129,7 @@ class ApiController extends Controller
         echo json_encode($data);
     }
     public function addMarcacion(Request $request){
+        date_default_timezone_set('America/El_Salvador');
         $data = NULL;
         if($request->toquen==$this->toquen){
             $marcacion = new marcacionesempleados();

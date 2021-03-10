@@ -39,7 +39,7 @@ use App\Http\Controllers\userAccesoController;
 use App\Models\rutas\rutas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\formularios\formController;
-
+use App\Http\Controllers\rrhh\carnetController;
 use Maatwebsite\Excel\Facades\Excel;
 
 //RUTAS QUE NO NECESITAN ESTAR LOGEADO
@@ -150,7 +150,7 @@ Route::group(['middleware' => 'sesion'], function() {
     //Accesos
     Route::resource('userAcceso',userAccesoController::class);
 
-    Route::resource('carnet',userAccesoController::class);
+    Route::resource('carnet',carnetController::class);
 });
 
 //RUTAS DE ADMINISTRADOR

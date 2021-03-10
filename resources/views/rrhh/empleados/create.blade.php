@@ -44,8 +44,8 @@
                             </div>
                             <div class="col-xl-4">
                                 <div class="form-group">
-                                    <label>Codigo de empleado <span class="text-danger">*</span></label>
-                                    <input type="text" name="codigo" value="{{old('codigo')}}" class="form-control form-control-sm" autofocus autocomplete="off"/>
+                                    <label>Codigo de carnet</label>
+                                    <input disabled type="text" name="codigo" value="{{old('codigo')}}" class="form-control form-control-sm" autofocus autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="col-xl-4">

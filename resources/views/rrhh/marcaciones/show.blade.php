@@ -48,7 +48,7 @@
                             <td>{{date('d/m/Y',strtotime($item->fecha))}}</td>
                             <td>{{date('h:i:s a',strtotime($item->instante))}}</td>
                             <?php
-                                $salida = marcacionesempleados::where('tipo','Salida')->where('idempleado',$item->idempleado)->where('id','>',$item->id)->where('fecha',$item->fecha)->first();
+                                $salida = marcacionesempleados::where('tipo','Salida')->where('idempleado',$item->idempleado)->where('instante','>=',date('h:i:s a',strtotime($item->instante)))->where('fecha',$item->fecha)->first();
                                 if($salida!=null){
                                     $hora = $salida->instante;
                                     $horasalida = date('h:i:s a',strtotime($hora));
