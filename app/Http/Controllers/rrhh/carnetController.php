@@ -110,16 +110,19 @@ class carnetController extends Controller
         return redirect()->route('carnet.index')->with('mensaje','Datos guardados correctamente');
     }
     private function quitarCarnet($idempleado,$idcarnet){
-        $empleado = empleados::find($idempleado);
-        $carnet = Carnet::find($idcarnet);
-        $empleado->codigo = $empleado->id;
-        $empleado->save();
+        if($idempleado>0){
+            $empleado = empleados::find($idempleado);
+            $empleado->codigo = $empleado->id;
+            $empleado->save();
+        }
     }
     private function asignarCarnet($idempleado,$idcarnet){
-        $empleado = empleados::find($idempleado);
-        $carnet = Carnet::find($idcarnet);
-        $empleado->codigo = $carnet->codigo;
-        $empleado->save();
+        if($idempleado>0){
+            $empleado = empleados::find($idempleado);
+            $carnet = Carnet::find($idcarnet);
+            $empleado->codigo = $carnet->codigo;
+            $empleado->save();
+        }
     }
     /**
      * Remove the specified resource from storage.
