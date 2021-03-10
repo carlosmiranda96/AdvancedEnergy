@@ -37,7 +37,11 @@
                     <label>Empleado</label>
                     <p class="text-danger">* solo muestra empleados que no se les ha asignado carnet</p>
                     <select name="idempleado" class="form-control">
+                        @if(isset($empleado->id))
                         <option value="{{$empleado->id}}">{{$empleado->nombreCompleto}}</option>
+                        @else
+                        <option value="0">Seleccione</option>
+                        @endif
                         @foreach ($empleados as $item)
                         <option value="{{$item->id}}">{{$item->nombreCompleto}}</option>
                         @endforeach
