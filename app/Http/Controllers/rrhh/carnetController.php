@@ -4,7 +4,7 @@ namespace App\Http\Controllers\rrhh;
 
 use App\Http\Controllers\Controller;
 use App\Models\empleados;
-use App\Models\rrhh\carnet;
+use App\Models\rrhh\Carnet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -14,7 +14,7 @@ class carnetController extends Controller
 {
     public function index()
     {
-        $carnet = carnet::leftjoin("empleados as b","carnets.idempleado","b.id")->select("carnets.*",'b.nombreCompleto as empleado')->paginate(5);
+        $carnet = Carnet::leftjoin("empleados as b","carnets.idempleado","b.id")->select("carnets.*",'b.nombreCompleto as empleado')->paginate(5);
         return view('rrhh.carnet.lista',compact('carnet'));
     }
 
@@ -25,7 +25,7 @@ class carnetController extends Controller
      */
     public function create()
     {
-        if(carnet::get()->count()){
+        if(Carnet::get()->count()){
             $empleados = empleados::join("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
         }else{
             $empleados = empleados::leftjoin("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
@@ -47,7 +47,7 @@ class carnetController extends Controller
             'idempleado' => 'required',
         ]);
         $toquen = substr(Crypt::encryptString($request->codigo),0,20);
-        $carnet = carnet::create([
+        $carnet = Carnet::create([
             'codigo' => $request->codigo,
             'fechavencimiento' => $request->fechavencimiento,
             'idempleado' => $request->idempleado,
@@ -65,7 +65,7 @@ class carnetController extends Controller
      */
     public function show($id)
     {
-        $carnet = carnet::find($id);
+        $carnet = Carnet::find($id);
         return view('rrhh.carnet.show',compact('carnet'));
     }
     /**
@@ -76,8 +76,8 @@ class carnetController extends Controller
      */
     public function edit($id)
     {
-        $carnet = carnet::find($id);
-        if(carnet::get()->count()){
+        $carnet = Carnet::find($id);
+        if(Carnet::get()->count()){
             $empleados = empleados::join("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
         }else{
             $empleados = empleados::leftjoin("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
@@ -100,7 +100,7 @@ class carnetController extends Controller
             'fechavencimiento' => 'required',
             'idempleado' => 'required',
         ]);
-        $carnet = carnet::find($id);
+        $carnet = Carnet::find($id);
         $idempleadoanterior = $carnet->idempleado;
         if($idempleadoanterior!=$request->idempleado){
             $this->quitarCarnet($idempleadoanterior,$id);
@@ -111,13 +111,13 @@ class carnetController extends Controller
     }
     private function quitarCarnet($idempleado,$idcarnet){
         $empleado = empleados::find($idempleado);
-        $carnet = carnet::find($idcarnet);
+        $carnet = Carnet::find($idcarnet);
         $empleado->codigo = $empleado->id;
         $empleado->save();
     }
     private function asignarCarnet($idempleado,$idcarnet){
         $empleado = empleados::find($idempleado);
-        $carnet = carnet::find($idcarnet);
+        $carnet = Carnet::find($idcarnet);
         $empleado->codigo = $carnet->codigo;
         $empleado->save();
     }
@@ -129,7 +129,7 @@ class carnetController extends Controller
      */
     public function destroy($id)
     {
-        $carnet = carnet::find($id);
+        $carnet = Carnet::find($id);
         $this->quitarCarnet($carnet->idempleado,$id);
         $carnet->delete();
         return redirect()->route('carnet.index')->with('mensaje','Dato eliminado correctamente');
