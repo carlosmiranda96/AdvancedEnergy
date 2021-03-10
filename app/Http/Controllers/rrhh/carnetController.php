@@ -25,11 +25,7 @@ class carnetController extends Controller
      */
     public function create()
     {
-        if(Carnet::get()->count()){
-            $empleados = empleados::join("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
-        }else{
-            $empleados = empleados::leftjoin("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
-        }        
+        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();     
         return view('rrhh.carnet.create',compact('empleados'));
     }
 
@@ -77,11 +73,7 @@ class carnetController extends Controller
     public function edit($id)
     {
         $carnet = Carnet::find($id);
-        if(Carnet::get()->count()){
-            $empleados = empleados::join("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
-        }else{
-            $empleados = empleados::leftjoin("carnets as b","empleados.id","!=","b.idempleado")->select("empleados.*")->orderby("nombreCompleto")->get();
-        }
+        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orwhere("empleados.id",$id)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();
         $empleado = empleados::find($carnet->idempleado);
         return view('rrhh.carnet.edit',compact('carnet','empleados','empleado'));
     }
