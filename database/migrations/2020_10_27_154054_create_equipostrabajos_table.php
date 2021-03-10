@@ -17,6 +17,7 @@ class CreateEquipostrabajosTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('codigo');
+            $table->integer('tipo');
             $table->string('placa');
             $table->string('marca');
             $table->string('modelo')->nullable();

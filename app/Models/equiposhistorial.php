@@ -21,6 +21,7 @@ class equiposhistorial extends Model
         'idusuario',
         'latitud',
         'longitud',
+        'proyecto',
         'uso'
     ];
 }

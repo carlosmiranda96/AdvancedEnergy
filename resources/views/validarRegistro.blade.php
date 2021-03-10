@@ -115,7 +115,7 @@
                 data:"crear=1",
                 success:function(r)
                 {
-                    if(r==1){
+                    if(r==1 || r==2){
                         window.location = "{{route('inicio')}}";
                     }else{
                         alertify.error(r+"!!");

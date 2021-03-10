@@ -42,6 +42,12 @@
                             <option @if(old('uso')=='Devolución') {{'selected'}} @endif value="Devolución">Devolución</option>
                         </select>
                         </div>
+
+                        <div class="form-group col-12 col-lg-4">
+                        <label>Nombre de proyecto <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control input" value="{{old('proyecto')}}" {{$disabled}} name="proyecto" required/>
+                        </div>
+
                         <div class="form-group col-12 col-lg-4">
                         <label>Kilometraje <span class="text-danger">*</span></label>
                         <input type="number" class="form-control input" value="{{old('kilometraje')}}" {{$disabled}} name="kilometraje" required/>

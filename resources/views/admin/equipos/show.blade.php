@@ -25,6 +25,15 @@
                         <input disabled type="text"value="{{$equipostrabajo->codigo}}" class="form-control" autofocus autocomplete="off"/>
                     </div>
                     <div class="form-group">
+                        <label>Tipo</label>
+                        <select name="tipo" class="form-control" disabled>
+                            <option value="0" @if($equipostrabajo->tipo==0) {{'selected'}} @endif>Seleccione</option>
+                            <option value="1" @if($equipostrabajo->tipo==1) {{'selected'}} @endif>Vehiculo</option>
+                            <option value="2" @if($equipostrabajo->tipo==2) {{'selected'}} @endif>Maquinaria</option>
+                            <option value="3" @if($equipostrabajo->tipo==3) {{'selected'}} @endif>Herramientas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Placa</label>
                         <input disabled type="text" name="placa" value="{{$equipostrabajo->placa}}" class="form-control" autocomplete="off"/>
                     </div>

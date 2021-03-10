@@ -95,12 +95,14 @@ class EquiposhistorialController extends Controller
             $request->validate([
                 'uso' => 'required',
                 'combustible' => 'required',
+                'proyecto' => 'required',
             ]);
         }else{
             $request->validate([
                 'uso' => 'required',
                 'kilometraje' => 'required|integer',
                 'combustible' => 'required',
+                'proyecto' => 'required',
             ]);
         }
         $equiposhistorial = equiposhistorial::find($idequipohistorial);
@@ -121,6 +123,7 @@ class EquiposhistorialController extends Controller
         $equiposhistorial->botiquin = $request->botiquin;
         $equiposhistorial->equiposeguridad = $request->equiposeguridad;
         $equiposhistorial->observaciones = $request->observaciones;
+        $equiposhistorial->proyecto = $request->proyecto;
         $equiposhistorial->save();
         if(session()->has('codigoCarnet')){
             $codigoCarnet = session('codigoCarnet');

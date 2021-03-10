@@ -19,10 +19,16 @@ use App\Http\Controllers\PageController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::get('userlogin/{email}/{password}', [PageController::class, 'user'])->name('userlogin');
 Route::get('ubicaciones', [ApiController::class, 'ubicaciones'])->name('apiubicaciones');
 Route::get('empleados', [ApiController::class, 'empleados'])->name('apiempleados');
 Route::get('vehiculos', [ApiController::class, 'vehiculos'])->name('apivehiculos');
+Route::get('getmarcaciones/{idusuario}',[ApiController::class,'getMarcaciones'])->name('getmarcaciones');
+Route::get('ultimamarcacion',[ApiController::class,'ultimamarcacion'])->name('ultimamarcacion');
+Route::get('getvehiculos/{idusuario}',[ApiController::class,'getVehiculos'])->name('getvehiculos');
+Route::get('addmarcacion',[ApiController::class,'addMarcacion'])->name('addmarcacion');
+Route::get('addcontrolvehiculos',[ApiController::class,'addControlVehiculos'])->name('addcontrolvehiculos');
 
 
 

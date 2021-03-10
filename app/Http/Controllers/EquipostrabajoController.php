@@ -34,10 +34,12 @@ class EquipostrabajoController extends Controller
         $request->validate([
             'codigo' => 'required|unique:equipostrabajos',
             'placa' => 'required',
-            'marca' => 'required'
+            'marca' => 'required',
+            'tipo' => 'required'
         ]);
         equipostrabajo::create([
             'codigo' => $request->codigo,
+            'tipo' => $request->tipo,
             'placa' => $request->placa,
             'marca' => $request->marca,
             'modelo' => $request->modelo,
@@ -82,7 +84,8 @@ class EquipostrabajoController extends Controller
         $request->validate([
             'codigo' => 'required',
             'placa' => 'required',
-            'marca' => 'required'
+            'marca' => 'required',
+            'tipo' => 'required',
         ]);
         $equipostrabajo = equipostrabajo::find($id);
         $equipostrabajo->update($request->all());

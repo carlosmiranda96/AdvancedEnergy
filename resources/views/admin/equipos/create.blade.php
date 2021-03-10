@@ -29,6 +29,15 @@
                     <input type="text" name="codigo" value="{{old('codigo')}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
+                    <label>Tipo</label>
+                    <select name="tipo" class="form-control">
+                        <option value="0">Seleccione</option>
+                        <option value="1">Vehiculo</option>
+                        <option value="2">Maquinaria</option>
+                        <option value="3">Herramientas</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Placa <span class="text-danger">*</span></label>
                     <input type="text" name="placa" value="{{old('placa')}}" class="form-control"  autocomplete="off"/>
                 </div>

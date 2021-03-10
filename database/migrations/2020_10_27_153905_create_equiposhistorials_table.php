@@ -28,6 +28,7 @@ class CreateEquiposhistorialsTable extends Migration
             $table->integer('idusuario');
             $table->double('latitud');
             $table->double('longitud');
+            $table->string('proyecto')->nullable();
             $table->string('uso')->nullable();
         });
     }

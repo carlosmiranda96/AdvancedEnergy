@@ -393,6 +393,11 @@ class PageController extends Controller
 		}
 		echo json_encode($datos);
 	}
+	public function pruebaPerimetro(){
+		$arreglo = $this->getBoundaries(13.670061666666667,-89.29386500000001,0.5);
+		
+		echo json_encode($arreglo);
+	}
 	private function getBoundaries($lat, $lng, $distance = 1, $earthRadius = 6371)
 	{
 		$return = array();

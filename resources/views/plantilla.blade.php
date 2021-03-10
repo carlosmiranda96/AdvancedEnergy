@@ -149,7 +149,7 @@ use App\Models\modulos;
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <nav class="p-0 m-0" style="z-index: 1000;">
+                <!--nav class="p-0 m-0" style="z-index: 1000;">
                     <ul class="menu bg-white">
                         <li><button class="btn" onclick="herramienta(1)"><img height="20px" src="{{asset('img/iconos/preview.png')}}" /></button></li>
                         <li><button class="btn" onclick="herramienta(2)"><img height="20px" src="{{asset('img/iconos/view.png')}}" /></button></li>
@@ -162,8 +162,8 @@ use App\Models\modulos;
                         <li><button class="btn" onclick="herramienta(9)"><img height="20px" src="{{asset('img/iconos/right2.png')}}" /></button></li>
                         <li><button class="btn" onclick="herramienta(10)"><img height="20px" src="{{asset('img/iconos/enlace.png')}}" /></button></li>
                     </ul>
-                </nav>
-                <main class="mt-5 pt-4" id="pagina">
+                </nav-->
+                <main class="pt-5" id="pagina">
                     @yield('pagina')
                 </main>
                 <footer class="py-4 bg-light mt-auto">

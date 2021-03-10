@@ -50,6 +50,8 @@ Route::post('iniciarsesion', [PageController::class, 'iniciarsesion'])->name('in
 
 Route::get('politica',[PageController::class,'politica'])->name('politica');
 
+Route::get("pruebaperimetro",[PageController::class,'pruebaPerimetro']);
+
 Route::get('apiiniciarsesion', [PageController::class, 'iniciarsesion'])->name('apiiniciarsesion');
 
 Route::get('validaruser/{email}/{password}', [PageController::class, 'validarUser'])->name('validaruser');
