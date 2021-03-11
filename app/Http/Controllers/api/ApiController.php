@@ -7,6 +7,7 @@ use App\Models\empleados;
 use App\Models\equiposhistorial;
 use App\Models\equipostrabajo;
 use App\Models\marcacionesempleados;
+use App\Models\rrhh\Carnet;
 use App\Models\ubicacion;
 use Illuminate\Http\Request;
 
@@ -44,11 +45,11 @@ class ApiController extends Controller
     {
         $data = NULL;
         if($request->toquen==$this->toquen){
-            $empleados = empleados::all();
+            $empleados = empleados::join("carnets as b","empleados.id","b.idempleado")->select("empleados.id","b.id as idcarnet","b.codigo","empleados.nombreCompleto","empleados.foto","b.toquen")->get();
             $correlativo = 0;
             foreach($empleados as $item){
                 $data['empleados'][$correlativo]['id'] = $item->id;
-                $data['empleados'][$correlativo]['idcarnet'] = $item->id;
+                $data['empleados'][$correlativo]['idcarnet'] = $item->idcarnet;
                 $data['empleados'][$correlativo]['codigocarnet'] = $item->codigo;
                 $data['empleados'][$correlativo]['nombre'] = $item->nombreCompleto;
                 $data['empleados'][$correlativo]['foto'] = $item->foto;
@@ -90,11 +91,13 @@ class ApiController extends Controller
                 $data['vehiculos'][0]['id'] = 0;
                 $data['vehiculos'][0]['codigo'] = 0;
                 $data['vehiculos'][0]['placa'] = 0;
+                $data['vehiculos'][0]['tipo'] = 0;
             }	
         }else{
             $data['vehiculos'][0]['id'] = 0;
             $data['vehiculos'][0]['codigo'] = 0;
             $data['vehiculos'][0]['placa'] = 0;
+            $data['vehiculos'][0]['tipo'] = 0;
         }
         echo json_encode($data);
     }
