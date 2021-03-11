@@ -8,7 +8,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="metro">
+            <!--div class="metro">
                 <div class="l1">
                     <li class="item i1" id="btnmenu">
                         <span>Menu</span>
@@ -55,7 +55,23 @@
                     </li>
                 </div>
                 
+            </div-->
+
+            <div class="metro">
+                <div class="l1">
+                    <li class="item i1" id="btnmenu">
+                        <span>Menu</span>
+                    </li>
+                    <a href="https://portal.ae-energiasolar.com/public/advancedEnergy.apk" style="color:white" target="_blank"><li class="item i2">
+                        <span>Descargar App Android</span>
+                    </li>
+                    </a>                    
+                    <a href="{{route('load.aplicacion')}}" style="color:white" target="_blank"><li class="item i5">
+                        <span>Asistencia</span>
+                    </li></a>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

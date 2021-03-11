@@ -32,17 +32,22 @@ class PageController extends Controller
 	public function loadaplicacion()
 	{
 		$idusuario = session('user_id');
-        $empleado = empleadoUser::where('idusuario',$idusuario)->first();
+        $empleadouser = empleadoUser::where('idusuario',$idusuario)->first();
 		$idempleado = 0;
 		$a=0;
 		$b=0;
-        if($empleado){
-			$a = $empleado->idempleado;
-			$datosempleado = empleados::find($a);
-			$b = $datosempleado->toquen;
+        if($empleadouser){
+			$a = $empleadouser->idempleado;
+			$empleado = empleados::find($a);
+			$b = $empleado->toquen;
         }
+		$email = '';
+		$password = '';
+		return view('aplicacion.aplicacion',compact('empleado','email','password'));
+		/*
 		$url = route('asistencia',['a'=>$a,'b'=>$b]);
-		return view('aplicacion.cargar',compact('url'));
+		//return view('aplicacion.cargar',compact('url'));
+		return view('asistencia',['a'=>$a,'b'=>$b]);*/
 	}
 	//API APLICACION ASISTENCIA
 	public function asistencia(Request $request)

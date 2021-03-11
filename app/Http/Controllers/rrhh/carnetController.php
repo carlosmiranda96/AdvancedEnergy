@@ -73,7 +73,7 @@ class carnetController extends Controller
     public function edit($id)
     {
         $carnet = Carnet::find($id);
-        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orwhere("empleados.id",$id)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();
+        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orwhere("empleados.id",$carnet->idempleado)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();
         $empleado = empleados::find($carnet->idempleado);
         return view('rrhh.carnet.edit',compact('carnet','empleados','empleado'));
     }
@@ -96,8 +96,8 @@ class carnetController extends Controller
         $idempleadoanterior = $carnet->idempleado;
         if($idempleadoanterior!=$request->idempleado){
             $this->quitarCarnet($idempleadoanterior,$id);
-            $this->asignarCarnet($request->idempleado,$id);
         }
+        $this->asignarCarnet($request->idempleado,$request->codigo);
         $carnet->update($request->all());
         return redirect()->route('carnet.index')->with('mensaje','Datos guardados correctamente');
     }
@@ -108,11 +108,10 @@ class carnetController extends Controller
             $empleado->save();
         }
     }
-    private function asignarCarnet($idempleado,$idcarnet){
+    private function asignarCarnet($idempleado,$codigo){
         if($idempleado>0){
             $empleado = empleados::find($idempleado);
-            $carnet = Carnet::find($idcarnet);
-            $empleado->codigo = $carnet->codigo;
+            $empleado->codigo = $codigo;
             $empleado->save();
         }
     }

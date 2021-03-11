@@ -39,7 +39,7 @@
                     <select name="idempleado" class="form-control">
                         <option value="0">Seleccione</option>
                         @foreach ($empleados as $item)
-                        <option @if($empleado->id==$item->id){{'selected'}}@endif value="{{$item->id}}">{{$item->nombreCompleto}}</option>
+                        <option @if($empleado && $empleado->id==$item->id){{'selected'}}@endif value="{{$item->id}}">{{$item->nombreCompleto}}</option>
                         @endforeach
                     </select>
                 </div>
