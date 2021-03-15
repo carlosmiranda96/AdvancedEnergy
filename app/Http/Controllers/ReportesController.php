@@ -14,21 +14,11 @@ class ReportesController extends Controller
     {
         $idusuario = session('user_id');
         $reporte = modulos::find($id);
-
         $titulo = "Reporte de ".$reporte->modulo;
         if ($id==60) {
             $parametro = app(AsistenciaRPTController::class)->parametros();
         }
-        return view('reportes.reportes',compact('titulo','parametro'));
-    }
-    public function generarPDF(Request $request)
-    {
-        /*$reporte = permisos::find($request->idreporte);
-        if(isset($reporte)){
-            $ruta = $reporte->ruta;
-            return redirect()->route($ruta.".pdf",$request->all());
-        }else{
-            return redirect()->route('reportes')->with('error','No se ha podido generar el documento');
-        }*/
+        $excel = "AsistenciaRPTController.excel";
+        return view('reportes.reportes',compact('titulo','parametro','excel'));
     }
 }

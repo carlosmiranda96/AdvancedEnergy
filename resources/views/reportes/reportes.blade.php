@@ -2,7 +2,7 @@
 @section('pagina')
 <div class="container-fluid">
   <!-- Page Heading -->
-  <form action="{{route('reportes.pdf')}}" method="get" target="print_popup" >
+  <form action="{{route($excel)}}" method="get" target="print_popup" >
   <div class="row pt-3">
     <div class="col-12 col-lg-6 offset-lg-3">
         <div class="card shadow mb-4">
@@ -22,6 +22,7 @@
                 <div class="form-group">
                     
                 </div>
+                <button class="btn mt-3 btn-sm btn-success">Descargar Excel</button>
             </div>
         </div>
     </div>

@@ -133,7 +133,8 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('reporte/{id}',[ReportesController::class,'reportes'])->name('reportes');//Cargar el reporte por su id
 
     Route::get('reportes/parametros',[ReportesController::class,'parametros'])->name('reportes.parametros');
-    Route::get('reportes/pdf',[ReportesController::class,'generarPDF'])->name('reportes.pdf');
+    
+    Route::get('reportes/excel',[AsistenciaRPTController::class,'generarExcel'])->name('AsistenciaRPTController.excel');
 
     //empleados
     Route::get('reportes/empleado/parametros/{id}',[EmpleadosRPTController::class,'parametros'])->name('reportes.empleados.parametros');//obtener parametros a imprimir
