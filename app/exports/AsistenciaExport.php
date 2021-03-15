@@ -21,6 +21,6 @@ class AsistenciaExport implements FromArray,ShouldAutoSize
     }
     public function array():array
     {
-         return $this->asistencia;
+        return $this->asistencia;
     }
 }
