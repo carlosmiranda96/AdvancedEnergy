@@ -40,6 +40,7 @@ use App\Models\rutas\rutas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\formularios\formController;
 use App\Http\Controllers\rrhh\carnetController;
+use App\Http\Controllers\vehiculos\EquiposaccesoriosController;
 use Maatwebsite\Excel\Facades\Excel;
 
 //RUTAS QUE NO NECESITAN ESTAR LOGEADO
@@ -152,6 +153,10 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::resource('userAcceso',userAccesoController::class);
 
     Route::resource('carnet',carnetController::class);
+
+    Route::get("accesoriosvehiculos/add",[EquiposaccesoriosController::class,'add'])->name('addAccesorio');
+    Route::get("accesoriosvehiculos/get",[EquiposaccesoriosController::class,'get'])->name('getAccesorio');
+    Route::get("accesoriosvehiculos/delete",[EquiposaccesoriosController::class,'delete'])->name('deletedAccesorio');
 });
 
 //RUTAS DE ADMINISTRADOR

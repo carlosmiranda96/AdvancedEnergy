@@ -101,11 +101,11 @@ class ApiController extends Controller
         }
         echo json_encode($data);
     }
-    public function getMarcaciones(Request $request){
+    public function getMarcaciones($idusuario,Request $request){
         $data = NULL;
         if($request->toquen==$this->toquen){
             $marcaciones = marcacionesempleados::join("empleados as b","marcacionesempleados.idempleado","b.id")->join("ubicacions as c","marcacionesempleados.idubicacion","c.id")->
-            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo")->orderby("marcacionesempleados.fecha")->orderby("marcacionesempleados.instante")->get();
+            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo")->where("marcacionesempleados.idusuario",$idusuario)->orderby("marcacionesempleados.instante","desc")->get();
             $correlativo = 0;
             foreach($marcaciones as $item){
                 $data['marcacion'][$correlativo]['ubicacion'] = $item->descripcion;

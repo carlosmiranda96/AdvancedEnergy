@@ -7,7 +7,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><a href="{{route('equiposhistorial.index')}}" style="color: #2E9A73"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp&nbspListado de vehiculos</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Listado de vehiculos</h6>
         </div>
         <div class="card-body">
             @if (session('mensaje'))
@@ -55,7 +55,7 @@
                             <td onclick="mostrar('{{$item->id}}')" style="cursor:pointer" >{{$item->año}}</td>
                             <td onclick="mostrar('{{$item->id}}')" style="cursor:pointer" >{{$item->descripcion}}</td>
                             <td>
-                                <form id="mostrar{{$item->id}}" action="{{ route('equipos.show',$item->id)}}" method="GET"></form>
+                                <form id="mostrar{{$item->id}}" action="{{ route('equipos.edit',$item->id)}}" method="GET"></form>
                                 <form id="frmeliminar{{$item->id}}" method="post" action="{{route('equipos.destroy',$item->id)}}" class="form-inline">
                                 @csrf
                                 @method('DELETE')
