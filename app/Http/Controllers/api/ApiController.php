@@ -137,7 +137,7 @@ class ApiController extends Controller
         date_default_timezone_set('America/El_Salvador');
         $data = NULL;
         if($request->toquen==$this->toquen){
-            $existemarcacion = marcacionesempleados::where("idempleado",$request->idempleado)->where("idusuario",$request->idusuario)->where("fecha",$request->fecha)->where("hora",$request->hora)->where("idubicacion",$request->idubicacion)->first();
+            $existemarcacion = marcacionesempleados::where("idempleado",$request->idempleado)->where("idusuario",$request->idusuario)->where("fecha",$request->fecha)->where("instante",$request->hora)->where("idubicacion",$request->idubicacion)->first();
             if(isset($existemarcacion->id)){
                 $data['marcacion'][0]['respuesta'] = 1;
             }else{
