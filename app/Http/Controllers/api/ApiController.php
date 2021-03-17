@@ -102,10 +102,12 @@ class ApiController extends Controller
         echo json_encode($data);
     }
     public function getMarcaciones($idusuario,Request $request){
+        date_default_timezone_set('America/El_Salvador');
+        $fecha = date("Y-m-d");
         $data = NULL;
         if($request->toquen==$this->toquen){
             $marcaciones = marcacionesempleados::join("empleados as b","marcacionesempleados.idempleado","b.id")->join("ubicacions as c","marcacionesempleados.idubicacion","c.id")->
-            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo")->where("marcacionesempleados.idusuario",$idusuario)->orderby("marcacionesempleados.instante","desc")->get();
+            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo")->where("marcacionesempleados.fecha",$fecha)->where("marcacionesempleados.idusuario",$idusuario)->orderby("marcacionesempleados.instante","desc")->get();
             $correlativo = 0;
             foreach($marcaciones as $item){
                 $data['marcacion'][$correlativo]['ubicacion'] = $item->descripcion;
@@ -135,20 +137,25 @@ class ApiController extends Controller
         date_default_timezone_set('America/El_Salvador');
         $data = NULL;
         if($request->toquen==$this->toquen){
-            $marcacion = new marcacionesempleados();
-            if(isset($request->idempleado)){
-                $marcacion->idempleado = $request->idempleado;
-                $marcacion->idusuario = $request->idusuario;
-                $marcacion->tipo = $request->tipo;
-                $marcacion->fecha = $request->fecha;
-                $marcacion->instante = $request->hora;
-                $marcacion->idubicacion = $request->idubicacion;
-                $marcacion->latitud = $request->latitud;
-                $marcacion->longitud = $request->longitud;
-                $marcacion->save();
+            $existemarcacion = marcacionesempleados::where("idempleado",$request->idempleado)->where("idusuario",$request->idusuario)->where("fecha",$request->fecha)->where("hora",$request->hora)->where("idubicacion",$request->idubicacion)->get();
+            if($existemarcacion){
                 $data['marcacion'][0]['respuesta'] = 1;
             }else{
-                $data['marcacion'][0]['respuesta'] = 0;
+                $marcacion = new marcacionesempleados();
+                if(isset($request->idempleado)){
+                    $marcacion->idempleado = $request->idempleado;
+                    $marcacion->idusuario = $request->idusuario;
+                    $marcacion->tipo = $request->tipo;
+                    $marcacion->fecha = $request->fecha;
+                    $marcacion->instante = $request->hora;
+                    $marcacion->idubicacion = $request->idubicacion;
+                    $marcacion->latitud = $request->latitud;
+                    $marcacion->longitud = $request->longitud;
+                    $marcacion->save();
+                    $data['marcacion'][0]['respuesta'] = 1;
+                }else{
+                    $data['marcacion'][0]['respuesta'] = 0;
+                }
             }
         }else{
             $data['marcacion'][0]['respuesta'] = 0;
