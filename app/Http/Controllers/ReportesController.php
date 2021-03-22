@@ -26,6 +26,7 @@ class ReportesController extends Controller
                 $parametro = app(Covid19RPTController::class)->parametros();
                 $excel = "Covid19RPTController.excel";
             break;
+            
         }
         
         return view('reportes.reportes',compact('titulo','parametro','excel'));
