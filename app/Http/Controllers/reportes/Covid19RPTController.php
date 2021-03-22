@@ -41,9 +41,9 @@ class Covid19RPTController extends Controller
         $desde = $request->desde;
         $hasta = $request->hasta;
 
-        $idreporte = 2;
-        $desde = "2021-03-17";
-        $hasta = "2021-03-18";
+        //$idreporte = 2;
+        //$desde = "2021-03-17";
+        //$hasta = "2021-03-18";
 
         if($idreporte==1){
             $columnas = array("FECHA","NOMBRE","DUI","GENERO","EMPRESA","OTRA EMPRESA","PROYECTO","TEMPERATURA","COMENTARIOS");
