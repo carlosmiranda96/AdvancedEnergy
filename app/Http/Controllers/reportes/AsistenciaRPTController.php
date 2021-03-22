@@ -143,7 +143,5 @@ class AsistenciaRPTController extends Controller
             $export = new AsistenciaExport($data);
             return Excel::download($export,"asistencia.xlsx");
         }
-
-       
     }
 }

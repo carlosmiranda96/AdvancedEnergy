@@ -27,6 +27,8 @@ use App\Http\Controllers\modulosController;
 use App\Http\Controllers\PaisController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\reportes\AsistenciaRPTController;
+use App\Http\Controllers\reportes\Covid19RPTController;
+
 use App\Http\Controllers\reportes\EmpleadosRPTController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SSL\validar;
@@ -132,10 +134,13 @@ Route::group(['middleware' => 'sesion'], function() {
 
     //REPORTES
     Route::get('reporte/{id}',[ReportesController::class,'reportes'])->name('reportes');//Cargar el reporte por su id
-
     Route::get('reportes/parametros',[ReportesController::class,'parametros'])->name('reportes.parametros');
+
     
-    Route::get('reportes/excel',[AsistenciaRPTController::class,'generarExcel'])->name('AsistenciaRPTController.excel');
+    Route::get('reportes/asistencia/excel',[AsistenciaRPTController::class,'generarExcel'])->name('AsistenciaRPTController.excel');
+    Route::get('reportes/covid19/excel',[Covid19RPTController::class,'generarExcel'])->name('Covid19RPTController.excel');
+
+    
 
     //empleados
     Route::get('reportes/empleado/parametros/{id}',[EmpleadosRPTController::class,'parametros'])->name('reportes.empleados.parametros');//obtener parametros a imprimir

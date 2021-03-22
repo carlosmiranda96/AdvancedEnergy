@@ -112,9 +112,9 @@ class EquiposaccesoriosController extends Controller
                 <td>'.$item->descripcion.'</td>
                 <td>
                     <form id="frmeliminar{{$item->id}}" method="post" action="{{route('."'equiposaccesorios.destroy'".',$item->id)}}" class="form-inline">
-                    @csrf
+                    '.@csrf
                     @method("DELETE")
-                    <a class="btn btn-sm btn-warning" href="{{ route('."'equiposac'".',$item->id) }}"><i class="fas fa-edit"></i></a>
+                    .'<a class="btn btn-sm btn-warning" href="{{ route('."'equiposac'".',$item->id) }}"><i class="fas fa-edit"></i></a>
                     <a onclick="eliminar('.$item->id.')" class="btn btn-sm btn-danger" href="#"><i class="fas fa-trash-alt"></i></a>
                     </form>
                 </td>
