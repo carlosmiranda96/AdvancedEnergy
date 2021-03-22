@@ -40,30 +40,3 @@
   </form>
 </div>
 @stop
-@section('script')
-<script>
-    function cargarParametros(input)
-    {
-        $.ajax({
-            type:"GET",
-            data:"idreporte="+input.value,
-            url:"{{route('reportes.parametros')}}",
-            success:function(r)
-            {
-                if(r!=0){
-                    $("#cardParametros").fadeIn();
-                    $("#parametrosbody").empty();
-                    $("#parametrosbody").html(r);
-                }else{
-                    //alert("No fue posible generar el reporte");
-                    $("#cardParametros").fadeOut();
-                }
-            },
-            error:function(){
-                alert("No fue posible generar el reporte");
-                $("#cardParametros").fadeOut();
-            }
-        })
-    }
-</script>
-@stop

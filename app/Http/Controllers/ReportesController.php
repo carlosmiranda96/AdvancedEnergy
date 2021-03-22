@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\reportes\AsistenciaRPTController;
+use App\Http\Controllers\reportes\Covid19RPTController;
 use App\Models\autorizacionusuarios;
 use App\Models\modulos;
 use App\Models\permisos;
@@ -15,10 +16,18 @@ class ReportesController extends Controller
         $idusuario = session('user_id');
         $reporte = modulos::find($id);
         $titulo = "Reporte de ".$reporte->modulo;
-        if ($id==60) {
-            $parametro = app(AsistenciaRPTController::class)->parametros();
+        switch ($id)
+        {
+            case 60:
+                $parametro = app(AsistenciaRPTController::class)->parametros();
+                $excel = "AsistenciaRPTController.excel";
+            break;
+            case 66:
+                $parametro = app(Covid19RPTController::class)->parametros();
+                $excel = "Covid19RPTController.excel";
+            break;
         }
-        $excel = "AsistenciaRPTController.excel";
+        
         return view('reportes.reportes',compact('titulo','parametro','excel'));
     }
 }
