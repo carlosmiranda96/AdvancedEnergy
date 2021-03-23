@@ -86,10 +86,23 @@ class Covid19RPTController extends Controller
             $export = new AsistenciaExport($data);
             return Excel::download($export,"Covid19.xlsx");
         }else{
-            $columnas = array("ID","NOMBRE","DETALLES","PUNTUACIÓN","PERIODO");
-            $data=array($columnas);
+            $columnas = array("ID","NOMBRE");
+
+            $date1 = new DateTime($desde);
+            $date2 = new DateTime($hasta);
+            $diff = $date1->diff($date2);
+            $fechaactual = date("Y-m-d",strtotime($desde));
+            for($i = 0;$i<$diff->days+1;$i++){
+                //array_push($filas,"");
+                array_push($columnas,"Dia ".date("d",strtotime($fechaactual)));
+                array_push($columnas,"Puntos");
+                $fechaactual = date("Y-m-d",strtotime($fechaactual."+ 1 days"));
+            }
+
+            
             $id = 1;
-            $empleados = empleados::where("estado",1)->where("id","!=","codigo")->orderby("codigo")->get();
+            //$empleados = empleados::where("estado",1)->where("id","!=","codigo")->orderby("codigo")->get();
+            $empleados = formua::where("fecha",">=",$desde)->where("fecha","<=",$hasta)->select("nombrecompleto")->groupBy("nombrecompleto")->get();
             $diainicio = date("d",strtotime($desde));
             $diafinal = date("d",strtotime($hasta));
             setlocale(LC_TIME, 'es_ES');
@@ -121,16 +134,49 @@ class Covid19RPTController extends Controller
             }
             $año = date("Y",strtotime($hasta));
             $periodo = "Semana del ".$diainicio." al ".$diafinal." de ".$mes." ".$año;
+
+            $data=array(array("",$periodo));
+            array_push($data,$columnas);
+
             foreach($empleados as $item)
             {
-                
                 $fila1 = array(
                     $id,
-                    $item->nombreCompleto,
-                    "",
-                    "",
-                    $periodo
+                    $item->nombrecompleto,
                 );
+                $date1 = new DateTime($desde);
+                $date2 = new DateTime($hasta);
+                $diff = $date1->diff($date2);
+                $fechaactual = date("Y-m-d",strtotime($desde));
+                for($i = 0;$i<$diff->days+1;$i++){
+                    //array_push($filas,"");
+                    $marcoasistencia = "NO";
+                    $puntos = "0";
+
+                    $covid19 = formua::where("fecha",$fechaactual)->where("nombrecompleto",$item->nombrecompleto)->first();
+                    if($covid19){
+                        $marcoasistencia = "SI";
+
+                        $sintomas = formuc::orderby("id")->get();
+                        $puntuacion = 0;
+                        foreach($sintomas as $item2){
+                            $respuestaf = formub::where("idformua",$covid19->id)->where("idformuc",$item2->id)->first();
+                            if($respuestaf->respuesta=="SI"){
+                                $puntosSintomas = $item2->puntos;
+                            }else{
+                                $puntosSintomas = 0;
+                            }
+                            $puntuacion = $puntuacion+$puntosSintomas;
+                        }
+                        if($puntuacion==0){
+                            $puntuacion = "0";
+                        }
+                        $puntos = $puntuacion;
+                    }
+                    array_push($fila1,$marcoasistencia);
+                    array_push($fila1,$puntos);
+                    $fechaactual = date("Y-m-d",strtotime($fechaactual."+ 1 days"));
+                }
                 array_push($data,$fila1);
                 $id++;
             }
