@@ -102,7 +102,7 @@ class EquiposaccesoriosController extends Controller
         <thead>
             <tr>
                 <th>Descripcion</th>
-                <th>Opciones</th>
+                <th class="text-center">Opciones</th>
             </tr>
         </thead>
         <tbody>';
@@ -110,20 +110,22 @@ class EquiposaccesoriosController extends Controller
         foreach($accesorios as $item){
             $retorno = $retorno.'<tr>
                 <td>'.$item->descripcion.'</td>
-                <td>
-                    <button class="btn-btn-danger">e</button>
+                <td class="text-center">
+                    <button onclick="eliminarAccesorio('.$item->id.')" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></button>
                 </td>
             </tr>';
             $contador++;
         }
         if($contador==0){
-            $retorno = $retorno."<tr><td colspan='2'>Sin datos</td></tr>";
+            $retorno = $retorno."<tr><td class='text-center' colspan='2'>Sin datos</td></tr>";
         }
         $retorno = $retorno."</tbody>
         </table>";
         echo $retorno;
     }
     public function delete(Request $request){
-        
+        $id = $request->id;
+        $accesorio = equiposaccesorios::find($id);
+        $accesorio->delete();    
     }
 }

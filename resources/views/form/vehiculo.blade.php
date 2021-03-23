@@ -50,7 +50,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                         <label>Kilometraje <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control input" value="{{old('kilometraje')}}" {{$disabled}} name="kilometraje" required/>
+                            <input type="number" class="form-control input" value="{{old('kilometraje')}}" {{$disabled}} name="kilometraje" required/>
                         </div>
                         <div class="form-group col-12 col-lg-4">
                         <label>Combustible <span class="text-danger">*</span></label>

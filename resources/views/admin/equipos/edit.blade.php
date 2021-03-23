@@ -82,10 +82,10 @@
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3 text-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Accesorios</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Accesorios de vehiculos</h6>
                 </div>
                 <div class="card-body">
-                    <button class="btn btn-sm btn-primary mb-3" onclick="agregarAccesorio()">Agregar</button>
+                    <button class="btn btn-sm btn-primary mb-3" onclick="agregarAccesorio()"><i class="fas fa-plus"></i> Agregar</button>
                     <div id="tablaAccessorio">
                     
                     </div>
@@ -127,7 +127,7 @@
         $("#descargarCodigo").on("click",function(){
             var base64 = $("#codigoQR img").attr('src');
             $("#descargarCodigo").attr('href', base64);
-            $("#descargarCodigo").attr('download', "codigoQR");
+            $("#descargarCodigo").attr('download', "{{str_replace('.','',$equipostrabajo->codigo)}}");
             $("#descargarCodigo").trigger("click");
         });
         $(document).ready(function(){
@@ -168,6 +168,36 @@
             }else{
                 bootbox.alert("Por favor ingresar una descripción");
             }
+        }
+        function eliminarAccesorio(id){
+            bootbox.confirm({
+                message: "Confirmar, para eliminar registro",
+                buttons: {
+                    confirm: {
+                        label: 'SI',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if(result){
+                        $.ajax({
+                            type:"get",
+                            data:"id="+id,
+                            url:"{{route('deletedAccesorio')}}",
+                            success:function(r){
+                                cargarAccesorios();
+                            },
+                            error:function(){
+                                alert("Problemas de conexión");
+                            }
+                        });
+                    }
+                }
+            });
         }
     </script>
 @stop

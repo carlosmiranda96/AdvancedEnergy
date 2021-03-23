@@ -143,7 +143,8 @@ class EmpleadosController extends Controller
             'idgenero' => 'required|integer|min:1',
             'idmunicipio' => 'required|integer|min:1',
             'fechaingreso' => 'required',
-            'estado' => 'required'
+            'estado' => 'required',
+            'codigo' => 'required',
         ]);
         $empleados = empleados::find($id);
         if(isset($request->foto))
