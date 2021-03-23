@@ -171,6 +171,7 @@ class ApiController extends Controller
             ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->get();
             $correlativo = 0;
             foreach($vehiculos as $item){
+                $data['controlvehiculo'][$correlativo]['id'] = $item->id;
                 $data['controlvehiculo'][$correlativo]['fecha'] = date("Y-m-d",strtotime($item->instante));
                 $data['controlvehiculo'][$correlativo]['hora'] = date("H:i:s",strtotime($item->instante));
                 $data['controlvehiculo'][$correlativo]['idvehiculo'] = $item->idequipotrabajo;
@@ -191,6 +192,7 @@ class ApiController extends Controller
                 $correlativo++;
             }		
             if($correlativo==0){
+                $data['controlvehiculo'][0]['id'] = 0;
                 $data['controlvehiculo'][0]['fecha'] = 0;
                 $data['controlvehiculo'][0]['hora'] = 0;
                 $data['controlvehiculo'][0]['idvehiculo'] = 0;
@@ -210,23 +212,24 @@ class ApiController extends Controller
                 $data['controlvehiculo'][0]['proyecto'] = 0;
             }	
         }else{
+            $data['controlvehiculo'][0]['id'] = 0;
             $data['controlvehiculo'][0]['fecha'] = 0;
-                $data['controlvehiculo'][0]['hora'] = 0;
-                $data['controlvehiculo'][0]['idvehiculo'] = 0;
-                $data['controlvehiculo'][0]['codigoequipo'] = 0;
-                $data['controlvehiculo'][0]['idempleado'] = 0;
-                $data['controlvehiculo'][0]['nombre'] = 0;
-                $data['controlvehiculo'][0]['kilometraje'] = 0;
-                $data['controlvehiculo'][0]['combustible'] = 0;
-                $data['controlvehiculo'][0]['extinguidor'] = 0;
-                $data['controlvehiculo'][0]['botiquin'] = 0;
-                $data['controlvehiculo'][0]['equiposeguridad'] = 0;
-                $data['controlvehiculo'][0]['observaciones'] = 0;
-                $data['controlvehiculo'][0]['idusuario'] = 0;
-                $data['controlvehiculo'][0]['latitud'] = 0;
-                $data['controlvehiculo'][0]['longitud'] = 0;
-                $data['controlvehiculo'][0]['uso'] = 0;
-                $data['controlvehiculo'][0]['proyecto'] = 0;
+            $data['controlvehiculo'][0]['hora'] = 0;
+            $data['controlvehiculo'][0]['idvehiculo'] = 0;
+            $data['controlvehiculo'][0]['codigoequipo'] = 0;
+            $data['controlvehiculo'][0]['idempleado'] = 0;
+            $data['controlvehiculo'][0]['nombre'] = 0;
+            $data['controlvehiculo'][0]['kilometraje'] = 0;
+            $data['controlvehiculo'][0]['combustible'] = 0;
+            $data['controlvehiculo'][0]['extinguidor'] = 0;
+            $data['controlvehiculo'][0]['botiquin'] = 0;
+            $data['controlvehiculo'][0]['equiposeguridad'] = 0;
+            $data['controlvehiculo'][0]['observaciones'] = 0;
+            $data['controlvehiculo'][0]['idusuario'] = 0;
+            $data['controlvehiculo'][0]['latitud'] = 0;
+            $data['controlvehiculo'][0]['longitud'] = 0;
+            $data['controlvehiculo'][0]['uso'] = 0;
+            $data['controlvehiculo'][0]['proyecto'] = 0;
         }
         echo json_encode($data);
     }
