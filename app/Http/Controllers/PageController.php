@@ -118,7 +118,8 @@ class PageController extends Controller
 			session()->put('email',$usuario->email);
 			session()->put('foto','storage/app/'.$usuario->foto);
 			session()->put('idrol',$usuario->idrol);
-			session()->put('menu_id',5);//Seleccionar menu inicio
+			session()->put('menu_id',5);
+			//Seleccionar menu inicio
 			if($request->recordar)
 			{
 				//Crear cookie para recordar el email y contraseña

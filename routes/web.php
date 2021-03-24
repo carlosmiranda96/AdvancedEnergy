@@ -86,7 +86,6 @@ Route::get('.well-known/pki-validation/{txt}',[validar::class,'validar'])->name(
 Route::group(['middleware' => 'sesion'], function() {
 
     Route::get('api/qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
-
     Route::get('cerrarsesion',[PageController::class,'cerrar'])->name('cerrarsesion');
 
     /*$rutas = rutas::all();
