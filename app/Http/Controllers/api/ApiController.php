@@ -239,14 +239,26 @@ class ApiController extends Controller
         if($request->toquen==$this->toquen){
             $controlvehiculo = new equiposhistorial();
             if(isset($request->idempleado)){
+
                 $controlvehiculo->instante = $request->fecha.' '.$request->hora;
                 $controlvehiculo->idequipotrabajo = $request->idvehiculo;
                 $controlvehiculo->idempleado = $request->idempleado;
+
+                $controlvehiculo->kilometraje = $request->kilometraje;
+                $controlvehiculo->combustible = $request->combustible;
+                $controlvehiculo->extinguidor = $request->extinguidor;
+                $controlvehiculo->botiquin = $request->botiquin;
+                $controlvehiculo->equiposeguridad = $request->equiposeguridad;
+                $controlvehiculo->observaciones = $request->observaciones;
+                $controlvehiculo->proyecto = $request->proyecto;
+                $controlvehiculo->uso = $request->uso;
+
                 $controlvehiculo->idusuario = $request->idusuario;
                 $controlvehiculo->latitud = $request->latitud;
                 $controlvehiculo->longitud = $request->longitud;
                 $controlvehiculo->save();
                 $data['vehiculos'][0]['respuesta'] = 1;
+                
             }else{
                 $data['vehiculos'][0]['respuesta'] = 0;
             }
