@@ -7,6 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Alexander Miranda">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  @yield('titulo')
   <title>Formularios - Advanced Energy</title>
   <link rel="icon" type="image/png" href="{{asset('img/isotipo.png')}}">
   <!-- Custom fonts for this template-->
