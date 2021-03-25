@@ -64,8 +64,9 @@
                             <label>Educación</label>
                             <select class="form-control input" name="educacion">
                                 <option value="0">Seleccione</option>
-                                <option value="Estudios secundarios completos">Estudios secundarios completos</option>
-                                <option value="Estudio Técnico">Estudio Técnico</option>
+                                <option value="Educación básica">Educación básica</option>
+                                <option value="Educación Media">Educación Media</option>
+                                <option value="Educación Superior">Educación Superior</option>
                             </select>
                         </div>
                         <div class="form-group col-12">
