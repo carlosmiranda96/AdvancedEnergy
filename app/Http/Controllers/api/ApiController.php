@@ -165,14 +165,21 @@ class ApiController extends Controller
 
     public function getVehiculos($idusuario,Request $request)
     {
+        date_default_timezone_set('America/El_Salvador');
+
+        $hasta =  date("Y-m-d");
+        $desde = date("Y-m-d",strtotime($hasta."- 8 days"));
+
         $data = NULL;
         if($request->toquen==$this->toquen){
             if(isset($request->idvehiculocontrol)){
                 $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
-            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.id",$request->idvehiculocontrol)->get();
+            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.id",$request->idvehiculocontrol)
+            ->where("instante",">=",$desde." 00:00")->where("instante","<=",$hasta." 24:00")->get();
             }else{
                 $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
-            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.idusuario",$idusuario)->get();
+            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.idusuario",$idusuario)
+            ->where("instante",">=",$desde." 00:00")->where("instante","<=",$hasta." 24:00")->get();
             }
             $correlativo = 0;
             foreach($vehiculos as $item){

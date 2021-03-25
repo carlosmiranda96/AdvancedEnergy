@@ -41,6 +41,7 @@ use App\Http\Controllers\userAccesoController;
 use App\Models\rutas\rutas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\formularios\formController;
+use App\Http\Controllers\formularios\solicitudempleoController;
 use App\Http\Controllers\rrhh\carnetController;
 use App\Http\Controllers\vehiculos\EquiposaccesoriosController;
 use Maatwebsite\Excel\Facades\Excel;
@@ -80,6 +81,11 @@ Route::get('api/form/covidenviar',[formController::class,'guardarcovid'])->name(
 Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
 Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo
 
+//FORMULARIO SOLICITUD EMPLEO
+Route::get("solicitud-empleo",[solicitudempleoController::class,'index'])->name("form.solicitudempleo");
+Route::post("solicitud-empleo/guardar",[solicitudempleoController::class,'guardar'])->name("form.solicitudempleo.guardar");
+
+//VALIDAR CERTIFICADO SSL
 Route::get('.well-known/pki-validation/{txt}',[validar::class,'validar'])->name('ssl');
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
