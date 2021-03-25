@@ -1,4 +1,7 @@
 @extends('plantillaForm')
+@section('titulo')
+<title>Solicitud de empleo - Advanced Energy</title>
+@stop
 @section('pagina')
 
 <div class="row">
@@ -61,7 +64,7 @@
                             <input type="number" class="form-control input" value="{{old('aspiracionsalarial')}}" name="aspiracionsalarial"/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Educación</label>
+                            <label>Nivel de estudios</label>
                             <select class="form-control input" name="educacion">
                                 <option value="0">Seleccione</option>
                                 <option value="Educación básica">Educación básica</option>
