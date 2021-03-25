@@ -163,12 +163,17 @@ class ApiController extends Controller
         echo json_encode($data);
     }
 
-    public function getVehiculos(Request $request)
+    public function getVehiculos($idusuario,Request $request)
     {
         $data = NULL;
         if($request->toquen==$this->toquen){
-            $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
-            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->get();
+            if(isset($request->idvehiculocontrol)){
+                $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
+            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.id",$request->idvehiculocontrol)->get();
+            }else{
+                $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
+            ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.idusuario",$idusuario)->get();
+            }
             $correlativo = 0;
             foreach($vehiculos as $item){
                 $data['controlvehiculo'][$correlativo]['id'] = $item->id;
