@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\formularios;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Empleo;
 use App\Models\formularios\solicitudempleo as FormulariosSolicitudempleo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class solicitudempleoController extends Controller
 {
@@ -50,6 +52,9 @@ class solicitudempleoController extends Controller
         $solicitud->Eresponsabilidades = $request->Eresponsabilidades;
         $solicitud->Etrabajoactual = $request->Etrabajoactual;
         $solicitud->save();
+
+        Mail::to("contacto@ae-energiasolar.com")->bcc("amiranda@ae-energiasolar.com")->send(new Empleo($solicitud->id));
+
         return redirect()->route('form.solicitudempleo')->with('mensaje','Solicitud enviada correctamente');
     }
 }
