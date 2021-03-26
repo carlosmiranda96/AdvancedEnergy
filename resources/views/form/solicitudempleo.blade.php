@@ -76,12 +76,12 @@
                             <label>Area donde desea aplicar</label>
                             <select class="form-control input" name="puesto">
                                 <option value="0">Seleccione</option>
-                                <option value="Seguridad Industrial y salud ocupacional">Seguridad Industrial y salud ocupacional</option>
-                                <option value="Operador de maquinaria">Operador de maquinaria</option>
-                                <option value="Ingeniero Electricista">Ingeniero Electricista</option>
-                                <option value="Ingeniero Electricista en subestaciones">Ingeniero Electricista en subestaciones</option>
-                                <option value="Técnico Electricista">Técnico Electricista</option>
-                                <option value="Técnico Soldador">Técnico Soldador</option>
+                                <option value="Seguridad Industrial y salud ocupacional" @if($id=="Seguridad Industrial y salud ocupacional") {{'selected'}} @endif>Seguridad Industrial y salud ocupacional</option>
+                                <option value="Operador de maquinaria" @if($id=="Operador de maquinaria") {{'selected'}} @endif>Operador de maquinaria</option>
+                                <option value="Ingeniero Electricista" @if($id=="Ingeniero Electricista") {{'selected'}} @endif>Ingeniero Electricista</option>
+                                <option value="Ingeniero Electricista en subestaciones" @if($id=="Ingeniero Electricista en subestaciones") {{'selected'}} @endif>Ingeniero Electricista en subestaciones</option>
+                                <option value="Técnico Electricista" @if($id=="Técnico Electricista") {{'selected'}} @endif>Técnico Electricista</option>
+                                <option value="Técnico Soldador" @if($id=="Técnico Soldador") {{'selected'}} @endif>Técnico Soldador</option>
                             </select>
                         </div>
                         <div class="col-12">

@@ -13,9 +13,10 @@ class solicitudempleoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function solicitud(Request $request)
     {
-        return view("form.solicitudempleo");
+        $id = $request->id;
+        return view("form.solicitudempleo",compact('id'));
     }
     public function guardar(Request $request)
     {

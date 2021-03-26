@@ -83,7 +83,7 @@ Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.fo
 Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo
 
 //FORMULARIO SOLICITUD EMPLEO
-Route::get("solicitud-empleo",[solicitudempleoController::class,'index'])->name("form.solicitudempleo");
+Route::get("solicitud-empleo",[solicitudempleoController::class,'solicitud'])->name("form.solicitudempleo");
 Route::post("solicitud-empleo/guardar",[solicitudempleoController::class,'guardar'])->name("form.solicitudempleo.guardar");
 
 //VALIDAR CERTIFICADO SSL
