@@ -36,7 +36,7 @@
                             <input type="text" class="form-control input" value="{{old('apellido')}}" name="apellido" required/>
                         </div>
                         <div class="form-group col-12">
-                            <label>N° de dui (requerido) <span class="text-danger">*</span></label>
+                            <label>Número de dui (requerido) <span class="text-danger">*</span></label>
                             <input type="text" class="form-control input" value="{{old('dui')}}" name="dui" required pattern="[0-9]{8}-[0-9]{1}" title="Ejemplo:12345678-9"/>
                         </div>
                         <div class="form-group col-12">
@@ -48,15 +48,15 @@
                             <textarea class="form-control input" name="direccionactual" required>{{old('direccionactual')}}</textarea>
                         </div>
                         <div class="form-group col-12">
-                            <label>Telefono fijo (requerido) <span class="text-danger">*</span></label>
+                            <label>Teléfono fijo (requerido) <span class="text-danger">*</span></label>
                             <input type="number" class="form-control input" value="{{old('telefono')}}" name="telefono" required/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Telefono Celular (requerido) <span class="text-danger">*</span></label>
+                            <label>Teléfono Celular (requerido) <span class="text-danger">*</span></label>
                             <input type="number" class="form-control input" value="{{old('celular')}}" name="celular" required/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Su correo electronico (requerido) <span class="text-danger">*</span></label>
+                            <label>Su correo electrónico (requerido) <span class="text-danger">*</span></label>
                             <input type="email" class="form-control input" value="{{old('email')}}" name="email" required/>
                         </div>
                         <div class="form-group col-12">
@@ -73,7 +73,7 @@
                             </select>
                         </div>
                         <div class="form-group col-12">
-                            <label>Area donde desea aplicar</label>
+                            <label>Área donde desea aplicar</label>
                             <select class="form-control input" name="puesto">
                                 <option value="0">Seleccione</option>
                                 <option value="Seguridad Industrial y salud ocupacional" @if($id=="Seguridad Industrial y salud ocupacional") {{'selected'}} @endif>Seguridad Industrial y salud ocupacional</option>
