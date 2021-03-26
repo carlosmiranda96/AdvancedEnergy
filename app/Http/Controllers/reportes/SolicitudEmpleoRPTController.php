@@ -12,7 +12,7 @@ class SolicitudEmpleoRPTController extends Controller
 {
     public function parametros()
     {
-        $parametro='<div class="form-group">
+        /*$parametro='<div class="form-group">
                 <label>Desde</label>
                 <input type="date" class="form-control" name="desde" required/>
               </div>
@@ -20,7 +20,8 @@ class SolicitudEmpleoRPTController extends Controller
                 <label>Hasta</label>
                 <input type="date" class="form-control" name="hasta" required/>
                </div>
-              ';
+              ';*/
+        $parametro = "<h4>Se descargaran todos los registros hasta la fecha</h4>";
         return $parametro;
     }
     public function generarExcel(Request $request)
@@ -32,8 +33,8 @@ class SolicitudEmpleoRPTController extends Controller
         $columnas = array("FECHA","NOMBRE","APELLIDO","DUI","FECHA NACIMIENTO","DIRECCION ACTUAL","TELEFONO","CELULAR","EMAIL","ASPIRACION SALARIAL","EDUCACION","PUESTO","EMPRESA","CARGO","FECHA INICIO","SALARIO","RESPONSABILIDADES","ES TRABAJO ACTUAL");
         $data=array($columnas);
 
-        $solicitud = solicitudempleo::where("created_at",">=",$desde.' 00:00')->where("created_at","<=",'2021-03-26 24:00')->get();
-        //$solicitud = solicitudempleo::get();
+        //$solicitud = solicitudempleo::where("created_at","<=",$hasta.' 24:00')->get();
+        $solicitud = solicitudempleo::get();
         foreach($solicitud as $item){
             $columna1 = array(
                 $item->created_at,
