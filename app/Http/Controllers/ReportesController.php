@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\reportes\AsistenciaRPTController;
 use App\Http\Controllers\reportes\Covid19RPTController;
+use App\Http\Controllers\reportes\SolicitudEmpleoRPTController;
 use App\Models\autorizacionusuarios;
 use App\Models\modulos;
 use App\Models\permisos;
@@ -26,7 +27,9 @@ class ReportesController extends Controller
                 $parametro = app(Covid19RPTController::class)->parametros();
                 $excel = "Covid19RPTController.excel";
             break;
-            
+            case 67:
+                $parametro = app(SolicitudEmpleoRPTController::class)->parametros();
+                $excel = "SolicitudEmpleoRPTController.excel";          
         }
         
         return view('reportes.reportes',compact('titulo','parametro','excel'));

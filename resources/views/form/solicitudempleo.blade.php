@@ -76,7 +76,12 @@
                             <label>Area donde desea aplicar</label>
                             <select class="form-control input" name="puesto">
                                 <option value="0">Seleccione</option>
+                                <option value="Seguridad Industrial y salud ocupacional">Seguridad Industrial y salud ocupacional</option>
+                                <option value="Operador de maquinaria">Operador de maquinaria</option>
+                                <option value="Ingeniero Electricista">Ingeniero Electricista</option>
+                                <option value="Ingeniero Electricista en subestaciones">Ingeniero Electricista en subestaciones</option>
                                 <option value="Técnico Electricista">Técnico Electricista</option>
+                                <option value="Técnico Soldador">Técnico Soldador</option>
                             </select>
                         </div>
                         <div class="col-12">

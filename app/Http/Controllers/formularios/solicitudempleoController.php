@@ -19,6 +19,7 @@ class solicitudempleoController extends Controller
     }
     public function guardar(Request $request)
     {
+        date_default_timezone_set('America/El_Salvador');
         $request->validate([
             'nombre' => 'required',
             'apellido' => 'required',
