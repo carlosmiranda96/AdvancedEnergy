@@ -42,6 +42,7 @@ use App\Models\rutas\rutas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\formularios\formController;
 use App\Http\Controllers\formularios\solicitudempleoController;
+use App\Http\Controllers\reportes\SolicitudEmpleoRPTController;
 use App\Http\Controllers\rrhh\carnetController;
 use App\Http\Controllers\vehiculos\EquiposaccesoriosController;
 use Maatwebsite\Excel\Facades\Excel;
@@ -140,12 +141,10 @@ Route::group(['middleware' => 'sesion'], function() {
     //REPORTES
     Route::get('reporte/{id}',[ReportesController::class,'reportes'])->name('reportes');//Cargar el reporte por su id
     Route::get('reportes/parametros',[ReportesController::class,'parametros'])->name('reportes.parametros');
-
     
     Route::get('reportes/asistencia/excel',[AsistenciaRPTController::class,'generarExcel'])->name('AsistenciaRPTController.excel');
     Route::get('reportes/covid19/excel',[Covid19RPTController::class,'generarExcel'])->name('Covid19RPTController.excel');
-
-    
+    Route::get('reportes/solicitudempleo/excel',[SolicitudEmpleoRPTController::class,'generarExcel'])->name('SolicitudEmpleoRPTController.excel');
 
     //empleados
     Route::get('reportes/empleado/parametros/{id}',[EmpleadosRPTController::class,'parametros'])->name('reportes.empleados.parametros');//obtener parametros a imprimir
