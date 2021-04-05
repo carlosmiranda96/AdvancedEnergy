@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\equipostrabajo;
 use App\Models\equiposhistorial;
 use App\Models\empleadoUser;
+use App\Models\rrhh\Carnet;
 use App\Models\ubicacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -55,14 +56,24 @@ class PageController extends Controller
 		$id = $request->a;
 		$toquen = $request->b;
 		if(isset($id)){
-			$empleado = empleados::where('id',$id)->where('toquen',$toquen)->first();
-			if(isset($empleado))
-			{
-				$email = '';
-				$password = '';
-				$email = $request->cookie('email');
-				$password = $request->cookie('password');
-				return view('aplicacion.aplicacion',compact('empleado','email','password'));
+			$carnet = Carnet::where('id',$id)->where('toquen',$toquen)->first();
+			if(isset($carnet->idempleado)){
+				$idempleado = $carnet->idempleado; 
+				if($idempleado>0){
+					$empleado = empleados::where('id',$idempleado)->where('estado',1)->first();
+					if(isset($empleado))
+					{
+						$email = '';
+						$password = '';
+						$email = $request->cookie('email');
+						$password = $request->cookie('password');
+						return view('aplicacion.aplicacion',compact('empleado','email','password'));
+					}else{
+						abort(404);
+					}
+				}else{
+					abort(404);
+				}
 			}else{
 				abort(404);
 			}

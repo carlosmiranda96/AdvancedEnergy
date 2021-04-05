@@ -60,22 +60,22 @@
                             <input type="email" class="form-control input" value="{{old('email')}}" name="email" required/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Aspiración Salarial</label>
-                            <input type="number" class="form-control input" value="{{old('aspiracionsalarial')}}" name="aspiracionsalarial"/>
+                            <label>Aspiración Salarial (requerido) <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control input" value="{{old('aspiracionsalarial')}}" name="aspiracionsalarial" required/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Nivel de estudios</label>
-                            <select class="form-control input" name="educacion">
-                                <option value="0">Seleccione</option>
+                            <label>Nivel de estudios (requerido) <span class="text-danger">*</span></label>
+                            <select class="form-control input" name="educacion" required>
+                                <option value="">Seleccione</option>
                                 <option value="Educación básica">Educación básica</option>
                                 <option value="Educación Media">Educación Media</option>
                                 <option value="Educación Superior">Educación Superior</option>
                             </select>
                         </div>
                         <div class="form-group col-12">
-                            <label>Área donde desea aplicar</label>
-                            <select class="form-control input" name="puesto">
-                                <option value="0">Seleccione</option>
+                            <label>Área donde desea aplicar (requerido) <span class="text-danger">*</span></label>
+                            <select class="form-control input" name="puesto" required>
+                                <option value="">Seleccione</option>
                                 <option value="Seguridad Industrial y salud ocupacional" @if($id=="Seguridad Industrial y salud ocupacional") {{'selected'}} @endif>Seguridad Industrial y salud ocupacional</option>
                                 <option value="Operador de maquinaria" @if($id=="Operador de maquinaria") {{'selected'}} @endif>Operador de maquinaria</option>
                                 <option value="Ingeniero Electricista" @if($id=="Ingeniero Electricista") {{'selected'}} @endif>Ingeniero Electricista</option>
@@ -90,28 +90,28 @@
                         </div>
                         <div class="form-group col-12">
                             <label>Empresa</label>
-                            <input type="text" class="form-control input" value="{{old('Eempresa')}}" name="Eempresa"/>
+                            <input type="text" class="form-control input" value="{{old('Eempresa')}}" id="Eempresa" name="Eempresa"/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Cargo</label>
-                            <input type="text" class="form-control input" value="{{old('Ecargo')}}" name="Ecargo"/>
+                            <label id="labelcargo">Cargo</label>
+                            <input type="text" class="form-control input" value="{{old('Ecargo')}}" id="Ecargo" name="Ecargo"/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Fecha de inicio</label>
-                            <input type="date" class="form-control input" value="{{old('Efechainicio')}}" name="Efechainicio"/>
+                            <label id="labelfecha">Fecha de inicio</label>
+                            <input type="date" class="form-control input" value="{{old('Efechainicio')}}" id="Efechainicio" name="Efechainicio"/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Salario</label>
-                            <input type="number" class="form-control input" value="{{old('Esalario')}}" name="Esalario"/>
+                            <label id="labelsalario">Salario</label>
+                            <input type="number" class="form-control input" value="{{old('Esalario')}}" id="Esalario" name="Esalario"/>
                         </div>
                         <div class="form-group col-12">
-                            <label>Responsabilidades</label>
-                            <textarea class="form-control input" name="Eresponsabilidades">{{old('Eresponsabilidades')}}</textarea>
+                            <label id="labelresponsabilidades">Responsabilidades</label>
+                            <textarea class="form-control input" id="Eresponsabilidades" name="Eresponsabilidades">{{old('Eresponsabilidades')}}</textarea>
                         </div>
                         <div class="form-group col-12">
-                            <label>Trabaja actualmente en esta empresa</label>
-                            <select class="form-control input" name="Etrabajoactual">
-                                <option>Seleccione</option>
+                            <label id="labeltrabajoactual">Trabaja actualmente en esta empresa</label>
+                            <select class="form-control input" id="Etrabajoactual" name="Etrabajoactual">
+                                <option value="">Seleccione</option>
                                 <option value="SI" @if(old('trabajoactual')=="SI") {{'selected'}} @endif>SI</option>
                                 <option value="NO" @if(old('trabajoactual')=="NO") {{'selected'}} @endif>NO</option>
                             </select>
@@ -127,4 +127,35 @@
     </div>
 
 </div>
+@stop
+
+@section('script')
+    <script>
+        $("#Eempresa").keyup(function(){
+            var cantidad = $("#Eempresa").val().length;
+            if(cantidad>0){
+                $("#labelcargo").html('Cargo (requerido) <span class="text-danger">*</span>');
+                $("#Ecargo").prop("required",true);
+                $("#labelfecha").html('Fecha de inicio (requerido) <span class="text-danger">*</span>');
+                $("#Efechainicio").prop("required",true);
+                $("#labelsalario").html('Salario (requerido) <span class="text-danger">*</span>');
+                $("#Esalario").prop("required",true);
+                $("#labelresponsabilidades").html('Responsabilidades (requerido) <span class="text-danger">*</span>');
+                $("#Eresponsabilidades").prop("required",true);
+                $("#labeltrabajoactual").html('Trabaja actualmente en esta empresa (requerido) <span class="text-danger">*</span>');
+                $("#Etrabajoactual").prop("required",true);
+            }else{
+                $("#labelcargo").html('Cargo');
+                $("#Ecargo").prop("required",false);
+                $("#labelfecha").html('Fecha de inicio');
+                $("#Efechainicio").prop("required",false);
+                $("#labelsalario").html('Salario');
+                $("#Esalario").prop("required",false);
+                $("#labelresponsabilidades").html('Responsabilidades');
+                $("#Eresponsabilidades").prop("required",false);
+                $("#labeltrabajoactual").html('Trabaja actualmente en esta empresa');
+                $("#Etrabajoactual").prop("required",false);
+            }
+        });
+    </script>
 @stop
