@@ -15,6 +15,11 @@ class solicitudempleoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        $solicitudes = FormulariosSolicitudempleo::all();
+        return view("rrhh.formularios.solicitudempleo",compact('solicitudes'));
+    }
     public function solicitud(Request $request)
     {
         $id = $request->id;
