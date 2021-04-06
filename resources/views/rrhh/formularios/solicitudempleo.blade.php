@@ -18,6 +18,7 @@
             <table id="table_id" class="display responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Fecha</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
@@ -26,8 +27,8 @@
                         <th>Dirección Actual</th>
                         <th>Telefono</th>
                         <th>Celular</th>
-                        <th>Email</th>
                         <th>Aspiración Salarial</th>
+                        <th>Email</th>
                         <th>Educación</th>
                         <th>Puesto</th>
                         <th>Empresa</th>
@@ -39,8 +40,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $contador=0;?>
                     @foreach($solicitudes as $item)
+                    <?php $contador++;?>
                     <tr>
+                        <td>{{$contador}}</td>
                         <td>{{$item->created_at}}</td>
                         <td>{{$item->nombre}}</td>
                         <td>{{$item->apellido}}</td>
@@ -49,8 +53,8 @@
                         <td>{{$item->direccionactual}}</td>
                         <td>{{$item->telefono}}</td>
                         <td>{{$item->celular}}</td>
-                        <td>{{$item->email}}</td>
                         <td>{{$item->aspiracionsalarial}}</td>
+                        <td>{{$item->email}}</td>
                         <td>{{$item->educacion}}</td>
                         <td>{{$item->puesto}}</td>
                         <td>{{$item->Eempresa}}</td>

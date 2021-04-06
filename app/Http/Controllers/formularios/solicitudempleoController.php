@@ -17,7 +17,7 @@ class solicitudempleoController extends Controller
      */
     public function index()
     {
-        $solicitudes = FormulariosSolicitudempleo::all();
+        $solicitudes = FormulariosSolicitudempleo::orderby("created_at","desc")->get();
         return view("rrhh.formularios.solicitudempleo",compact('solicitudes'));
     }
     public function solicitud(Request $request)
