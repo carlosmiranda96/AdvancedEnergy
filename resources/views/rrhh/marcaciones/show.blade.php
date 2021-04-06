@@ -8,7 +8,7 @@
     <div class='container-fluid'>
       <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-primary">Asistencia</h1>
+        <h1 class="h3 mb-0 text-primary">Asistencia de mes actual</h1>
     </div>
     <div class="card shadow mb-4 mt-3">
         <div class="card-header py-3">

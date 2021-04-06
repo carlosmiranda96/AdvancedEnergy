@@ -794,11 +794,15 @@ class PageController extends Controller
 	}
 	public function marcaciones()
 	{
+		date_default_timezone_set('America/El_Salvador');
+		$mesactual = date("m");
+		$anioactual = date("Y");
+		$desde = $anioactual."-".$mesactual."-01";
 		$marcacionesempleados = marcacionesempleados::join('empleados','idempleado','empleados.id')->join
 		('ubicacions','idubicacion','ubicacions.id')
 		->join('users as u','marcacionesempleados.idusuario','u.id')
 		->select('marcacionesempleados.*','empleados.codigo as codigoempleado','empleados.nombreCompleto as empleado','ubicacions.descripcion','u.name as usuario')
-		->where('tipo','Entrada')->orderby('fecha',"desc")->orderby('instante')->get();
+		->where('tipo','Entrada')->where('fecha','>=',$desde)->orderby('fecha',"desc")->orderby('instante')->get();
 		return view('rrhh.marcaciones.show',compact('marcacionesempleados'));
 	}
 	public function pruebaemail()
