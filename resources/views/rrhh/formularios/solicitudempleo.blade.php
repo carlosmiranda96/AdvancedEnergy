@@ -39,6 +39,29 @@
                         <th>Es trabajo actual</th>
                     </tr>
                 </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dui</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Dirección Actual</th>
+                        <th>Telefono</th>
+                        <th>Celular</th>
+                        <th>Aspiración Salarial</th>
+                        <th>Email</th>
+                        <th>Educación</th>
+                        <th>Puesto</th>
+                        <th>Empresa</th>
+                        <th>Cargo</th>
+                        <th>Fecha inicio</th>
+                        <th>Salario</th>
+                        <th>Responsabilidades</th>
+                        <th>Es trabajo actual</th>
+                    </tr>
+                </tfoot>
                 <tbody>
                     <?php $contador=0;?>
                     @foreach($solicitudes as $item)

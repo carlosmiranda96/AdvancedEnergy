@@ -1,4 +1,9 @@
 @extends('plantilla')
+@section('css')
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.dataTables.min.css')}}">
+<!--Script para tabla responsive-->
+<link rel="stylesheet" type="text/css" href="{{asset('css/responsive.dataTables.min.css')}}" />
+@stop
 @section('pagina')
     <div class='container-fluid'>
       <!-- Page Heading -->
@@ -19,31 +24,41 @@
             </div>
             @endif
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table id="table_id" class="display responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
+                            <th>#</th>
+                            <th>Codigo</th>
                             <th>Empleado</th>
                             <th>Fecha</th>
                             <th>Entrada</th>
                             <th>Salida</th>
                             <th>Ubicación</th>
+                            <th>Usuario</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>#</th>
+                            <th>Codigo</th>
                             <th>Empleado</th>
                             <th>Fecha</th>
                             <th>Entrada</th>
                             <th>Salida</th>
                             <th>Ubicación</th>
+                            <th>Usuario</th>
                         </tr>
                     </tfoot>
                     <?php 
                         use App\Models\marcacionesempleados;
                     ?>
                     <tbody>
+                        <?php $contador=0;?>
                         @foreach ($marcacionesempleados as $item)
+                        <?php $contador++;?>
                         <tr>
+                            <td>{{$contador}}</td>
+                            <td>{{$item->codigoempleado}}</td>
                             <td>{{$item->empleado}}</td>
                             <td>{{date('d/m/Y',strtotime($item->fecha))}}</td>
                             <td>{{date('h:i:s a',strtotime($item->instante))}}</td>
@@ -59,6 +74,7 @@
                             ?>
                             <td>{{$horasalida}}</td>                           
                             <td>{{$item->descripcion}}</td>
+                            <td>{{$item->usuario}}</td>
                         </tr>
                         @endforeach
                         @if ($marcacionesempleados->count()==0)
@@ -75,7 +91,18 @@
     
 @stop
 @section('script')
+<script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+<!--Script para tabla responsive-->
+<script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/dataTables.responsive.min.js')}}"></script>
 <script>
+    $(document).ready(function(){
+        $('#table_id').DataTable({
+            language: {
+                url: "{{route('datatable-es')}}"
+            }
+        });
+    });
     function eliminar(key){
         alertify.confirm("Notificación","¿Desea eliminar el registro?",function(){
             $("#frmeliminar"+key).submit();
