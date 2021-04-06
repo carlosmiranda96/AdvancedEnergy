@@ -795,7 +795,10 @@ class PageController extends Controller
 	public function marcaciones()
 	{
 		$marcacionesempleados = marcacionesempleados::join('empleados','idempleado','empleados.id')->join
-		('ubicacions','idubicacion','ubicacions.id')->select('marcacionesempleados.*','empleados.nombreCompleto as empleado','ubicacions.descripcion')->where('tipo','Entrada')->orderby('fecha')->orderby('instante')->get();
+		('ubicacions','idubicacion','ubicacions.id')
+		->join('users as u','marcacionesempleados.idusuario','u.id')
+		->select('marcacionesempleados.*','empleados.codigo as codigoempleado','empleados.nombreCompleto as empleado','ubicacions.descripcion','u.name as usuario')
+		->where('tipo','Entrada')->orderby('fecha',"desc")->orderby('instante')->get();
 		return view('rrhh.marcaciones.show',compact('marcacionesempleados'));
 	}
 	public function pruebaemail()
