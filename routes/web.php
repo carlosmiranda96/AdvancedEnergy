@@ -67,6 +67,29 @@ Route::POST('usuario/restablecer2',[UsuariosController::class,'restablecer2'])->
 
 Route::get('ldap',[PageController::class,'ldap'])->name('ldap');
 
+//ESPAÑOL DATATABLES
+
+Route::get('datatable-es',function(){
+    $data = array();
+    $data["processing"] = "Cargando..";
+    $data["search"] = "Buscar:&nbsp;";
+    $data["lengthMenu"] = "Mostrando _MENU_ &nbsp;registros";
+    $data["info"] = "Mostrando del _START_ al _END_ de _TOTAL_ registros";
+    $data["infoEmpty"] = "Mostrando 0 registros";
+    $data["infoFiltered"] = "(Filtrado de _MAX_ registros)";
+    $data["infoPostFix"] = "";
+    $data["loadingRecords"] = "Cargando...";
+    $data["zeroRecords"] = "Busqueda no encontrada";
+    $data["emptyTable"] = "No hay información";
+    $data["paginate"] = array("first"=>"Primero",
+                        "previous"=>"Anterior",
+                        "next"=>"Siguiente",
+                        "last"=>"Ultimo");
+    $data["aria"] = array("sortAscending"=>": activer pour trier la colonne par ordre croissant",
+                        "sortDescending"=>": activer pour trier la colonne par ordre décroissant");
+    echo json_encode($data);
+})->name('datatable-es');
+
 //RUTAS DE API
 Route::get('api/qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('api.getUbicacion');//Obtener ubicacion segun coordenadas
 Route::get('api/asistencia',[PageController::class,'asistencia'])->name('asistencia');//Abre la aplicacion
@@ -85,6 +108,7 @@ Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'u
 //FORMULARIO SOLICITUD EMPLEO
 Route::get("solicitud-empleo",[solicitudempleoController::class,'solicitud'])->name("form.solicitudempleo");
 Route::post("solicitud-empleo/guardar",[solicitudempleoController::class,'guardar'])->name("form.solicitudempleo.guardar");
+Route::get("solicitudes-empleo",[solicitudempleoController::class,'index'])->name('solicitudempleo.index');
 
 //VALIDAR CERTIFICADO SSL
 Route::get('.well-known/pki-validation/{txt}',[validar::class,'validar'])->name('ssl');
