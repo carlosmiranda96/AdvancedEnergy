@@ -9,6 +9,7 @@ use App\Models\equipostrabajo;
 use App\Models\marcacionesempleados;
 use App\Models\rrhh\Carnet;
 use App\Models\ubicacion;
+use App\Models\vehiculos\equiposaccesorios;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -85,19 +86,27 @@ class ApiController extends Controller
                 $data['vehiculos'][$correlativo]['codigo'] = $item->codigo;
                 $data['vehiculos'][$correlativo]['placa'] = $item->placa;
                 $data['vehiculos'][$correlativo]['tipo'] = $item->tipo;
+                $arrayaccesorios = array();
+                $accesorios = equiposaccesorios::where("idvehiculo",$item->id)->get();
+                foreach($accesorios as $item2){
+                    array_push($arrayaccesorios,$item2->descripcion);
+                }
+                $data['vehiculos'][$correlativo]['accesorios'] = $arrayaccesorios;
                 $correlativo++;
-            }		
+            }
             if($correlativo==0){
                 $data['vehiculos'][0]['id'] = 0;
                 $data['vehiculos'][0]['codigo'] = 0;
                 $data['vehiculos'][0]['placa'] = 0;
                 $data['vehiculos'][0]['tipo'] = 0;
-            }	
+                $data['vehiculos'][0]['accesorios'] = array();
+            }
         }else{
             $data['vehiculos'][0]['id'] = 0;
             $data['vehiculos'][0]['codigo'] = 0;
             $data['vehiculos'][0]['placa'] = 0;
             $data['vehiculos'][0]['tipo'] = 0;
+            $data['vehiculos'][0]['accesorios'] = array();
         }
         echo json_encode($data);
     }
@@ -175,11 +184,11 @@ class ApiController extends Controller
             if(isset($request->idvehiculocontrol)){
                 $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
             ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.id",$request->idvehiculocontrol)
-            ->where("instante",">=",$desde." 00:00")->where("instante","<=",$hasta." 24:00")->get();
+            ->where("instante",">=",$desde." 00:00")->where("instante","<=",$hasta." 23:59")->get();
             }else{
                 $vehiculos = equiposhistorial::join('empleados as b','equiposhistorials.idempleado','b.id')->join('equipostrabajos as c','equiposhistorials.idequipotrabajo','c.id')
             ->select('equiposhistorials.*','b.codigo','b.nombrecompleto','c.codigo as codigovehiculo','c.placa')->where("equiposhistorials.idusuario",$idusuario)
-            ->where("instante",">=",$desde." 00:00")->where("instante","<=",$hasta." 24:00")->get();
+            ->where("instante",">=",$desde." 00:00")->where("instante","<=",$hasta." 23:59")->get();
             }
             $correlativo = 0;
             foreach($vehiculos as $item){
@@ -192,9 +201,7 @@ class ApiController extends Controller
                 $data['controlvehiculo'][$correlativo]['nombre'] = $item->nombrecompleto;
                 $data['controlvehiculo'][$correlativo]['kilometraje'] = $item->kilometraje;
                 $data['controlvehiculo'][$correlativo]['combustible'] = $item->combustible;
-                $data['controlvehiculo'][$correlativo]['extinguidor'] = $item->extinguidor;
-                $data['controlvehiculo'][$correlativo]['botiquin'] = $item->botiquin;
-                $data['controlvehiculo'][$correlativo]['equiposeguridad'] = $item->equiposeguridad;
+                $data['controlvehiculo'][$correlativo]['herramienta'] = $item->herramienta;
                 $data['controlvehiculo'][$correlativo]['observaciones'] = $item->observaciones;
                 $data['controlvehiculo'][$correlativo]['idusuario'] = $item->idusuario;
                 $data['controlvehiculo'][$correlativo]['latitud'] = $item->laitud;
@@ -213,15 +220,14 @@ class ApiController extends Controller
                 $data['controlvehiculo'][0]['nombre'] = 0;
                 $data['controlvehiculo'][0]['kilometraje'] = 0;
                 $data['controlvehiculo'][0]['combustible'] = 0;
-                $data['controlvehiculo'][0]['extinguidor'] = 0;
-                $data['controlvehiculo'][0]['botiquin'] = 0;
-                $data['controlvehiculo'][0]['equiposeguridad'] = 0;
+                $data['controlvehiculo'][0]['herramienta'] = 0;
                 $data['controlvehiculo'][0]['observaciones'] = 0;
                 $data['controlvehiculo'][0]['idusuario'] = 0;
                 $data['controlvehiculo'][0]['latitud'] = 0;
                 $data['controlvehiculo'][0]['longitud'] = 0;
                 $data['controlvehiculo'][0]['uso'] = 0;
                 $data['controlvehiculo'][0]['proyecto'] = 0;
+                
             }	
         }else{
             $data['controlvehiculo'][0]['id'] = 0;
@@ -233,9 +239,7 @@ class ApiController extends Controller
             $data['controlvehiculo'][0]['nombre'] = 0;
             $data['controlvehiculo'][0]['kilometraje'] = 0;
             $data['controlvehiculo'][0]['combustible'] = 0;
-            $data['controlvehiculo'][0]['extinguidor'] = 0;
-            $data['controlvehiculo'][0]['botiquin'] = 0;
-            $data['controlvehiculo'][0]['equiposeguridad'] = 0;
+            $data['controlvehiculo'][0]['herramienta'] = 0;
             $data['controlvehiculo'][0]['observaciones'] = 0;
             $data['controlvehiculo'][0]['idusuario'] = 0;
             $data['controlvehiculo'][0]['latitud'] = 0;
@@ -247,6 +251,7 @@ class ApiController extends Controller
     }
     public function addControlVehiculos(Request $request)
     {
+        date_default_timezone_set('America/El_Salvador');
         $data = NULL;
         if($request->toquen==$this->toquen){
             $controlvehiculo = new equiposhistorial();
@@ -258,9 +263,8 @@ class ApiController extends Controller
 
                 $controlvehiculo->kilometraje = $request->kilometraje;
                 $controlvehiculo->combustible = $request->combustible;
-                $controlvehiculo->extinguidor = $request->extinguidor;
-                $controlvehiculo->botiquin = $request->botiquin;
-                $controlvehiculo->equiposeguridad = $request->equiposeguridad;
+                
+                $controlvehiculo->herramienta = $request->herramienta;
                 $controlvehiculo->observaciones = $request->observaciones;
                 $controlvehiculo->proyecto = $request->proyecto;
                 $controlvehiculo->uso = $request->uso;
