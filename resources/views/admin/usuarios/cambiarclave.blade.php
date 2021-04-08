@@ -43,10 +43,18 @@
                     <div class="invalid-feedback">
                         Clave ingresada no coincide
                     </div>
+                    @if(isset($perfil))
+                    <input hidden type="text" name="perfil" value="1" class="form-control"/>
+                    @endif
                 </div>
                 <div class="form-group">
+                    @if(isset($perfil))
+                    <a href="{{route('aj_perfil')}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>
+                    <button class="btn btn-sm btn-warning"><i class="fas fa-redo-alt"></i> Actualizar</button>
+                    @else
                     <a href="{{route('usuarios.edit',$usuarios->id)}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>
                     <button class="btn btn-sm btn-warning"><i class="fas fa-redo-alt"></i> Actualizar</button>
+                    @endif
                 </div>
             </form>
         </div>

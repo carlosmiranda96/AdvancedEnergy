@@ -110,6 +110,7 @@ Route::get("solicitud-empleo",[solicitudempleoController::class,'solicitud'])->n
 Route::post("solicitud-empleo/guardar",[solicitudempleoController::class,'guardar'])->name("form.solicitudempleo.guardar");
 Route::get("solicitudes-empleo",[solicitudempleoController::class,'index'])->name('solicitudempleo.index');
 
+
 //VALIDAR CERTIFICADO SSL
 Route::get('.well-known/pki-validation/{txt}',[validar::class,'validar'])->name('ssl');
 
@@ -142,7 +143,7 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('QR/obtenerubicacion',[PageController::class,'obtenerubicacion'])->name('getUbicacion');
     Route::get('QR/obtenerEmpleado',[PageController::class,'obtenerEmpleado'])->name('getEmpleado');
 
-    Route::get('general',[PageController::class,'general'])->name('general');
+    //Route::get('general',[PageController::class,'general'])->name('general');
 
     Route::resource('equiposhistorial',EquiposhistorialController::class);
     Route::get('equipohistorial/mostrar/{id}',[EquiposhistorialController::class,'mostrar'])->name('equiposhistorial.mostrar');
@@ -187,9 +188,19 @@ Route::group(['middleware' => 'sesion'], function() {
 
     Route::resource('carnet',carnetController::class);
 
+
+    //CONTROL DE VEHICULOS
+    Route::get('controlvehiculos',[EquiposhistorialController::class,'index'])->name('controlvehiculos');
+
     Route::get("accesoriosvehiculos/add",[EquiposaccesoriosController::class,'add'])->name('addAccesorio');
     Route::get("accesoriosvehiculos/get",[EquiposaccesoriosController::class,'get'])->name('getAccesorio');
     Route::get("accesoriosvehiculos/delete",[EquiposaccesoriosController::class,'delete'])->name('deletedAccesorio');
+
+
+    Route::POST('usuario/restablecer',[UsuariosController::class,'restablecer'])->name('usuario.restablecer');
+    Route::get('usuarios/password/{id}',[UsuariosController::class,'cambiarclave'])->name('usuarios.clave');
+    Route::put('usuarios/password/update/{id}',[UsuariosController::class,'updateclave'])->name('usuarios.updateclave');
+
 });
 
 //RUTAS DE ADMINISTRADOR
@@ -215,9 +226,8 @@ Route::group(['middleware' => 'admin'], function()
     Route::resource('departamento',DepartamentoController::class);
     Route::resource('grupohorariosd',GrupohorariosdController::class);
     Route::resource('usuarios',UsuariosController::class);
-    Route::POST('usuario/restablecer',[UsuariosController::class,'restablecer'])->name('usuario.restablecer');
-    Route::get('usuarios/password/{id}',[UsuariosController::class,'cambiarclave'])->name('usuarios.clave');
-    Route::put('usuarios/password/update/{id}',[UsuariosController::class,'updateclave'])->name('usuarios.updateclave');
+    
+    
 
     Route::resource('grupo',GrupoController::class);
 

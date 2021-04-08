@@ -1,93 +1,83 @@
 @extends('plantilla')
 @section('pagina')
 <div class="container-fluid">
-    <div hidden>
-        <input id="cant" value="0"/>
-        <input id="latitud" value="0"/>
-        <input id="longitud" value="0"/>
-        <input id="idusuario" value="{{session()->get('user_id')}}"/>
-        <input id="idubicacion" value="76AE"/>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-primary">Control de vehiculos</h1>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-primary">Control vehiculos</h1>
-            </div>
-            <nav>
-                <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('inicio')}}">Pagina principal</a></li>
-                <li class="breadcrumb-item"><a href="{{route('general')}}">Generales</a></li>
-                <li class="breadcrumb-item active">Control vehiculos</li>
-                </ol>
-            </nav>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Control de vehiculos</h6>
         </div>
-        @if (session('mensaje'))
-        <div class="col-12">
+        <div class="card-body">
+            @if (session('mensaje'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{session('mensaje')}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        </div>
-        @endif
-    </div>
-    <div class="row">
-        <div class="col-12">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <a href="{{route('equipos.index',session()->get('user_id'))}}" style="text-decoration: none;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">Listado de vehiculos</div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-list fa-2x text-gray-300"></i>
-                </div>
-                </div>
+            @endif
+            <div class="table-responsive">
+                <table id="table_id" class="display responsive nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Equipo</th>
+                            <th>Empleado</th>
+                            <th>Uso</th>
+                            <th>Proyecto</th>
+                            <th>kilometraje</th>
+                            <th>Combustible</th>
+                            <th>Herramientas</th>
+                            <th>Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Equipo</th>
+                            <th>Empleado</th>
+                            <th>Uso</th>
+                            <th>Proyecto</th>
+                            <th>kilometraje</th>
+                            <th>Combustible</th>
+                            <th>Herramientas</th>
+                            <th>Observaciones</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                    @foreach($controlvehiculo as $item)
+                        <tr>
+                            <td>{{date("d/m/Y",strtotime($item->instante))}}</td>
+                            <td>{{date("d/m/Y",strtotime($item->instante))}}</td>
+                            <td>{{$item->codigo." / ".$item->placa}}</td>
+                            <td>{{$item->nombreCompleto}}</td>
+                            <td>{{$item->uso}}</td>
+                            <td>{{$item->proyecto}}</td>
+                            <td>{{$item->kilometraje}}</td>
+                            <td>{{$item->combustible}}</td>
+                            <td>{{$item->herramienta}}</td>
+                            <td>{{$item->observaciones}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
-            </a>
-        </div>
-        </div>
-
-        <div class="col-12 pt-3">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <a href="{{route('equipomantenimiento.index')}}" style="text-decoration: none;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">Mantenimientos</div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-list fa-2x text-gray-300"></i>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-        </div>
-
-        <div class="col-12 pt-3">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <a href="{{route('equipomantenimiento.programacion')}}" style="text-decoration: none;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">Programar Mantenimientos</div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-list fa-2x text-gray-300"></i>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
         </div>
     </div>
 </div>
 @stop
 @section('script')
 <script>
-
+    $(document).ready(function(){
+        $('#table_id').DataTable({
+            language: {
+                url: "{{route('datatable-es')}}"
+            }
+        });
+    });
 </script>
 @stop

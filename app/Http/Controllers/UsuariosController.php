@@ -171,21 +171,24 @@ class UsuariosController extends Controller
                     'email' => 'required|unique:users,email,'.$usuario->id.',id'
                 ]);
             }
-            if($id==1){
+            if($id==1){//Si es supervisor
                 $request->idrol = 1;
             }
             $usuario->update($request->all());
-            if($idrol==1){
-                return redirect()->route('usuarios.index')->with('mensaje','Datos guardados correctamente');
-            }else{
+            $perfil = $request->perfil;
+            if(isset($perfil))
+            {
                 return redirect()->route('aj_perfil')->with('mensaje','Datos guardados correctamente');
+            }else{
+                return redirect()->route('usuarios.index')->with('mensaje','Datos guardados correctamente');
             }
         }
     }
-    public function cambiarclave($id)
+    public function cambiarclave($id,Request $request)
     {
+        $perfil = $request->perfil;
         $usuarios = User::find($id);
-        return view('admin.usuarios.cambiarclave',compact('usuarios'));
+        return view('admin.usuarios.cambiarclave',compact('usuarios','perfil'));
     }
     public function updateclave(Request $request,$id)
     {
@@ -199,10 +202,10 @@ class UsuariosController extends Controller
             $usuario->update([
                 'password' =>Crypt::encryptString($request->password)
             ]);
-            if($usuario->id==1){
-                return redirect()->route('usuarios.edit',$id)->with('mensaje','Clave actualizada correctamente');
-            }else{
+            if(isset($request->perfil)){
                 return redirect()->route('aj_perfil')->with('mensaje','Clave actualizada correctamente');
+            }else{
+                return redirect()->route('usuarios.edit',$id)->with('mensaje','Clave actualizada correctamente');
             }
         }else{
             return redirect()->route('usuarios.clave',$id)->with('mensaje','No coinciden las claves ingresadas');
