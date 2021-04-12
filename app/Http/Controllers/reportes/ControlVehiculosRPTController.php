@@ -38,11 +38,9 @@ class ControlVehiculosRPTController extends Controller
         ->select("equiposhistorials.*","b.codigo as carnet","b.nombreCompleto","c.codigo as equipo","c.placa")
         ->where("instante",">=",$desde." 00:00")
         ->where("instante","<=",$hasta." 23:59")->get();
-
-        $fila = array();
         foreach($controlvehiculo as $item)
         {
-            
+
             array_push($data,array(
                 date("Y-m-d",strtotime($item->instante)),
                 date("h:i",strtotime($item->instante)),
