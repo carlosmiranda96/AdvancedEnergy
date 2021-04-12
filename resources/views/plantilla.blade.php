@@ -16,6 +16,10 @@ use App\Models\modulos;
         <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('vendor/alertify/css/alertify.min.css')}}" />
         <link rel="stylesheet" href="{{asset('vendor/alertify/css/themes/default.min.css')}}" />
+
+        <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.dataTables.min.css')}}">
+        <!--Script para tabla responsive-->
+        <link rel="stylesheet" type="text/css" href="{{asset('css/responsive.dataTables.min.css')}}" />
         @yield('css')
         @yield('head')
     </head>
@@ -180,6 +184,9 @@ use App\Models\modulos;
         <script src="{{asset('js/bootbox.min.js')}}"></script>
         <script src="{{asset('js/scripts.js')}}"></script>
         <script src="{{asset('vendor/alertify/alertify.min.js')}}"></script>
+        <!--Script para tabla responsive-->
+        <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/dataTables.responsive.min.js')}}"></script>
         @yield('script')
         <script>
             function cerrarsesion()

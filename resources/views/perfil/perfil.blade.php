@@ -50,27 +50,30 @@
                 <p class="text-danger">** Esta es una cuenta de Active directory, algunos campos no pueden ser actualizados</p>
                 <div class="form-group">
                     <label>Nombre</label>
-                    <input disabled type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
+                    <input readonly type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
                     <label>Correo</label>
-                    <input disabled type="text" name="email" value="{{$usuarios->email}}" class="form-control" autocomplete="off"/>
+                    <input readonly type="text" name="email" value="{{$usuarios->email}}" class="form-control" autocomplete="off"/>
                 </div>
+                <input hidden type="text" name="idrol" value="{{$usuarios->idrol}}" class="form-control" autocomplete="off"/>
                 @else
                 <div class="form-group">
                     <label>Nombre</label>
-                    <input disabled type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
+                    <input readonly type="text" name="name" value="{{$usuarios->name}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
                     <label>Correo</label>
                     <input type="text" name="email" value="{{$usuarios->email}}" class="form-control" autocomplete="off"/>
                 </div>
+                <input hidden type="text" name="idrol" value="{{$usuarios->idrol}}" class="form-control" autocomplete="off"/>
                 @endif
+                <input hidden type="text" name="perfil" value="1" class="form-control" autocomplete="off"/>
                 
                 <div class="form-group">
-                    <a href="{{route('usuarios.index')}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>
+                    <a href="{{route('inicio')}}"><div class="btn btn-sm btn-secondary"><i class="fas fa-times"></i> Cancelar</div></a>
                     @if($usuarios->ldap!=1)
-                    <a href="{{route('usuarios.clave',$usuarios->id)}}"><div class="btn btn-sm btn-primary"><i class="fas fa-key"></i> Cambiar clave</div></a>
+                    <a href="{{route('usuarios.clave',$usuarios->id)}}?perfil=1"><div class="btn btn-sm btn-primary"><i class="fas fa-key"></i> Cambiar clave</div></a>
                     @endif
                     <button class="btn btn-sm btn-warning"><i class="fas fa-redo-alt"></i> Actualizar</button>
                 </div>

@@ -9,7 +9,7 @@ class EquipostrabajoController extends Controller
 {
     public function index()
     {
-        $equipostrabajo = equipostrabajo::orderby('codigo','desc')->paginate(5);
+        $equipostrabajo = equipostrabajo::orderby('codigo','desc')->get();
         return view('admin.equipos.lista',compact('equipostrabajo'));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\reportes\AsistenciaRPTController;
+use App\Http\Controllers\reportes\ControlVehiculosRPTController;
 use App\Http\Controllers\reportes\Covid19RPTController;
 use App\Http\Controllers\reportes\SolicitudEmpleoRPTController;
 use App\Models\autorizacionusuarios;
@@ -19,6 +20,10 @@ class ReportesController extends Controller
         $titulo = "Reporte de ".$reporte->modulo;
         switch ($id)
         {
+            case 58:
+                $parametro = app(ControlVehiculosRPTController::class)->parametros();
+                $excel = "ControlVehiculosRPTController.excel";
+                break;
             case 60:
                 $parametro = app(AsistenciaRPTController::class)->parametros();
                 $excel = "AsistenciaRPTController.excel";

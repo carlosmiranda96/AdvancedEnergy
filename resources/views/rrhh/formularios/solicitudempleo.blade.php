@@ -1,9 +1,4 @@
 @extends('plantilla')
-@section('css')
-<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.dataTables.min.css')}}">
-<!--Script para tabla responsive-->
-<link rel="stylesheet" type="text/css" href="{{asset('css/responsive.dataTables.min.css')}}" />
-@stop
 @section('pagina')
 <div class='container-fluid'>
     <!-- Page Heading -->
@@ -95,10 +90,6 @@
 </div>
 @stop
 @section('script')
-<script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
-<!--Script para tabla responsive-->
-<script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/dataTables.responsive.min.js')}}"></script>
 <script>
     $(document).ready(function(){
         $('#table_id').DataTable({
