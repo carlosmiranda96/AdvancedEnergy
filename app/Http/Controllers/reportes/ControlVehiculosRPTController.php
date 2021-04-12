@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\reportes;
 
-use App\Exports\AsistenciaExport;
+use App\exports\AsistenciaExport;
 use App\Http\Controllers\Controller;
 use App\Models\equiposhistorial;
 use Illuminate\Http\Request;
