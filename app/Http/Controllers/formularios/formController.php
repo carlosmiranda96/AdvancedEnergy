@@ -25,17 +25,6 @@ class formController extends Controller
         }
 		return view('form.vehiculo',compact('disabled','equipohistorial'));
     }
-    public function covid($toquen)
-    {
-        $empleado = empleados::where('toquen',$toquen)->first();
-        $dui = "";
-        if($empleado){
-            $dui = empleadoDocumento::where('idempleado',$empleado->id)->where('idtipodocumento',1)->first();
-        }
-        $genero = genero::all();
-        $sintomas = formuc::all();
-        return view('form.covid',compact('empleado','dui','genero','sintomas'));
-    }
     public function formcovid()
     {
         $idusuario = session('user_id');
@@ -46,8 +35,26 @@ class formController extends Controller
         $url = route('api.form.covid',$toquen);
         return view('form.cargar',compact('url'));
     }
+    public function covid($toquen,Request $request)
+    {
+        $empleado = empleados::where('toquen',$toquen)->first();
+        $dui = "";
+        $temp = $request->temp;
+        if($empleado){
+            $dui = empleadoDocumento::where('idempleado',$empleado->id)->where('idtipodocumento',1)->first();
+        }
+        $genero = genero::all();
+        $sintomas = formuc::orderby("requerido","desc")->get();
+        if(!isset($temp)){
+            $temp = "";     
+        }else{
+            $temp = number_format($temp,2);
+        }
+        return view('form.covid',compact('empleado','dui','genero','sintomas','temp'));
+    }
     public function guardarcovid(Request $request)
     {
+        date_default_timezone_set('America/El_Salvador');
         if(isset($request->fecha)&&isset($request->nombrecompleto))
         {
             $formulario = formua::create([
@@ -63,14 +70,14 @@ class formController extends Controller
             ]);
             $idformua = $formulario->id;
             
-            $sintomas = formuc::all();
+            $sintomas = formuc::orderby("requerido","desc")->get();
             foreach($sintomas as $item)
             {
                 $a = 'c'.$item->id;
                 $valor = $request->$a;
                 $si = NULL;
                 $no = NULL;
-                if($valor=="SI")
+                if(isset($valor) && $valor=="SI")
                 {
                     $respuesta = "SI";
                 }else{

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\empleadoDocumento;
 use App\Models\empleados;
 use App\Models\equiposhistorial;
 use App\Models\equipostrabajo;
+use App\Models\formularios\covid\formuc;
 use App\Models\marcacionesempleados;
 use App\Models\rrhh\Carnet;
 use App\Models\ubicacion;
@@ -42,11 +44,36 @@ class ApiController extends Controller
         }
         echo json_encode($data);
     }
+    public function sintomascovid(Request $request)
+    {
+        $data = NULL;
+        if($request->toquen==$this->toquen){
+            $sintomas = formuc::orderby("requerido","desc")->get();
+            $correlativo = 0;
+            foreach($sintomas as $item){
+                $data['sintomas'][$correlativo]['id'] = $item->id;
+                $data['sintomas'][$correlativo]['sintoma'] = $item->sintoma;
+                $data['sintomas'][$correlativo]['requerido'] = $item->requerido;
+
+                $correlativo++;
+            }
+            if($correlativo==0){
+                $data['sintomas'][0]['id'] = 0;
+                $data['sintomas'][0]['sintoma'] = "No Autorizado";
+                $data['sintomas'][0]['requerido'] = 0;
+            }	
+        }else{
+            $data['sintomas'][0]['id'] = 0;
+            $data['sintomas'][0]['sintoma'] = "No Autorizado";
+            $data['sintomas'][0]['requerido'] = 0;
+        }
+        echo json_encode($data);
+    }
     public function empleados(Request $request)
     {
         $data = NULL;
         if($request->toquen==$this->toquen){
-            $empleados = empleados::join("carnets as b","empleados.id","b.idempleado")->select("empleados.id","b.id as idcarnet","b.codigo","empleados.nombreCompleto","empleados.foto","b.toquen")->get();
+            $empleados = empleados::join("carnets as b","empleados.id","b.idempleado")->select("empleados.id","b.id as idcarnet","b.codigo","empleados.nombreCompleto","empleados.foto","b.toquen","empleados.idgenero")->get();
             $correlativo = 0;
             foreach($empleados as $item){
                 $data['empleados'][$correlativo]['id'] = $item->id;
@@ -55,6 +82,13 @@ class ApiController extends Controller
                 $data['empleados'][$correlativo]['nombre'] = $item->nombreCompleto;
                 $data['empleados'][$correlativo]['foto'] = $item->foto;
                 $data['empleados'][$correlativo]['toquen'] = $item->toquen;
+                $data['empleados'][$correlativo]['idgenero'] = $item->idgenero;
+                $dui = empleadoDocumento::where('idempleado',$item->id)->where("idtipodocumento",1)->first();
+                if(isset($dui)){
+                    $data['empleados'][$correlativo]['dui'] = $dui->numerodocumento;
+                }else{
+                    $data['empleados'][$correlativo]['dui'] = "";
+                }
                 $correlativo++;
             }
             if($correlativo==0){
@@ -64,6 +98,8 @@ class ApiController extends Controller
                 $data['empleados'][0]['nombre'] = 0;
                 $data['empleados'][0]['foto'] = 0;
                 $data['empleados'][0]['toquen'] = 0;
+                $data['empleados'][0]['idgenero'] = 0;
+                $data['empleados'][0]['dui'] = 0;
             }
         }else{
             $data['empleados'][0]['id'] = 0;
@@ -72,6 +108,8 @@ class ApiController extends Controller
             $data['empleados'][0]['nombre'] = 0;
             $data['empleados'][0]['foto'] = 0;
             $data['empleados'][0]['toquen'] = 0;
+            $data['empleados'][0]['idgenero'] = 0;
+            $data['empleados'][0]['dui'] = 0;
         }
         echo json_encode($data);
     }
@@ -115,8 +153,14 @@ class ApiController extends Controller
         $fecha = date("Y-m-d");
         $data = NULL;
         if($request->toquen==$this->toquen){
-            $marcaciones = marcacionesempleados::join("empleados as b","marcacionesempleados.idempleado","b.id")->join("ubicacions as c","marcacionesempleados.idubicacion","c.id")->
-            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo")->where("marcacionesempleados.fecha",$fecha)->where("marcacionesempleados.idusuario",$idusuario)->orderby("marcacionesempleados.instante","desc")->get();
+            if($idusuario==8){
+                $marcaciones = marcacionesempleados::join("empleados as b","marcacionesempleados.idempleado","b.id")->join("ubicacions as c","marcacionesempleados.idubicacion","c.id")->
+            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo","marcacionesempleados.temp")->where("marcacionesempleados.fecha",$fecha)->orderby("marcacionesempleados.instante","desc")->get();
+            }else{
+                $marcaciones = marcacionesempleados::join("empleados as b","marcacionesempleados.idempleado","b.id")->join("ubicacions as c","marcacionesempleados.idubicacion","c.id")->
+            select("c.descripcion","b.codigo","marcacionesempleados.fecha","marcacionesempleados.instante","marcacionesempleados.tipo","marcacionesempleados.temp")->where("marcacionesempleados.fecha",$fecha)->where("marcacionesempleados.idusuario",$idusuario)->orderby("marcacionesempleados.instante","desc")->get();
+            }
+            
             $correlativo = 0;
             foreach($marcaciones as $item){
                 $data['marcacion'][$correlativo]['ubicacion'] = $item->descripcion;
@@ -124,6 +168,7 @@ class ApiController extends Controller
                 $data['marcacion'][$correlativo]['fecha'] = $item->fecha;
                 $data['marcacion'][$correlativo]['hora'] = $item->instante;
                 $data['marcacion'][$correlativo]['tipo'] = $item->tipo;
+                $data['marcacion'][$correlativo]['temp'] = number_format($item->temp,2);
                 $correlativo++;
             }		
             if($correlativo==0){
@@ -132,6 +177,7 @@ class ApiController extends Controller
                 $data['marcacion'][0]['fecha'] = "0";
                 $data['marcacion'][0]['hora'] = "0";
                 $data['marcacion'][0]['tipo'] = "0";
+                $data['marcacion'][0]['temp'] = "0";
             }	
         }else{
             $data['marcacion'][0]['ubicacion'] = "0";
@@ -139,6 +185,7 @@ class ApiController extends Controller
             $data['marcacion'][0]['fecha'] = "0";
             $data['marcacion'][0]['hora'] = "0";
             $data['marcacion'][0]['tipo'] = "0";
+            $data['marcacion'][0]['temp'] = "0";
         }
         echo json_encode($data);
     }
@@ -160,6 +207,9 @@ class ApiController extends Controller
                     $marcacion->idubicacion = $request->idubicacion;
                     $marcacion->latitud = $request->latitud;
                     $marcacion->longitud = $request->longitud;
+                    if(isset($request->temp)){
+                        $marcacion->temp = $request->temp;
+                    }
                     $marcacion->save();
                     $data['marcacion'][0]['respuesta'] = 1;
                 }else{
