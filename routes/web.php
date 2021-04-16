@@ -102,6 +102,7 @@ Route::get('api/escaner',[PageController::class,'escaner'])->name('api.escanear'
 Route::get('api/form/covid/{toquen}',[formController::class,'covid'])->name('api.form.covid');//Abre formulario covid
 
 Route::get('api/form/covidenviar',[formController::class,'guardarcovid'])->name('api.form.covid.enviar');//Envia formulario covid
+
 //FORMULARIO --VEHICULO
 Route::get('api/form/vehiculo',[formController::class,'vehiculo'])->name('api.form.vehiculo');//Abre formulario vehiculo
 Route::put('api/form/vehiculo/update/{id}',[EquiposhistorialController::class,'update'])->name('api.form.vehiculo.update');//Actualiza formulario vehiculo

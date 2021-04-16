@@ -25,6 +25,7 @@
                             <th>#</th>
                             <th>Codigo</th>
                             <th>Empleado</th>
+                            <th>Temperatura</th>
                             <th>Fecha</th>
                             <th>Entrada</th>
                             <th>Salida</th>
@@ -37,6 +38,7 @@
                             <th>#</th>
                             <th>Codigo</th>
                             <th>Empleado</th>
+                            <th>Temperatura</th>
                             <th>Fecha</th>
                             <th>Entrada</th>
                             <th>Salida</th>
@@ -55,6 +57,7 @@
                             <td>{{$contador}}</td>
                             <td>{{$item->codigoempleado}}</td>
                             <td>{{$item->empleado}}</td>
+                            <td class="text-center">{{number_format($item->temp,2)}}</td>
                             <td>{{date('d/m/Y',strtotime($item->fecha))}}</td>
                             <td>{{date('h:i:s a',strtotime($item->instante))}}</td>
                             <?php

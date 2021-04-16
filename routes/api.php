@@ -29,6 +29,8 @@ Route::get('ultimamarcacion',[ApiController::class,'ultimamarcacion'])->name('ul
 Route::get('getvehiculos/{idusuario}',[ApiController::class,'getVehiculos'])->name('getvehiculos');
 Route::get('addmarcacion',[ApiController::class,'addMarcacion'])->name('addmarcacion');
 Route::get('addcontrolvehiculos',[ApiController::class,'addControlVehiculos'])->name('addcontrolvehiculos');
+Route::get('sintomascovid',[ApiController::class,'sintomascovid'])->name('sintomascovid');
+
 
 
 

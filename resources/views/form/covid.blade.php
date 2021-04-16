@@ -50,6 +50,7 @@
                     <option value="AES">AES</option>
                     <option value="Almaco">Almaco</option>
                     <option value="EDECSA">EDECSA</option>
+                    <option value="EDECSA">DIPAL</option>
                     <option value="OTRA">OTRA</option>
                 </select>
             </div>
@@ -68,7 +69,7 @@
                     color: white;
                 }
             </style>
-                <label>Marque en "SI" o "NO" en los siguientes sintomas <span class="text-danger">*</span></label>
+                <label>Marque en "SI" o "NO" en los siguientes sintomas</label>
                 <table class="table bg-white">
                     <tbody>
                         @foreach($sintomas as $item)
@@ -76,7 +77,7 @@
                             <td>{{$item->sintoma}}</td>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input sintoma" type="radio" name="c{{$item->id}}" id="si{{$item->id}}" value="SI" required>
+                                    <input class="form-check-input sintoma" type="radio" name="c{{$item->id}}" id="si{{$item->id}}" value="SI" @if($item->requerido=="SI"){{'required'}}@endif>
                                     <label class="form-check-label" for="si{{$item->id}}">
                                         SI
                                     </label>
@@ -84,7 +85,7 @@
                             </td>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input sintoma" type="radio" name="c{{$item->id}}" id="no{{$item->id}}" value="NO" required>
+                                    <input class="form-check-input sintoma" type="radio" name="c{{$item->id}}" id="no{{$item->id}}" value="NO" @if($item->requerido=="SI"){{'required'}}@endif>
                                     <label class="form-check-label" for="no{{$item->id}}">
                                         NO
                                     </label>
@@ -97,7 +98,7 @@
             </div>
             <div class="form-group col-12">
                 <label>Temperatura registrada en grados C</label>
-                <input type="number" class="form-control input" step="0.01" value="" id="temperatura" name="temperatura"/>
+                <input type="number" class="form-control input" step="0.01" value="{{$temp}}" id="temperatura" name="temperatura" required/>
             </div>
             <div class="form-group col-12">
                 <label>Es responsabilidad de todos cuidarnos. Juntos saldremos adelante! Déjanos tus comentarios</label>
