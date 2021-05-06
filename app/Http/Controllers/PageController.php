@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Mail\Registro;
+use App\Models\empleadoDocumento;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\empleados;
 use App\Models\marcacionesempleados;
@@ -17,6 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
 error_reporting(0);
 class PageController extends Controller
 {
@@ -505,9 +508,9 @@ class PageController extends Controller
 		//2 = Cargar codigo carnet
 		//3 = Cargar vehiculo
 
-		$error = '<img class="col-6 offset-3" src="'.asset('img/cancel.png').'"><br><br><div class="h3 text-danger text-center">';
-		$alert = '<img class="col-6 offset-3" src="'.asset('img/alert.png').'"><div class="h3 text-primary text-center">';
-		$success = '<img class="col-6 offset-3" src="'.asset('img/ok.png').'"><div class="h3 text-primary text-center">';
+		$error = '<div class="col-6 offset-3 text-center"><img width="50%" src="'.asset('img/cancel.png').'"></div><br><br><div class="h3 text-danger text-center">';
+		$alert = '<div class="col-6 offset-3 text-center"><img width="50%" src="'.asset('img/alert.png').'"></div><br><br><div class="h3 text-primary text-center">';
+		$success = '<div class="col-6 offset-3 text-center"><img width="50%" src="'.asset('img/ok.png').'"></div><br><br><div class="h4 text-primary text-center">';
 
 		$ubicacionkey = strpos($contenido, 'api/qr?c=');
 		$vehiculokey = strpos($contenido, 'api/qr?a');
@@ -699,12 +702,12 @@ class PageController extends Controller
 									$tipo = "Entrada";
 								}
 							}
-							if($cantidad>=6){
+							/*if($cantidad>=6){
 								$data['id'] = 0;
 								$data['mensaje'] = $error.$empleadoCarnet->nombre1.', has alcanzado el número maximo de marcaciones para este dia</div>';
-							}else{
+							}else{*/
 								$ubicacion = ubicacion::find($idubicacion);
-								marcacionesempleados::create([
+								$marcacion = marcacionesempleados::create([
 									'idempleado' => $idempleado,
 									'idusuario' => $idusuario,
 									'tipo' => $tipo,
@@ -714,9 +717,52 @@ class PageController extends Controller
 									'latitud' => $latitud,
 									'longitud' => $longitud
 								]);
-								$data['id'] = 0;
-								$data['mensaje'] = $success.$empleadoCarnet->nombre1.' tu asistencia se registro en '.$ubicacion->descripcion.'!</div><br><h3 class="text-primary text-center">Hora: '.date('h:i a',strtotime($instante)).'<br>Tipo: '.$tipo.'</h3>';
-							}
+								if($tipo=="Entrada")
+								{
+									$data['id'] = 44;
+									$data['mensaje'] = '<input hidden id="idasistencia" value="'.$marcacion->id.'" class="form-input input" type="number" />
+									<br>
+									<div class="caja">
+										<img class="fotoperfil" src="'.asset(Storage::url('app/'.$empleadoCarnet->foto)).'">
+									</div>
+									<br>
+									<p class="text-white font-gotham-book" style="font-size:20px">'.$empleadoCarnet->nombreCompleto.'</p>
+									<br>
+									<p class="color-amarillo font-gotham-book" style="font-size:18px">Correlativo #</p>
+									<p class="color-amarillo font-gotham-bold" style="font-size:28px">'.$empleadoCarnet->codigo.'</p>
+									
+									<p class="mt-2 text-white font-gotham-book" style="font-size:20px">'.$tipo.'</p>
+									<p class="color-amarillo font-gotham-bold" style="font-size:35px">'.date('h:i a',strtotime($marcacion->instante)).'</p>
+									
+									<p class="mt-2 color-amarillo font-gotham-book" style="font-size:20px">Ingrese temperatura (°C)</p>
+									<input id="inputtemperatura" class="form-input input" type="number" />
+						
+									<p class="mt-2 color-amarillo font-gotham-book" style="font-size:16px">¿Ha presentado algún sintoma de COVID-19?</p>
+									<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+										<button onclick="btnasisnegativo()" type="button" class="btn btn-success pl-5 pr-5"><i class="far fa-laugh"></i> NO</button>
+										<button onclick="btnasispositivo('."'".$empleadoCarnet->toquen."'".')" type="button" class="btn btn-warning pl-5 pr-5"><i class="far fa-tired"></i> SI</button>
+									</div>
+									<br>
+									<br>';
+								}else{
+									$data['id'] = 45;
+									$data['mensaje'] = '<input hidden id="idasistencia" value="'.$marcacion->id.'" class="form-input input" type="number" />
+									<br>
+									<div class="caja">
+										<img class="fotoperfil" src="'.asset(Storage::url('app/'.$empleadoCarnet->foto)).'">
+									</div>
+									<br>
+									<p class="text-white font-gotham-book" style="font-size:20px">'.$empleadoCarnet->nombreCompleto.'</p>
+									<br>
+									<p class="color-amarillo font-gotham-book" style="font-size:18px">Correlativo #</p>
+									<p class="color-amarillo font-gotham-bold" style="font-size:28px">'.$empleadoCarnet->codigo.'</p>
+									
+									<p class="mt-2 text-white font-gotham-book" style="font-size:20px">'.$tipo.'</p>
+									<p class="color-amarillo font-gotham-bold" style="font-size:35px">'.date('h:i a',strtotime($marcacion->instante)).'</p>
+									<br>
+									<br>';
+								}
+							//}
 						}else{
 							$data['id'] = 0;
 							$data['mensaje'] = $error.'El carnet no no es válido</div>';
@@ -752,6 +798,56 @@ class PageController extends Controller
 		}
 		//IMPRIMIR JSON
 		echo json_encode($data);
+	}
+	public function actualizarAsistencia(Request $request){
+		$idasistencia = $request->idasistencia;
+		$temp = $request->temp;
+		$covid = $request->covid;
+
+		$asistencia = marcacionesempleados::find($idasistencia);
+		$asistencia->temp = $temp;
+		$asistencia->save();
+
+		if($covid=="no")
+		{
+			$detalleasistencia = marcacionesempleados::join("ubicacions as b","marcacionesempleados.idubicacion","b.id")->
+			join("empleados as c","marcacionesempleados.idempleado","c.id")->
+			select("marcacionesempleados.*","b.descripcion as ubicacion","c.nombreCompleto","c.idgenero")->
+			where("marcacionesempleados.id",$idasistencia)->first();
+			
+			$dui = "";
+			if($detalleasistencia){
+				$documento = empleadoDocumento::where("idempleado",$detalleasistencia->idempleado)->where("idtipodocumento",1)->
+				first();
+				$dui = $documento->numerodocumento;
+			}
+			
+			
+			$fecha = date("Y-m-d");
+			$nombrecompleto = $detalleasistencia->nombreCompleto;
+			$idgenero = $detalleasistencia->idgenero;
+
+			$empresa = "Advanced Energy";
+			$otraempresa = "";
+			$proyecto = $detalleasistencia->ubicacion;
+
+			$temperatura = $temp;
+			$comentarios = "";
+
+			return redirect(route('api.form.covid.enviar',[
+			"fecha"=>$fecha,
+			"nombrecompleto"=>$nombrecompleto,
+			"dui"=>$dui,
+			"idgenero"=>$idgenero,
+			"empresa"=>$empresa,
+			"otraempresa"=>$otraempresa,
+			"proyecto"=>$proyecto,
+			"temperatura"=>$temperatura,
+			"comentarios"=>$comentarios
+			]));
+		}else{
+			echo "1";
+		}
 	}
 	public function escanerCarnet(Request $request)
 	{

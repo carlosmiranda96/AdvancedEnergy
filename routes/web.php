@@ -49,6 +49,7 @@ use App\Http\Controllers\vehiculos\EquiposaccesoriosController;
 use Maatwebsite\Excel\Facades\Excel;
 
 //RUTAS QUE NO NECESITAN ESTAR LOGEADO
+
 Route::get('/',[PageController::class,'login'])->name('login');
 Route::get('recuperacion',[PageController::class,'recordar'])->name('recordar');
 Route::get('registrarse',[PageController::class,'registrarse'])->name('registrarse');
@@ -96,7 +97,7 @@ Route::get('api/qr/obtenerubicacion',[PageController::class,'obtenerubicacion'])
 Route::get('api/asistencia',[PageController::class,'asistencia'])->name('asistencia');//Abre la aplicacion
 
 Route::get('api/escaner',[PageController::class,'escaner'])->name('api.escanear');//Metodo para escanear, QR Empleado, QR Vehiculo, QR Ubicacion
-
+Route::get('asistencia/actualizar',[PageController::class,'actualizarAsistencia'])->name('asistencia.actualizar');
 
 //FORMULARIO --COVID
 Route::get('api/form/covid/{toquen}',[formController::class,'covid'])->name('api.form.covid');//Abre formulario covid

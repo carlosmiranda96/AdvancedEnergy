@@ -114,10 +114,118 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="alertasistencia" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color:#0E5155;">
+        <div class="modal-body text-center" id="bodynotificacion2" style="padding: 0;">
+            <!--input id="idasistencia" class="form-input input" type="number" />
+            <br>
+            <div class="caja">
+                <img class="fotoperfil" src="{{asset(Storage::url('app/'.$empleado->foto))}}">
+            </div>
+            <br>
+            <p class="text-white font-gotham-book" style="font-size:20px">Carlos Alexander Miranda Oliva</p>
+            <br>
+            <p class="color-amarillo font-gotham-book" style="font-size:18px">Correlativo #</p>
+            <p class="color-amarillo font-gotham-bold" style="font-size:28px">AE-0001</p>
+            
+            <p class="mt-2 text-white font-gotham-book" style="font-size:20px">Entrada</p>
+            <p class="color-amarillo font-gotham-bold" style="font-size:35px">12:00 PM</p>
+            
+            <p class="mt-2 color-amarillo font-gotham-book" style="font-size:20px">Ingrese temperatura (°C)</p>
+            <input id="inputtemperatura" class="form-input input" type="number" />
+
+            <p class="mt-2 color-amarillo font-gotham-book" style="font-size:16px">¿Ha presentado algún sintoma de COVID-19?</p>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <button id="btnasisnegativo" type="button" class="btn btn-success pl-5 pr-5"><i class="far fa-laugh"></i> NO</button>
+                <button id="btnasispositivo" onclick="btnasispositivo('{{$empleado->toquen}}')" type="button" class="btn btn-warning pl-5 pr-5"><i class="far fa-tired"></i> SI</button>
+            </div>
+            <br>
+            <br-->
+        </div>
+    </div>
+  </div>
+</div>
 @stop
 @section('script')
 <script src="{{asset('js/instascan.js')}}"></script>
 <script>
+    function btnasisnegativo(){
+        var temperatura = $("#inputtemperatura").val();
+        if(temperatura.length>0){
+            //Actualizar asistencia con la temperatura
+            var idasistencia = $("#idasistencia").val();
+            actualizarasistencia(idasistencia,temperatura,"no");
+            $("#alertasistencia").modal('hide');
+        }else{
+            bootbox.alert({
+                title:'Notificación',
+                message:"Por favor ingrese la temperatura!!.",
+                buttons:{
+                    ok:{
+                        label:'Cerrar'
+                    }
+                }
+            });
+        }
+    }
+    function btnasispositivo(toquen){
+        var temperatura = $("#inputtemperatura").val();
+        if(temperatura.length>0){
+            //Actualizar asistencia con la temperatura
+            var idasistencia = $("#idasistencia").val();
+            actualizarasistencia(idasistencia,temperatura,"si");
+            $("#alertasistencia").modal('hide');
+
+            window.location="api/form/covid/"+toquen+"?temp="+temperatura;
+        }else{
+            bootbox.alert({
+                title:'Notificación',
+                message:"Por favor ingrese la temperatura!!.",
+                buttons:{
+                    ok:{
+                        label:'Cerrar'
+                    }
+                }
+            });
+        }
+    }
+    function actualizarasistencia(idasistencia,temperatura,covid)
+    {
+        $.ajax({
+            url:"{{route('asistencia.actualizar')}}",
+            data:"idasistencia="+idasistencia+"&temp="+temperatura+"&covid="+covid,
+            type:"GET",
+            success:function(r){
+                if(r==1){
+                    $("#alertasistencia").modal('hide');
+                }else{
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"No se pudo registrar.",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                }
+            },
+            error:function(){
+                bootbox.alert({
+                    title:'Notificación',
+                    message:"No se pudo registrar.",
+                    buttons:{
+                        ok:{
+                            label:'Cerrar'
+                        }
+                    }
+                });
+            }
+        });
+    }
     var dialogo;
     var dialogo2;
     var scanner;
@@ -405,10 +513,23 @@
                     var jsonEmpleado = JSON.parse(json['json']);
                     $("#idempleado").append('<option value="'+jsonEmpleado['id']+'">'+jsonEmpleado['nombre']+'</option>');
                     $("#idempleado").append('<option value="0">Seleccione</option>');
+                }else if(json['id']==44){
+                    $("#bodynotificacion2").html(json['mensaje']);
+                    $("#alertasistencia").modal('show');
+                }else if(json['id']==45){
+                    $("#bodynotificacion2").html(json['mensaje']);
+                    $("#alertasistencia").modal('show');
+                    window.setTimeout(ocultarAsistencia,2000);
                 }
-                $("#notificacion").modal('show');
+                if(json['id']!=44 && json['id']!=45){
+                    $("#bodynotificacion").html(json['mensaje']);
+                    $("#notificacion").modal('show');
+                }
             }
         });
+    }
+    function ocultarAsistencia(){
+        $("#alertasistencia").modal('hide');
     }
 </script>
 @stop

@@ -19,7 +19,7 @@ class EmpleadosController extends Controller
     }
     public function index()
     {
-        $empleados = empleados::paginate(5);
+        $empleados = empleados::get();
         return view('rrhh.empleados.lista',compact('empleados'));
     }
 

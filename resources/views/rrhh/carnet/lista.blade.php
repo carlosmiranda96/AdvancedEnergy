@@ -22,7 +22,7 @@
                 <a href="{{route('carnet.create')}}"><button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Agregar</button></a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table id="table_id" class="table table-sm display responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -41,7 +41,7 @@
                     </tfoot>
                     <tbody>
                         @foreach ($carnet as $item)
-                        <tr class="fila">
+                        <tr>
                             <td onclick="mostrar('{{$item->id}}')" style="cursor:pointer">{{$item->codigo}}</td>
                             <td onclick="mostrar('{{$item->id}}')" style="cursor:pointer">@if($item->empleado) {{$item->empleado}} @else {{'No asignado'}} @endif</td>
                             <td onclick="mostrar('{{$item->id}}')" style="cursor:pointer">{{$item->fechavencimiento}}</td>
@@ -65,13 +65,19 @@
                     </tbody>
                 </table>
             </div>
-            {{ $carnet->links() }}
         </div>
     </div>
 </div>
 @stop
 @section('script')
 <script>
+    $(document).ready(function(){   
+        $('#table_id').DataTable({
+            language: {
+                url: "{{route('datatable-es')}}"
+            }
+        });
+    });
     function eliminar(key){
         alertify.confirm("Notificación","¿Desea eliminar el registro?",function(){
             $("#frmeliminar"+key).submit();

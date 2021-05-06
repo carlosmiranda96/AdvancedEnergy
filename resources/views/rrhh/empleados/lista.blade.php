@@ -22,7 +22,7 @@
                 <a href="{{route('empleados.create')}}"><button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Agregar</button></a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table id="table_id" class="table table-sm display responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Fecha ingreso</th>
@@ -64,13 +64,19 @@
                     </tbody>
                 </table>
             </div>
-            {{ $empleados->links() }}
         </div>
     </div>
 </div>
 @stop
 @section('script')
 <script>
+    $(document).ready(function(){   
+        $('#table_id').DataTable({
+            language: {
+                url: "{{route('datatable-es')}}"
+            }
+        });
+    });
     function eliminar(key){
         alertify.confirm("Notificación","¿Desea eliminar el registro?",function(){
             $("#frmeliminar"+key).submit();

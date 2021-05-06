@@ -18,11 +18,18 @@
     font-family: 'Alright-Black';
     src: url('../fonts/AlrightSans-Black.otf');
 }
+@font-face {
+    font-family: 'Gotham-Book';
+    src: url('../fonts/Gotham-Book.otf');
+}
 .font-gotham-bold{
     font-family: 'Gotham-Bold';
 }
 .font-gotham-medium{
     font-family: 'Gotham-Medium';
+}
+.font-gotham-book{
+    font-family:'Gotham-Book'
 }
 .font-alright-regular{
     font-family: 'Alright-Regular';
@@ -38,15 +45,30 @@ body{
 .card_amarilla a{
     color: #0E5155;
 }
+.bgalert{
+    background-color: #0E5155;
+    margin: 0;
+    padding: 0;
+}
 .color-white{
     color: white;
 }
+.color-verde1{
+    color: #0E5155;
+}
+.color-amarillo{
+    color: #FFC20E;
+}
 .caja{
     width: 160px;
-    height: 160px;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
+}
+p{
+    padding: 0;
+    margin: 0;
 }
 .fotoperfil{
     width: 96%;

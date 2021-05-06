@@ -71,6 +71,17 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="alertasistencia" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color:#0E5155;">
+        <div class="modal-body text-center" id="bodynotificacion2" style="padding: 0;">
+        </div>
+    </div>
+  </div>
+</div>
+
 </form>
 @stop
 @section('script')
@@ -178,6 +189,18 @@
 
       });
     });
+    $("#alertasistencia").on('hide.bs.modal',function(){
+      Instascan.Camera.getCameras().then(function(cameras){
+        if (cameras.length > 0){
+          scanner.start(cameras[0]);
+        }
+        else {
+                      
+        }
+      }).catch (function(e){
+
+      });
+    });
     var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 3, mirror:false });
     var lector = new buzz.sound("{{asset('sound/lector')}}", {formats: [ "mp3"]});
     scanner.addListener('scan',function(content)
@@ -215,8 +238,19 @@
             $("#bodynotificacion").html(json['mensaje']);
             $("#idvehiculo").val(json['idvehiculo']);
             $("#vehiculo").prop("checked",true);
+          }else if(json['id']==44){
+            $("#bodynotificacion2").html(json['mensaje']);
+            $("#alertasistencia").modal('show');
+          }else if(json['id']==45){
+            $("#bodynotificacion2").html(json['mensaje']);
+            $("#alertasistencia").modal('show');
+            window.setTimeout(ocultarAsistencia,2000);
           }
-          $("#notificacion").modal('show');
+
+          if(json['id']!=44 && json['id']!=45){
+            $("#bodynotificacion").html(json['mensaje']);
+            $("#notificacion").modal('show');
+          }
           scanner.stop();
         }
       });
@@ -233,5 +267,82 @@
 
     });
   });
+  function ocultarAsistencia(){
+    $("#alertasistencia").modal('hide');
+  }
+  function btnasisnegativo(){
+        var temperatura = $("#inputtemperatura").val();
+        if(temperatura.length>0){
+            //Actualizar asistencia con la temperatura
+            var idasistencia = $("#idasistencia").val();
+            actualizarasistencia(idasistencia,temperatura,"no");
+            $("#alertasistencia").modal('hide');
+        }else{
+            bootbox.alert({
+                title:'Notificación',
+                message:"Por favor ingrese la temperatura!!.",
+                buttons:{
+                    ok:{
+                        label:'Cerrar'
+                    }
+                }
+            });
+        }
+    }
+    function btnasispositivo(toquen){
+        var temperatura = $("#inputtemperatura").val();
+        if(temperatura.length>0){
+            //Actualizar asistencia con la temperatura
+            var idasistencia = $("#idasistencia").val();
+            actualizarasistencia(idasistencia,temperatura,"si");
+            $("#alertasistencia").modal('hide');
+
+            window.location="api/form/covid/"+toquen+"?temp="+temperatura;
+        }else{
+            bootbox.alert({
+                title:'Notificación',
+                message:"Por favor ingrese la temperatura!!.",
+                buttons:{
+                    ok:{
+                        label:'Cerrar'
+                    }
+                }
+            });
+        }
+    }
+    function actualizarasistencia(idasistencia,temperatura,covid)
+    {
+        $.ajax({
+            url:"{{route('asistencia.actualizar')}}",
+            data:"idasistencia="+idasistencia+"&temp="+temperatura+"&covid="+covid,
+            type:"GET",
+            success:function(r){
+                if(r==1){
+                    $("#alertasistencia").modal('hide');
+                }else{
+                    bootbox.alert({
+                        title:'Notificación',
+                        message:"No se pudo registrar.",
+                        buttons:{
+                            ok:{
+                                label:'Cerrar'
+                            }
+                        }
+                    });
+                }
+            },
+            error:function(){
+                bootbox.alert({
+                    title:'Notificación',
+                    message:"No se pudo registrar.",
+                    buttons:{
+                        ok:{
+                            label:'Cerrar'
+                        }
+                    }
+                });
+            }
+        });
+    }
 </script>
 @stop
