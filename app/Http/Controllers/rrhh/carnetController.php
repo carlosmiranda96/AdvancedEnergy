@@ -15,15 +15,8 @@ class carnetController extends Controller
 {
     public function index()
     {
-        $carnet = Carnet::where('idempleado',">","0")->get();
-
-        foreach($carnet as $item){
-            echo $item->id."--".$item->idempleado."<br>";
-            $this->historial($item->idempleado,$item->id);
-        }
-
-        //$carnet = Carnet::leftjoin("empleados as b","carnets.idempleado","b.id")->select("carnets.*",'b.nombreCompleto as empleado')->get();
-        //return view('rrhh.carnet.lista',compact('carnet'));
+        $carnet = Carnet::leftjoin("empleados as b","carnets.idempleado","b.id")->select("carnets.*",'b.nombreCompleto as empleado')->get();
+        return view('rrhh.carnet.lista',compact('carnet'));
     }
 
     /**
