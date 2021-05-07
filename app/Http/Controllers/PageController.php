@@ -588,13 +588,14 @@ class PageController extends Controller
 										$tiempo = $minutos." minutos con ".$segundos.' segundos';
 									}
 								}
+								/*
 								if(isset($ultimoregistro) && $minutos<=15)
 								{
 									$data['id'] = 0;
 									$data['mensaje'] = $error.'Vehiculo fue asignado hace '.$tiempo.'</div><br><h5 class="text-danger text-center">Espera 15 min para volver a escanear el mismo codigo</h5>';
 								}
 								else
-								{
+								{*/
 									$historial = equiposhistorial::create([
 										'instante' => $instante,
 										'idequipotrabajo' => $idequipotrabajo,
@@ -607,7 +608,7 @@ class PageController extends Controller
 									$data['mensaje'] = $success.'Vehiculo asignado</h3>
 									<h6 class="text-primary text-center">Por favor llenar el siguiente formulario para finalizar el registro</h6>
 									<a href="'.route('api.form.vehiculo',['id'=>$historial->id]).'"><div class="btn btn-primary col-12"><i class="fas fa-share-square"></i> Formulario</div></a>';
-								}
+								//}
 							}else{
 								$data['id'] = 0;
 								$data['mensaje'] = $error.'Empleado no válido, por favor seleccionar empleado o escanear QR de carnet</div>';

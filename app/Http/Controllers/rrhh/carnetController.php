@@ -13,6 +13,10 @@ use function Complex\add;
 
 class carnetController extends Controller
 {
+    public function __construct()
+	{
+		date_default_timezone_set('America/El_Salvador');
+	}
     public function index()
     {
         $carnet = Carnet::leftjoin("empleados as b","carnets.idempleado","b.id")->select("carnets.*",'b.nombreCompleto as empleado')->get();
