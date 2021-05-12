@@ -70,7 +70,7 @@
                             @foreach($historial as $item)
                             <tr>
                                 <td>{{date('d/m/Y h:i a',strtotime($item->fecha." ".$item->hora))}}</td>
-                                <td>{{$item->nombreCompleto}}</td>
+                                <td>@if(isset($item->nombreCompleto)) {{$item->nombreCompleto}} @else {{'No Asignado'}}@endif</td>
                             </tr>
                             @endforeach
 

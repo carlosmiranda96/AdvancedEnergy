@@ -3,6 +3,7 @@
 use App\Http\Controllers\AutorizacionGrupoController;
 use App\Http\Controllers\AutorizacionUserController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\cloud\cloudController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\DiasController;
 use App\Http\Controllers\DiasferiadosController;
@@ -51,6 +52,7 @@ use Maatwebsite\Excel\Facades\Excel;
 //RUTAS QUE NO NECESITAN ESTAR LOGEADO
 
 Route::get('/',[PageController::class,'login'])->name('login');
+
 Route::get('recuperacion',[PageController::class,'recordar'])->name('recordar');
 Route::get('registrarse',[PageController::class,'registrarse'])->name('registrarse');
 Route::post('iniciarsesion', [PageController::class, 'iniciarsesion'])->name('iniciarsesion');
@@ -119,7 +121,8 @@ Route::get('.well-known/pki-validation/{txt}',[validar::class,'validar'])->name(
 
 //RUTAS QUE NECESITAN QUE EL USUARIO ESTE LOGEADO
 Route::group(['middleware' => 'sesion'], function() {
-
+    Route::get('cloud',[cloudController::class,'index'])->name('cloud.index');
+    
     Route::get('api/qr',[PageController::class,'lectorqr'])->name('lectorqr');//Abre el lector qr
     Route::get('cerrarsesion',[PageController::class,'cerrar'])->name('cerrarsesion');
 

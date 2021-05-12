@@ -84,7 +84,7 @@ class carnetController extends Controller
         $carnet = Carnet::find($id);
         $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orwhere("empleados.id",$carnet->idempleado)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();
         $empleado = empleados::find($carnet->idempleado);
-        $historial = Carnethistorial::join("empleados as b","carnethistorials.idempleado","b.id")->
+        $historial = Carnethistorial::leftjoin("empleados as b","carnethistorials.idempleado","b.id")->
         where("idcarnet",$id)->orderby("carnethistorials.fecha")->orderby("carnethistorials.hora")->get();
         return view('rrhh.carnet.edit',compact('carnet','empleados','empleado','historial'));
     }
@@ -110,9 +110,9 @@ class carnetController extends Controller
             //Si se cambio guardar historial de cambio
             //$this->historial($request->idempleado,$id);
         }
-        if($request->idempleado>0){
-            $this->historial($request->idempleado,$carnet->id);
-        }
+        //if($request->idempleado>0){
+        $this->historial($request->idempleado,$carnet->id);
+        //}
         $this->asignarCarnet($request->idempleado,$request->codigo);
         $carnet->update($request->all());
         return redirect()->route('carnet.index')->with('mensaje','Datos guardados correctamente');
