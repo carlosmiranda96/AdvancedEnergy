@@ -54,7 +54,17 @@
             </div>
         </div>
         <div class="col-12 col-sm-4">
-        <div class="card shadow mb-4">
+            <div class="card shadow mb-4 text-center">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Codigo QR</h6>
+                </div>
+                <div class="card-body">
+                    <center><div id="codigoQR"></div></center>
+                    <a id="descargarCodigo"><button class="btn btn-primary mt-3"><i class="fas fa-download"></i> Descargar</button></a>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Historial de carnet</h6>
                 </div>
@@ -87,4 +97,18 @@
     </div>
     
 </div>
+@stop
+@section('script')
+<script src="{{asset('js/qrcode.min.js')}}"></script>
+<script>
+    var qrcode = new QRCode("codigoQR");
+    qrcode.clear(); // clear the code.
+    qrcode.makeCode("{{route('asistencia')}}?a={{$carnet->id}}&b={{$carnet->toquen}}");
+    $("#descargarCodigo").on("click",function(){
+        var base64 = $("#codigoQR img").attr('src');
+        $("#descargarCodigo").attr('href', base64);
+        $("#descargarCodigo").attr('download', "QR_{{$carnet->codigo}}");
+        $("#descargarCodigo").trigger("click");
+    });
+</script>
 @stop
