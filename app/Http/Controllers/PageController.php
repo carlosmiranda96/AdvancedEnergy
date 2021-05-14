@@ -75,7 +75,8 @@ class PageController extends Controller
 						abort(404);
 					}
 				}else{
-					abort(404);
+					return view('aplicacion.sinasignar',compact('carnet'));
+					//abort(404);
 				}
 			}else{
 				abort(404);
