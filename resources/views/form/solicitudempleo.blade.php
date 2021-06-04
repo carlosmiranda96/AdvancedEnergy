@@ -82,11 +82,10 @@
                                 <option value="Ingeniero Electricista en subestaciones" @if($id=="Ingeniero Electricista en subestaciones") {{'selected'}} @endif>Ingeniero Electricista en subestaciones</option>
                                 <option value="Técnico Electricista" @if($id=="Técnico Electricista") {{'selected'}} @endif>Técnico Electricista</option>
                                 <option value="Técnico Soldador" @if($id=="Técnico Soldador") {{'selected'}} @endif>Técnico Soldador</option>
-<<<<<<< HEAD
+                                @if($id=="A5l8hzsd")
+                                    <option value="Electricista dibujante Jr" selected>Electricista dibujante Jr</option>
+                                @endif
                                 <option value="Albañil" @if($id=="Albañil") {{'selected'}} @endif>Albañil</option>
-=======
-				<option value="Albañil" @if($id=="Albañil") {{'selected'}} @endif>Albañil</option>
->>>>>>> c88a1b014a9421ec164919d154f0a8643da5ff39
                             </select>
                         </div>
                         <div class="col-12">
