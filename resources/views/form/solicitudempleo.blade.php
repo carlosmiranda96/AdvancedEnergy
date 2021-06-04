@@ -76,16 +76,20 @@
                             <label>Área donde desea aplicar (requerido) <span class="text-danger">*</span></label>
                             <select class="form-control input" name="puesto" required>
                                 <option value="">Seleccione</option>
-                                <option value="Seguridad Industrial y salud ocupacional" @if($id=="Seguridad Industrial y salud ocupacional") {{'selected'}} @endif>Seguridad Industrial y salud ocupacional</option>
+                                <!--option value="Seguridad Industrial y salud ocupacional" @if($id=="Seguridad Industrial y salud ocupacional") {{'selected'}} @endif>Seguridad Industrial y salud ocupacional</option>
                                 <option value="Operador de maquinaria" @if($id=="Operador de maquinaria") {{'selected'}} @endif>Operador de maquinaria</option>
                                 <option value="Ingeniero Electricista" @if($id=="Ingeniero Electricista") {{'selected'}} @endif>Ingeniero Electricista</option>
                                 <option value="Ingeniero Electricista en subestaciones" @if($id=="Ingeniero Electricista en subestaciones") {{'selected'}} @endif>Ingeniero Electricista en subestaciones</option>
                                 <option value="Técnico Electricista" @if($id=="Técnico Electricista") {{'selected'}} @endif>Técnico Electricista</option>
                                 <option value="Técnico Soldador" @if($id=="Técnico Soldador") {{'selected'}} @endif>Técnico Soldador</option>
+                                <option value="Albañil" @if($id=="Albañil") {{'selected'}} @endif>Albañil</option-->
+                                <option value="Ingeniero Civil Sr" @if($id=="Ingeniero Civil Sr") {{'selected'}} @endif>Ingeniero Civil Sr</option>
+                                <option value="Ingeniero Civil Jr" @if($id=="Ingeniero Civil Jr") {{'selected'}} @endif>Ingeniero Civil Jr</option>
+                                <option value="Ingeniero Civil (Residente)" @if($id=="Ingeniero Civil (Residente)") {{'selected'}} @endif>Ingeniero Civil (Residente)</option>
+                                <option value="Mecánico Automotriz" @if($id=="Mecánico Automotriz") {{'selected'}} @endif>Mecánico Automotriz</option>
                                 @if($id=="A5l8hzsd")
                                     <option value="Electricista dibujante Jr" selected>Electricista dibujante Jr</option>
                                 @endif
-                                <option value="Albañil" @if($id=="Albañil") {{'selected'}} @endif>Albañil</option>
                             </select>
                         </div>
                         <div class="col-12">
