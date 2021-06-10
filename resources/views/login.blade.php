@@ -14,7 +14,7 @@
               <div class="col-lg-6">
                 <div class="p-4">  
                   <div class="text-center">
-                    img class="col-12" src="{{asset('')}}img/logo.png"/>
+                    <img class="col-12" src="{{asset('')}}img/logo.png"/>
                   </div>
                   <div class="text-center text-white">
                     <h5 class="mb-3">¡Bienvenido! Ingresa tus credenciales</h5>

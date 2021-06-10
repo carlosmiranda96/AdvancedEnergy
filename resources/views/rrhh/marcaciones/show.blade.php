@@ -77,7 +77,7 @@
                         @endforeach
                         @if ($marcacionesempleados->count()==0)
                         <tr>
-                            <td colspan="5" class="text-center">No hay datos</td>
+                            <td colspan="9" class="text-center">No hay datos</td>
                         </tr>
                         @endif
                     </tbody>
