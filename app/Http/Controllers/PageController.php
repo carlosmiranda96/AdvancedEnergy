@@ -693,11 +693,9 @@ class PageController extends Controller
 						$Carnet = Carnet::where('id',$idcarnet)->where('toquen',$toquen)->first();
 						if($Carnet && $Carnet->idempleado>0)
 						{
-<<<<<<< HEAD
-=======
 							$idreferencia = 0;
->>>>>>> 5830959ee7d71964bf0b88a9f931eecd8260fcb9
 							$idempleado = $Carnet->idempleado;
+							
 							$empleadoCarnet = empleados::where('id',$idempleado)->first();
 							$marcacionempleado = marcacionesempleados::where('idempleado',$idempleado)->where('fecha',$fecha)->orderby('id','asc')->get();
 							$cantidad = $marcacionempleado->count();
