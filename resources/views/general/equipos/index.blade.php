@@ -22,6 +22,7 @@
                 <table id="table_id" class="display responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Equipo</th>
@@ -36,6 +37,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th></th>
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Equipo</th>
@@ -49,10 +51,12 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                    <?php $correlativo = 1;?>
                     @foreach($controlvehiculo as $item)
                         <tr>
+                            <th>{{$correlativo}}</th>
                             <td>{{date("d/m/Y",strtotime($item->instante))}}</td>
-                            <td>{{date("d/m/Y",strtotime($item->instante))}}</td>
+                            <td>{{date("h:i a",strtotime($item->instante))}}</td>
                             <td>{{$item->codigo." / ".$item->placa}}</td>
                             <td>{{$item->nombreCompleto}}</td>
                             <td>{{$item->uso}}</td>
@@ -62,6 +66,7 @@
                             <td>{{$item->herramienta}}</td>
                             <td>{{$item->observaciones}}</td>
                         </tr>
+                        <?php $correlativo++;?>
                     @endforeach
                     </tbody>
                 </table>

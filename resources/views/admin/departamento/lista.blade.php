@@ -25,6 +25,7 @@
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>Empresa</th>
                             <th>Departamento</th>
                             <th>Nivel</th>
                             <th>Dependencia</th>
@@ -33,6 +34,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>Empresa</th>
                             <th>Departamento</th>
                             <th>Nivel</th>
                             <th>Dependencia</th>
@@ -42,6 +44,7 @@
                     <tbody>
                         @foreach ($departamento as $item)
                         <tr>
+                            <td>{{$item->nombreEmpresa}}</td>
                             <td>{{$item->departamento}}</td>
                             <td>{{$item->nivel}}</td>
                             <td>{{$item->nombredependencia}}</td>
@@ -58,7 +61,7 @@
                         @endforeach
                         @if ($departamento->count()==0)
                         <tr>
-                            <td colspan="4" class="text-center">No hay datos</td>
+                            <td colspan="5" class="text-center">No hay datos</td>
                         </tr>
                         @endif
                     </tbody>

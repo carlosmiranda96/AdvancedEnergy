@@ -59,7 +59,7 @@
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Ubicación</th>
+                                            <th>Empresa</th>
                                             <th>Horario</th>
                                             <th>Cargo</th>
                                             <th>Salario</th>
@@ -68,7 +68,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Ubicación</th>
+                                            <th>Empresa</th>
                                             <th>Horario</th>
                                             <th>Cargo</th>
                                             <th>Salario</th>
@@ -78,7 +78,7 @@
                                     <tbody>
                                         @foreach ($empleadoempresa as $item)
                                         <tr>
-                                            <td><a href="{{ route('empleadoempresa.edit',$item->id)}}">{{$item->ubicacion}}</a></td>
+                                            <td><a href="{{ route('empleadoempresa.edit',$item->id)}}">{{$item->empresa}}</a></td>
                                             <td>{{$item->horario}}</td>
                                             <td>{{$item->cargo}}</td>
                                             <td>$ {{number_format($item->salario,'2')}}</td>

@@ -12,6 +12,10 @@
                     <h3 class="text-primary text-center font-gotham-bold">Cuenta {{$correo}} verificada</h3>
                     <hr>
                     </div>
+                    @if($ldap)
+                    <h4 class="text-center">No se puede crear la contraseña, está cuenta es de Active Directory.</h4>
+                    <h5 class="text-center">Contacta al Administrador</h5>
+                    @else
                     <h4 class="text-center">Crea una contraseña</h4>
                     <div class="col-lg-6 offset-lg-3">
                         <div class="form-group">
@@ -26,6 +30,7 @@
                             <button onclick="enviar()" class="btn btn-primary col-12">Enviar</button>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
             @else

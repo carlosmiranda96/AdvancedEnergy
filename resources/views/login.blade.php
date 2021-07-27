@@ -14,7 +14,7 @@
               <div class="col-lg-6">
                 <div class="p-4">  
                   <div class="text-center">
-                    <img class="col-12" src="{{asset('')}}img/logo.png"/>
+                    <img class="col-12" src="{{asset('')}}img/logoblanco2.png"/>
                   </div>
                   <div class="text-center text-white">
                     <h5 class="mb-3">¡Bienvenido! Ingresa tus credenciales</h5>
@@ -27,10 +27,10 @@
                     </div>
                     @endif
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user input" name="email" value="{{$email}}" autofocus placeholder="Correo o Usuario" required >
+                      <input type="text" class="form-control form-control-user input" name="email" value="{{$email}}" @if(!session('email')) {{'autofocus'}} @endif placeholder="Correo o Usuario" required >
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user input" name="password" value="{{$password}}" placeholder="Clave" required>
+                      <input type="password" class="form-control form-control-user input" name="password" value="{{$password}}" autofocus placeholder="Clave" required>
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox">

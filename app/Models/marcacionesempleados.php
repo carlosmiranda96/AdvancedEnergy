@@ -17,6 +17,7 @@ class marcacionesempleados extends Model
         'observaciones',
         'idubicacion',
         'latitud',
-        'longitud'
+        'longitud',
+        'idreferencia'
     ];
 }

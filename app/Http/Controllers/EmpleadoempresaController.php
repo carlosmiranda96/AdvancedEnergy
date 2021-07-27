@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\empleadoEmpresa;
 use App\Models\empleados;
 use App\Models\cargos;
+use App\Models\config\empresa;
 use App\Models\ubicacion;
 use App\Models\grupohorario;
 use Illuminate\Http\Request;
@@ -28,10 +29,9 @@ class EmpleadoempresaController extends Controller
     public function create(Request $request)
     {
         $empleados = empleados::find($request->id);
-        $cargo = cargos::orderby('cargo')->get();
         $horario = grupohorario::orderby('nombre')->get();
-        $ubicacion = ubicacion::orderby('descripcion')->get();
-        return view('rrhh.empleados.empresa.create',compact('empleados','cargo','horario','ubicacion'));
+        $empresas = empresa::orderby('nombreEmpresa')->get();
+        return view('rrhh.empleados.empresa.create',compact('empleados','horario','empresas'));
     }
 
     /**
@@ -43,7 +43,7 @@ class EmpleadoempresaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'idubicacion' => 'required|integer|min:1',
+            'idempresa' => 'required|integer|min:1',
             'idgrupohorario' => 'required|integer|min:1',
             'idcargo' => 'required|integer|min:1'
         ]);
@@ -60,7 +60,11 @@ class EmpleadoempresaController extends Controller
     public function show($id)
     {
         $empleados = empleados::find($id);
-        $empleadoempresa = empleadoempresa::join('cargos as a','idcargo','a.id')->join('ubicacions as b','idubicacion','b.id')->join('grupohorarios as c','idgrupohorario','c.id')->select('empleado_empresas.*','a.cargo','b.descripcion as ubicacion','c.nombre as horario')->where('idempleado',$id)->paginate();
+        $empleadoempresa = empleadoempresa::join('cargos as a','empleado_empresas.idcargo','a.id')
+        ->join('empresas as b','empleado_empresas.idempresa','b.id')
+        ->join('grupohorarios as c','empleado_empresas.idgrupohorario','c.id')
+        ->select('empleado_empresas.*','a.cargo','b.nombreEmpresa as empresa','c.nombre as horario')->where('idempleado',$id)
+        ->paginate();
         return view('rrhh.empleados.empresa.show',compact('empleados','empleadoempresa'));
     }
 
@@ -74,10 +78,15 @@ class EmpleadoempresaController extends Controller
     {
         $empleadoempresa = empleadoempresa::find($id);
         $empleados = empleados::find($empleadoempresa->idempleado);
-        $cargo = cargos::orderby('cargo')->get();
+        $cargo = cargos::orderby('cargo')
+        ->join('departamentos as a','idDepartamento','a.id')
+        ->select('cargos.*')
+        ->where('a.idempresa',$empleadoempresa['idempresa'])
+        ->get();
         $horario = grupohorario::orderby('nombre')->get();
-        $ubicacion = ubicacion::orderby('descripcion')->get();
-        return view('rrhh.empleados.empresa.edit',compact('empleados','empleadoempresa','cargo','horario','ubicacion'));
+
+        $empresas = empresa::orderby('nombreEmpresa')->get();
+        return view('rrhh.empleados.empresa.edit',compact('empleados','empleadoempresa','cargo','horario','empresas'));
     }
 
     /**
@@ -96,7 +105,7 @@ class EmpleadoempresaController extends Controller
         }
         $empleadoempresa->idempleado = $request->idempleado;
         $empleadoempresa->idcargo = $request->idcargo;
-        $empleadoempresa->idubicacion = $request->idubicacion;
+        $empleadoempresa->idempresa = $request->idempresa;
         $empleadoempresa->idgrupohorario = $request->idgrupohorario;
         $empleadoempresa->salario = $request->salario;
         $empleadoempresa->horasextras = $horasextras;

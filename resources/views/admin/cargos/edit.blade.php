@@ -26,14 +26,23 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
+                    <label>Empresa</label>
+                    <select class="form-control" id="idempresa" name="idempresa">
+                        <option value="">Seleccione</option>
+                        @foreach ($empresas as $emp)
+                            <option @if($idEmpresa==$emp->id){{'selected'}}@endif value="{{$emp->id}}">{{$emp->nombreEmpresa}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Cargo</label>
                     <input type="text" name="cargo" value="{{$cargos->cargo}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
                     <label>Departamento</label>
-                    <select class="form-control" name="idDepartamento">
+                    <select class="form-control" id="idDepartamento" name="idDepartamento">
                         <option value="0">Seleccione</option>
-                        @foreach ($departamento as $department)
+                        @foreach ($departamentos as $department)
                             <option @if($cargos->idDepartamento==$department->id) {{'selected'}} @endif value="{{$department->id}}">{{$department->departamento}}</option>
                         @endforeach
                     </select>
@@ -46,4 +55,37 @@
         </div>
     </div>
 </div>
+@stop
+@section('script')
+    <script>
+        $("#idempresa").on("change",function(){
+            if(this.value){
+                $.ajax({
+                    type:"GET",
+                    dataType:"json",
+                    data:"idempresa="+$(this).val(),
+                    url:"{{route('departamento.empresa')}}",
+                    success:function(r){
+                        $("#idDepartamento").empty();
+                        $("#idDepartamento").append('<option value="0">Seleccione</option>');
+                        $.each(r,function(value,key){  
+                            $("#idDepartamento").append('<option value="'+key.id+'">'+key.departamento+'</option>');
+                        });
+                    },
+                    error:function(){
+                        alert("Error");
+                    },
+                    beforeSend:function(){
+                        $("#idDepartamento").empty();
+                        $("#idDepartamento").append('<option value="">Cargando...</option>');
+                        $("#idDepartamento").empty();
+                        $("#idDepartamento").append('<option value="">Seleccione</option>');
+                    }
+                })
+            }else{
+                $("#idDepartamento").empty();
+                $("#idDepartamento").append('<option value="">Seleccione</option>');
+            }
+        });
+    </script>
 @stop

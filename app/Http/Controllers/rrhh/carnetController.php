@@ -30,7 +30,12 @@ class carnetController extends Controller
      */
     public function create()
     {
-        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();     
+        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")
+        ->where("b.id",null)
+        ->where("empleados.estado",'1')
+        ->orderby('empleados.nombreCompleto')
+        ->select("empleados.*")->get();     
+        
         return view('rrhh.carnet.create',compact('empleados'));
     }
 
@@ -82,7 +87,14 @@ class carnetController extends Controller
     public function edit($id)
     {
         $carnet = Carnet::find($id);
-        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")->where("b.id",null)->orwhere("empleados.id",$carnet->idempleado)->orderby('empleados.nombreCompleto')->select("empleados.*")->get();
+        
+        $empleados = empleados::leftjoin("carnets as b","empleados.id","b.idempleado")
+        ->where("b.id",null)
+        ->where("empleados.estado",'1')
+        ->orwhere("empleados.id",$carnet->idempleado)
+        ->orderby('empleados.nombreCompleto')
+        ->select("empleados.*")->get();
+        
         $empleado = empleados::find($carnet->idempleado);
         $historial = Carnethistorial::leftjoin("empleados as b","carnethistorials.idempleado","b.id")->
         where("idcarnet",$id)->orderby("carnethistorials.fecha")->orderby("carnethistorials.hora")->get();
