@@ -85,8 +85,8 @@
                                 <option value="Albañil" @if($id=="Albañil") {{'selected'}} @endif>Albañil</option-->
                                 <option value="Ingeniero Civil Sr" @if($id=="Ingeniero Civil Sr") {{'selected'}} @endif>Ingeniero Civil Sr</option>
                                 <option value="Ingeniero Civil Jr" @if($id=="Ingeniero Civil Jr") {{'selected'}} @endif>Ingeniero Civil Jr</option>
-                                <option value="Ingeniero Civil (Residente)" @if($id=="Ingeniero Civil (Residente)") {{'selected'}} @endif>Ingeniero Civil (Residente)</option>
-                                <option value="Mecánico Automotriz" @if($id=="Mecánico Automotriz") {{'selected'}} @endif>Mecánico Automotriz</option>
+                                <!--option value="Ingeniero Civil (Residente)" @if($id=="Ingeniero Civil (Residente)") {{'selected'}} @endif>Ingeniero Civil (Residente)</option>
+                                <option value="Mecánico Automotriz" @if($id=="Mecánico Automotriz") {{'selected'}} @endif>Mecánico Automotriz</option-->
                                 @if($id=="A5l8hzsd")
                                     <option value="Electricista dibujante Jr" selected>Electricista dibujante Jr</option>
                                 @endif

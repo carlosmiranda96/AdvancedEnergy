@@ -688,10 +688,12 @@ class PageController extends Controller
 						{
 							$tipo = "Salida";
 						}
-						$empleadoCarnet = empleados::where('id',$idcarnet)->where('toquen',$toquen)->first();
-						if($empleadoCarnet)
+						//$empleadoCarnet = empleados::where('id',$idcarnet)->where('toquen',$toquen)->first();
+						$Carnet = Carnet::where('id',$idcarnet)->where('toquen',$toquen)->first();
+						if($Carnet && $Carnet->idempleado>0)
 						{
-							$idempleado = $empleadoCarnet->id;
+							$idempleado = $Carnet->idempleado;
+							$empleadoCarnet = empleados::where('id',$idempleado)->first();
 							$marcacionempleado = marcacionesempleados::where('idempleado',$idempleado)->where('fecha',$fecha)->orderby('id','asc')->get();
 							$cantidad = $marcacionempleado->count();
 							$marcacionempleado = $marcacionempleado->last();
