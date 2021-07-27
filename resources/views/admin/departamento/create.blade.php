@@ -25,20 +25,26 @@
             <form method="POST" action="{{route('departamento.store')}}">
                 @csrf
                 <div class="form-group">
+                    <label>Empresa</label>
+                    <select class="form-control" id="idempresa" name="idempresa">
+                        <option value="">Seleccione</option>
+                        @foreach ($empresa as $emp)
+                            <option value="{{$emp->id}}">{{$emp->nombreEmpresa}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Departamento</label>
                     <input type="text" name="departamento" value="{{old('departamento')}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
                     <label>Nivel</label>
-                    <input type="text" name="nivel" class="form-control" autofocus autocomplete="off"/>
+                    <input type="text" name="nivel" value="{{old('nivel')}}" class="form-control" autofocus autocomplete="off"/>
                 </div>
                 <div class="form-group">
-                    <label>Dependencia</label>
-                    <select class="form-control" name="dependencia">
-                        <option value="0">Seleccione</option>
-                        @foreach ($departamento as $department)
-                            <option value="{{$department->id}}">{{$department->departamento}}</option>
-                        @endforeach
+                    <label>Departamento del que depende</label>
+                    <select class="form-control" id="dependencia" name="dependencia">
+                        <option value="">Seleccione</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -49,4 +55,37 @@
         </div>
     </div>
 </div>
+@stop
+@section('script')
+    <script>
+        $("#idempresa").on("change",function(){
+            if(this.value){
+                $.ajax({
+                    type:"GET",
+                    dataType:"json",
+                    data:"idempresa="+$(this).val(),
+                    url:"{{route('departamento.empresa')}}",
+                    success:function(r){
+                        $("#dependencia").empty();
+                        $("#dependencia").append('<option value="0">Seleccione</option>');
+                        $.each(r,function(value,key){  
+                            $("#dependencia").append('<option value="'+key.id+'">'+key.departamento+'</option>');
+                        });
+                    },
+                    error:function(){
+                        alert("Error");
+                    },
+                    beforeSend:function(){
+                        $("#dependencia").empty();
+                        $("#dependencia").append('<option value="">Cargando...</option>');
+                        $("#dependencia").empty();
+                        $("#dependencia").append('<option value="">Seleccione</option>');
+                    }
+                })
+            }else{
+                $("#dependencia").empty();
+                $("#dependencia").append('<option value="">Seleccione</option>');
+            }
+        });
+    </script>
 @stop

@@ -12,6 +12,7 @@ class empleadoEmpresa extends Model
         'idempleado',
         'idcargo',
         'idubicacion',
+        'idempresa',
         'idgrupohorario',
         'salario',
         'horasextras'

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\cargos;
+use App\Models\config\empresa;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 
@@ -26,8 +27,8 @@ class CargoController extends Controller
      */
     public function create()
     {
-        $departamento = Departamento::all()->sortBy('departamento');
-        return view('admin.cargos.create',compact('departamento'));
+        $empresas = empresa::all()->sortBy('nombreEmpresa');
+        return view('admin.cargos.create',compact('empresas'));
     }
 
     /**
@@ -68,8 +69,22 @@ class CargoController extends Controller
     public function edit($id)
     {
         $cargos = cargos::find($id);
-        $departamento = Departamento::all()->sortBy('departamento');
-        return view('admin.cargos.edit',compact('cargos','departamento'));
+        
+        $empresas = empresa::all()->sortBy('nombreEmpresa');
+
+        $idEmpresa = Departamento::find($cargos->idDepartamento)->idempresa;
+
+        $departamentos = Departamento::where('idempresa',$idEmpresa)->get()->sortBy('departamento');
+        return view('admin.cargos.edit',compact('cargos','departamentos','empresas','idEmpresa'));
+    }
+
+    public function getCargo(Request $request)
+    {
+        $cargos = cargos::orderby('cargo')
+        ->join('departamentos as b','idDepartamento','b.id')
+        ->select('cargos.*')
+        ->where('b.idempresa',$request->idempresa)->get();
+        echo json_encode($cargos);
     }
 
     /**

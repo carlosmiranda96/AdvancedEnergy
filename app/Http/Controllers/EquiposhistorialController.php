@@ -19,8 +19,8 @@ class EquiposhistorialController extends Controller
     {
         $controlvehiculo = equiposhistorial::join("empleados as b","equiposhistorials.idempleado","b.id")
         ->join("equipostrabajos as c","equiposhistorials.idequipotrabajo","c.id")
-        ->select("equiposhistorials.*","b.codigo","b.nombreCompleto","c.codigo","c.placa")->get();
-
+        ->select("equiposhistorials.*","b.codigo","b.nombreCompleto","c.codigo","c.placa")
+        ->orderby('equiposhistorials.instante','desc')->get();
         return view('general.equipos.index',compact('controlvehiculo'));
     }
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\AutorizacionGrupoController;
 use App\Http\Controllers\AutorizacionUserController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\cloud\cloudController;
+use App\Http\Controllers\config\EmpresaController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\DiasController;
 use App\Http\Controllers\DiasferiadosController;
@@ -47,6 +48,7 @@ use App\Http\Controllers\reportes\ControlVehiculosRPTController;
 use App\Http\Controllers\reportes\SolicitudEmpleoRPTController;
 use App\Http\Controllers\rrhh\carnetController;
 use App\Http\Controllers\vehiculos\EquiposaccesoriosController;
+use App\Http\Controllers\inventario\GrupoProductoController;
 use Maatwebsite\Excel\Facades\Excel;
 
 //RUTAS QUE NO NECESITAN ESTAR LOGEADO
@@ -208,6 +210,13 @@ Route::group(['middleware' => 'sesion'], function() {
     Route::get('usuarios/password/{id}',[UsuariosController::class,'cambiarclave'])->name('usuarios.clave');
     Route::put('usuarios/password/update/{id}',[UsuariosController::class,'updateclave'])->name('usuarios.updateclave');
 
+    Route::get('grupoProducto',[GrupoProductoController::class,'index'])->name('grupoProducto');
+
+    Route::resource('empresa',EmpresaController::class);
+
+    Route::get('departamento/empresa',[DepartamentoController::class,'getDepartamento'])->name('departamento.empresa');
+
+    Route::get('cargos/empresa',[CargoController::class,'getCargo'])->name('cargos.empresa');
 });
 
 //RUTAS DE ADMINISTRADOR
@@ -254,6 +263,7 @@ Route::group(['middleware' => 'admin'], function()
 
     Route::resource('pais',PaisController::class);
     Route::get('svpais/departamento',[PaisController::class,'getDepartamento'])->name('pais.departamento');
+
 
     Route::resource('svdepartamento',SvdepartamentoController::class);
     Route::resource('svmunicipio',SvmunicipioController::class);

@@ -3,13 +3,23 @@
     <div class='container-fluid'>
       <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-primary">Asistencia de mes actual</h1>
+        <h1 class="h3 mb-0 text-primary">Asistencia</h1>
     </div>
     <div class="card shadow mb-4 mt-3">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Lista de asistencia</h6>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label>Desde</label>
+                        <input onchange="mostrar(1)" type="date" id="desde" name="desde" value="{{$desde}}" class="form-control form-control-sm"/>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label>Hasta</label>
+                        <input onchange="mostrar(2)" type="date" id="hasta" name="hasta" value="{{$hasta}}" class="form-control form-control-sm"/>
+                </div>
+            </div>
             @if (session('mensaje'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{session('mensaje')}}
@@ -18,6 +28,10 @@
                 </button>
             </div>
             @endif
+            <div class="row">
+                <div class="col">
+                </div>
+            </div>
             <div class="table-responsive">
                 <table id="table_id" class="table table-sm display responsive nowrap" style="width:100%">
                     <thead>
@@ -59,17 +73,24 @@
                             <td>{{$item->empleado}}</td>
                             <td class="text-center">{{number_format($item->temp,2)}}</td>
                             <td>{{date('d/m/Y',strtotime($item->fecha))}}</td>
-                            <td>{{date('h:i:s a',strtotime($item->instante))}}</td>
-                            <?php
-                                $salida = marcacionesempleados::where('tipo','Salida')->where('idempleado',$item->idempleado)->where('instante','>=',date('h:i:s a',strtotime($item->instante)))->where('fecha',$item->fecha)->first();
-                                if($salida!=null){
-                                    $hora = $salida->instante;
-                                    $horasalida = date('h:i:s a',strtotime($hora));
-                                }else{
-                                    $hora = "00:00";
-                                    $horasalida = "No disponible";
-                                }
-                            ?>
+                            @if($item->tipo=='Entrada')
+                                <?php
+                                    $horaentrada = date('h:i:s a',strtotime($item->instante));
+                                    $salida = marcacionesempleados::where('tipo','Salida')->where('idempleado',$item->idempleado)->where('instante','>=',date('h:i:s a',strtotime($item->instante)))->where('fecha',$item->fecha)->first();
+                                    if($salida!=null){
+                                        $hora = $salida->instante;
+                                        $horasalida = date('h:i:s a',strtotime($hora));
+                                    }else{
+                                        $hora = "00:00";
+                                        $horasalida = "No disponible";
+                                    }
+                                ?>
+                            @else
+                                <?php
+                                    $horasalida = date('h:i:s a',strtotime($item->instante));
+                                ?>
+                            @endif
+                            <td>{{$horaentrada}}</td>
                             <td>{{$horasalida}}</td>                           
                             <td>{{$item->descripcion}}</td>
                             <td>{{$item->usuario}}</td>
@@ -97,6 +118,17 @@
             }
         });
     });
+    function mostrar(input){
+        desde = $("#desde").val();
+        hasta = $("#hasta").val();
+
+        if(hasta>=desde)
+        {
+            location.replace("{{route('marcaciones')}}?desde="+desde+"&hasta="+hasta);
+        }else{
+            alert("Por favor selecciona una fecha 'desde' menor...");
+        }
+    }
     function eliminar(key){
         alertify.confirm("Notificación","¿Desea eliminar el registro?",function(){
             $("#frmeliminar"+key).submit();

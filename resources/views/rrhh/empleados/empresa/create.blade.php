@@ -56,11 +56,11 @@
                             <input hidden type="text" class="form-control" name="idempleado" value="{{$empleados->id}}" required/>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Ubicación <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="idubicacion" autofocus required>
+                                    <label>Empresa <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="idempresa" name="idempresa" autofocus required>
                                         <option value="0">Seleccione</option>
-                                        @foreach($ubicacion as $item)
-                                        <option @if(old('idubicacion')==$item->id) {{'selected'}} @endif value="{{$item->id}}">{{$item->descripcion}}</option>
+                                        @foreach($empresas as $item)
+                                        <option value="{{$item->id}}">{{$item->nombreEmpresa}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -79,11 +79,8 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Cargo <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="idcargo" required>
+                                    <select class="form-control" id="idcargo" name="idcargo" required>
                                         <option value="0">Seleccione</option>
-                                        @foreach($cargo as $item)
-                                        <option @if(old('idcargo')==$item->id) {{'selected'}} @endif value="{{$item->id}}">{{$item->cargo}}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -116,4 +113,37 @@
         </div>
     </div>
 </div>
+@stop
+@section('script')
+    <script>
+        $("#idempresa").on("change",function(){
+            if(this.value){
+                $.ajax({
+                    type:"GET",
+                    dataType:"json",
+                    data:"idempresa="+$(this).val(),
+                    url:"{{route('cargos.empresa')}}",
+                    success:function(r){
+                        $("#idcargo").empty();
+                        $("#idcargo").append('<option value="0">Seleccione</option>');
+                        $.each(r,function(value,key){  
+                            $("#idcargo").append('<option value="'+key.id+'">'+key.cargo+'</option>');
+                        });
+                    },
+                    error:function(){
+                        alert("Error");
+                    },
+                    beforeSend:function(){
+                        $("#idcargo").empty();
+                        $("#idcargo").append('<option value="">Cargando...</option>');
+                        $("#idcargo").empty();
+                        $("#idcargo").append('<option value="">Seleccione</option>');
+                    }
+                })
+            }else{
+                $("#idcargo").empty();
+                $("#idcargo").append('<option value="">Seleccione</option>');
+            }
+        });
+    </script>
 @stop

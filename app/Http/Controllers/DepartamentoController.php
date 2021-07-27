@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\config\empresa;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,14 @@ class DepartamentoController extends Controller
 {
     public function index()
     {
-        $departamento = departamento::leftJoin('departamentos as b','departamentos.dependencia','=','b.id')->select('departamentos.*','b.departamento as nombredependencia')->orderby('departamentos.nivel')->paginate(5);
+        //$departamento = departamento::leftJoin('departamentos as b','departamentos.dependencia','=','b.id')
+        //->Join('empresas as c','departamentos.idempresa','=','c.id')
+        //->select('departamentos.*','b.departamento as nombredependencia')
+        //->orderby('departamentos.nivel')
+
+        $departamento = Departamento::leftJoin('empresas as b','departamentos.idempresa','b.id')
+        ->select('departamentos.*','b.nombreEmpresa')
+        ->paginate(5);
         return view('admin.departamento.lista',compact('departamento'));
     }
 
@@ -20,8 +28,14 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        $departamento = departamento::all()->sortBy('departamento');
-        return view('admin.departamento.create',compact('departamento'));
+        $empresa = empresa::all()->sortBy('nombreEmpresa');
+        //$departamento = departamento::all()->sortBy('departamento');
+        return view('admin.departamento.create',compact('empresa'));
+    }
+    public function getDepartamento(Request $request)
+    {
+        $departamento = Departamento::orderby('departamento')->where('idempresa',$request->idempresa)->get();
+        echo json_encode($departamento);
     }
 
     /**
@@ -33,16 +47,18 @@ class DepartamentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'idempresa' => 'required',
             'departamento' => 'required',
             'nivel' => 'required',
             'dependencia' => 'required'
         ]);
         departamento::create([
+            'idempresa' => $request->idempresa,
             'departamento' => $request->departamento,
             'nivel' => $request->nivel,
             'dependencia' => $request->dependencia
         ]);
-        return redirect()->route('departamento.index')->with('mensaje','Datos guardados correctamente');
+        return redirect()->route('departamento.index')->with('mensaje','Datos guardados correctamente '.$request->idempresa);
     }
 
     /**
@@ -64,8 +80,13 @@ class DepartamentoController extends Controller
     public function edit($id)
     {
         $departamento = departamento::find($id);
-        $departamentos = departamento::all()->sortBy('departamento');
-        return view('admin.departamento.edit',compact('departamento','departamentos'));
+        
+
+        $empresa = empresa::find($departamento->idempresa);
+        $empresas = empresa::all()->sortBy('nombreEmpresa');
+
+        $departamentos = departamento::where('idempresa',$empresa->id)->get()->sortBy('departamento');
+        return view('admin.departamento.edit',compact('departamento','departamentos','empresas','empresa'));
     }
 
     /**
@@ -78,13 +99,14 @@ class DepartamentoController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
+            'idempresa' => 'required',
             'departamento' => 'required',
             'nivel' => 'required',
             'dependencia' => 'required'
         ]);
         $departamento = departamento::find($id);
         $departamento->update($request->all());
-
+        
         return redirect()->route('departamento.index')->with('mensaje','Datos guardados correctamente');
     }
     /**

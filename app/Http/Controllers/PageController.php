@@ -120,7 +120,7 @@ class PageController extends Controller
 	public function iniciarsesion(Request $request)
 	{
 		$validar = $this->validarUser($request->email,$request->password,$request);
-		if($validar=="1")
+		if($validar=="1" || $validar=="2")
 		{
 			if(strpos($request->email,"@",0)!==false)
 			{
@@ -147,7 +147,7 @@ class PageController extends Controller
 			}
 			return redirect('inicio')->withCookie($cookie1)->withCookie($cookie2);
 		}else{
-			return redirect()->route('login')->with('mensaje',$validar);		
+			return redirect()->route('login')->with('mensaje',$validar)->with('email',$request->email);		
 		}		
 	}
 	public function validarUser($email,$password,Request $request)
@@ -311,7 +311,8 @@ class PageController extends Controller
 			}
 		}
 	}
-	public function validarsesion(){
+	public function validarsesion()
+	{
 		if(session('user_id'))
 		{
 			$empleadouser = empleadoUser::where('idusuario',session('user_id'))->first();
@@ -692,6 +693,10 @@ class PageController extends Controller
 						$Carnet = Carnet::where('id',$idcarnet)->where('toquen',$toquen)->first();
 						if($Carnet && $Carnet->idempleado>0)
 						{
+<<<<<<< HEAD
+=======
+							$idreferencia = 0;
+>>>>>>> 5830959ee7d71964bf0b88a9f931eecd8260fcb9
 							$idempleado = $Carnet->idempleado;
 							$empleadoCarnet = empleados::where('id',$idempleado)->first();
 							$marcacionempleado = marcacionesempleados::where('idempleado',$idempleado)->where('fecha',$fecha)->orderby('id','asc')->get();
@@ -702,6 +707,7 @@ class PageController extends Controller
 								$tipo=$marcacionempleado->tipo;
 								if($tipo=="Entrada"){
 									$tipo = "Salida";
+									$idreferencia = $marcacionempleado->id;
 								}else{
 									$tipo = "Entrada";
 								}
@@ -719,7 +725,8 @@ class PageController extends Controller
 									'instante' => $instante,
 									'idubicacion' => $idubicacion,
 									'latitud' => $latitud,
-									'longitud' => $longitud
+									'longitud' => $longitud,
+									'idreferencia' => $idreferencia
 								]);
 								if($tipo=="Entrada")
 								{
@@ -769,7 +776,7 @@ class PageController extends Controller
 							//}
 						}else{
 							$data['id'] = 0;
-							$data['mensaje'] = $error.'El carnet no no es válido</div>';
+							$data['mensaje'] = $error.'El carnet no es válido</div>';
 						}
 					}else{
 						$data['id'] = 0;
@@ -892,18 +899,27 @@ class PageController extends Controller
 			}
 		}
 	}
-	public function marcaciones()
+	public function marcaciones(Request $request)
 	{
 		date_default_timezone_set('America/El_Salvador');
 		$mesactual = date("m");
 		$anioactual = date("Y");
-		$desde = $anioactual."-".$mesactual."-01";
+		//$desde = $anioactual."-".$mesactual."-01";
+
+		if(isset($request->desde)){
+			$desde = $request->desde;
+			$hasta = $request->hasta;
+		}else{
+			$desde = date('Y-m-d');
+			$hasta = $desde;
+		}
 		$marcacionesempleados = marcacionesempleados::join('empleados','idempleado','empleados.id')->join
 		('ubicacions','idubicacion','ubicacions.id')
 		->join('users as u','marcacionesempleados.idusuario','u.id')
 		->select('marcacionesempleados.*','empleados.codigo as codigoempleado','empleados.nombreCompleto as empleado','ubicacions.descripcion','u.name as usuario')
-		->where('tipo','Entrada')->where('fecha','>=',$desde)->orderby('fecha',"desc")->orderby('instante')->get();
-		return view('rrhh.marcaciones.show',compact('marcacionesempleados'));
+		->where('tipo','Entrada')->where('fecha','>=',$desde)->where('fecha','<=',$hasta)->orwhere('tipo','Salida')->where('idreferencia',0)->orderby('fecha',"desc")->orderby('instante')->get();
+
+		return view('rrhh.marcaciones.show',compact('marcacionesempleados','desde','hasta'));
 	}
 	public function pruebaemail()
 	{
@@ -918,10 +934,17 @@ class PageController extends Controller
 		$usuario = User::where('email',$correo)->where('remember_token',$toquen)->find($idusuario);
 		if(isset($usuario) && isset($usuario->remember_token)){
 			$valido = true;
+			$ad = $usuario->ldap;
+			if(isset($ad) && $ad>0){
+				$ldap = true;
+			}else{
+				$ldap = false;
+			}
 		}else{
 			$valido = false;
+			$ldap = false;
 		}
-		return view('validarRegistro',compact('valido','idusuario','correo'));
+		return view('validarRegistro',compact('valido','idusuario','correo','ldap'));
 	}
 	public function ldap(){
 		//VALIDAR LDAP
