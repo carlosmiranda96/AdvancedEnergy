@@ -27,8 +27,12 @@ use App\Models\modulos;
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark navae">
-            <button class="btn btn-link btn-sm order-0 ml-3" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-            <a class="navbar-brand p-5"  href="{{route('inicio')}}"><img width="100%" src="{{asset('img/logo.png')}}"></a>
+            <button class="btn btn-link btn-sm order-0 ml-3 mr-3" id="sidebarToggle" href="#" ><i class="fas fa-bars"></i></button>
+            <div class="navbar-brand p-0 m-0" style="background-color:none;height:100%;width:100%">
+                <a href="{{route('inicio')}}">
+                    <img height="100%" src="{{asset('img/isotipo.png')}}">
+                </a>
+            </div>
             
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
