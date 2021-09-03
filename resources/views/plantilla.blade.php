@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\empleados;
-use App\Models\empleadoUser;
 use App\Models\modulos;
 ?>
 <!DOCTYPE html>
@@ -68,14 +67,14 @@ use App\Models\modulos;
                                     }else{
                                         $idusuario = session('user_id');
                                         $empleado = empleados::where('idusuario',$idusuario)->first();
-                                        if(isset($empleado->idgrupo)&&$empleado->idgrupo!=0)
+                                        /*if(isset($empleado->idgrupo)&&$empleado->idgrupo!=0)
                                         {
                                             $menu = modulos::join('autorizaciongrupos','modulos.id','autorizaciongrupos.idpermiso')->select('modulos.*')->where('idgrupo',$empleado->idgrupo)
                                         ->where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('modulos.orden')->get();
-                                        }else{
+                                        }else{*/
                                             $menu = modulos::join('autorizacionusuarios','modulos.id','autorizacionusuarios.idpermiso')->select('modulos.*')->where('idusuario',$idusuario)
                                         ->where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('modulos.orden')->get();
-                                        }
+                                        //}
                                     }
                                     if(isset($menu)){
                                         $nivel++;                                    
