@@ -21,7 +21,8 @@ class EquiposhistorialController extends Controller
         ->join("equipostrabajos as c","equiposhistorials.idequipotrabajo","c.id")
         ->select("equiposhistorials.*","b.codigo","b.nombreCompleto","c.codigo","c.placa")
         ->orderby('equiposhistorials.instante','desc')->get();
-        //return view('general.equipos.index',compact('controlvehiculo'));
+
+        return view('general.equipos.controlvehiculo',compact('controlvehiculo'));
     }
 
     /**

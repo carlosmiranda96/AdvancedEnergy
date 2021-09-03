@@ -66,7 +66,7 @@ use App\Models\modulos;
                                         $menu = modulos::where('nivel',$nivel)->where('dependencia',$dependencia)->orderby('orden')->get();
                                     }else{
                                         $idusuario = session('user_id');
-                                        $empleado = empleados::where('idusuario',$idusuario)->first();
+                                        //$empleado = empleados::where('idusuario',$idusuario)->first();
                                         /*if(isset($empleado->idgrupo)&&$empleado->idgrupo!=0)
                                         {
                                             $menu = modulos::join('autorizaciongrupos','modulos.id','autorizaciongrupos.idpermiso')->select('modulos.*')->where('idgrupo',$empleado->idgrupo)
