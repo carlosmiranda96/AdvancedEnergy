@@ -9,7 +9,7 @@ body{
 }
 .metro{
   color: white;
-  position: absolute;
+  /*position: absolute;*/
 }
 .item{
   width: 100px;

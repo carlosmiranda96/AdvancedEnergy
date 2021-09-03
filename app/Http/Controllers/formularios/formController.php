@@ -4,7 +4,6 @@ namespace App\Http\Controllers\formularios;
 
 use App\Http\Controllers\Controller;
 use App\Models\empleadoDocumento;
-use App\Models\empleadoUser;
 use App\Models\empleados;
 use App\Models\equiposhistorial;
 use App\Models\formularios\covid\formua;
@@ -28,7 +27,7 @@ class formController extends Controller
     public function formcovid()
     {
         $idusuario = session('user_id');
-        $empleado = empleadoUser::where('idusuario',$idusuario)->first();
+        $empleado = empleados::where('idusuario',$idusuario)->first();
         $idempleado = 0;
         $toquen=0;
         

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class syncappae extends Model
 {
     use HasFactory;
-    protected $fillable = ['key','fecha','hora','descripcion'];
+    protected $fillable = ['key','dispositivo','fecha','hora','descripcion','latitud','longitud'];
 }

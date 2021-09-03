@@ -17,9 +17,12 @@ class SyncappaeController extends Controller
         if($request->toquen==$this->toquen){
             $sync = new syncappae();
             $sync->key = $request->key;
+            $sync->dispositivo = $request->dispositivo;
             $sync->fecha = $request->fecha;
             $sync->hora = $request->hora;
             $sync->descripcion = $request->descripcion;
+            $sync->latitud = $request->latitud;
+            $sync->longitud = $request->longitud;
             $sync->save();
             $data['sync'][0]['respuesta'] = 1;
         }else{

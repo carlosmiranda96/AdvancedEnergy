@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\gruposEmpleadosController;
+use App\Http\Controllers\admin\gruposUbicacionController;
+use App\Http\Controllers\admin\usuariosGruposController;
 use App\Http\Controllers\AutorizacionGrupoController;
 use App\Http\Controllers\AutorizacionUserController;
 use App\Http\Controllers\CargoController;
@@ -12,7 +15,6 @@ use App\Http\Controllers\EmpleadodocumentoController;
 use App\Http\Controllers\EmpleadoempresaController;
 use App\Http\Controllers\EmpleadoreferenciaController;
 use App\Http\Controllers\EmpleadosController;
-use App\Http\Controllers\EmpleadouserController;
 use App\Http\Controllers\EquipomantenimientoController;
 use App\Http\Controllers\EquipostrabajoController;
 use App\Http\Controllers\EquiposhistorialController;
@@ -237,7 +239,6 @@ Route::group(['middleware' => 'admin'], function()
 
     Route::resource('empleadoempresa',EmpleadoempresaController::class);
     Route::resource('empleadoreferencia',EmpleadoreferenciaController::class);
-    Route::resource('empleadouser',EmpleadouserController::class);
 
     Route::resource('departamento',DepartamentoController::class);
     Route::resource('grupohorariosd',GrupohorariosdController::class);
@@ -246,6 +247,18 @@ Route::group(['middleware' => 'admin'], function()
     
 
     Route::resource('grupo',GrupoController::class);
+    Route::get('grupo/usuarios/{id}',[usuariosGruposController::class,'index'])->name('grupo.miembros');
+    Route::post('grupo/usuarios/add',[usuariosGruposController::class,'add'])->name('grupo.miembros.add');
+    Route::post('grupo/usuarios/delete/{id}',[usuariosGruposController::class,'destroy'])->name('grupo.miembros.destroy');
+
+    Route::get('grupo/ubicaciones/{id}',[gruposUbicacionController::class,'index'])->name('grupo.ubicaciones');
+    Route::post('grupo/ubicaciones/add',[gruposUbicacionController::class,'add'])->name('grupo.ubicaciones.add');
+    Route::post('grupo/ubicaciones/delete/{id}',[gruposUbicacionController::class,'destroy'])->name('grupo.ubicaciones.destroy');
+
+    Route::get('grupo/empleados/{id}',[gruposEmpleadosController::class,'index'])->name('grupo.empleados');
+    Route::post('grupo/empleados/add',[gruposEmpleadosController::class,'add'])->name('grupo.empleados.add');
+    Route::post('grupo/empleados/delete/{id}',[gruposEmpleadosController::class,'destroy'])->name('grupo.empleados.destroy');
+
 
     Route::resource('modulos',modulosController::class);
 

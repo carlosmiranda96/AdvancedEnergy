@@ -29,8 +29,9 @@
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user input" name="email" value="{{$email}}" @if(!session('email')) {{'autofocus'}} @endif placeholder="Correo o Usuario" required >
                     </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user input" name="password" value="{{$password}}" autofocus placeholder="Clave" required>
+                    <div class="form-group col-12 p-0">
+                      <input type="password" class="form-control form-control-user input" id="password" name="password" value="{{$password}}" autofocus placeholder="Clave" required>
+                      <button id="show_password" class="btn" type="button" onmousedown="mostrarPassword()" onmouseup="mostrarPassword()">  <span id="btnpassword" class="fa fa-eye-slash icon"></span> </button>
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox">
@@ -55,4 +56,18 @@
       </div>
     </div>
   </div>
+@stop
+@section('script')
+<script>
+    function mostrarPassword(){
+      var input = document.getElementById("password");
+      if(input.type == "password"){
+        input.type = "text";
+        $('#btnpassword').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+      }else{
+        input.type = "password";
+        $('#btnpassword').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+      }
+    }
+</script>
 @stop

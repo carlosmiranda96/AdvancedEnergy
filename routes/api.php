@@ -23,6 +23,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('userlogin/{email}/{password}', [PageController::class, 'user'])->name('userlogin');
 Route::get('ubicaciones', [ApiController::class, 'ubicaciones'])->name('apiubicaciones');
+Route::get('ubicacionesPermitidas',[ApiController::class,'ubicacionesPermitidas'])->name('apiubicacionesPermitidas');
+
+Route::get('getconfigapp', [ApiController::class, 'getConfigApp'])->name('getConfigApp');
+
 Route::get('empleados', [ApiController::class, 'empleados'])->name('apiempleados');
 Route::get('vehiculos', [ApiController::class, 'vehiculos'])->name('apivehiculos');
 Route::get('getmarcaciones/{idusuario}',[ApiController::class,'getMarcaciones'])->name('getmarcaciones');

@@ -28,6 +28,6 @@ class empleados extends Model
         'idmunicipio',
         'estado',
         'toquen',
-        'idgrupo'
+        'idusuario'
     ];
 }

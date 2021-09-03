@@ -48,10 +48,10 @@
 }
 body{
   -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 @font-face {
   font-family: 'Gotham-Bold';
@@ -10354,4 +10354,49 @@ a {
 
 .menu li:hover{
   background: #0E5155;
+}
+
+/*SCROLL*/
+::-webkit-scrollbar {
+  width: 6px;     /* Tamaño del scroll en vertical */
+  height: 6px;    /* Tamaño del scroll en horizontal */
+  display: auto;  /* Ocultar scroll */
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+::-webkit-scrollbar-thumb {
+  background: #999999;
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #82b8a4;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+::-webkit-scrollbar-thumb:active {
+  background-color: #2E9A73;
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+::-webkit-scrollbar-track {
+  opacity: 0;
+  border-radius: 4px;
+}
+#show_password{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  background-color:transparent;
+  color: gray;
+  box-shadow: none;
+  border: none;
+}
+#show_password:focus{
+  border: none;
+  outline: none;
+  box-shadow: none;
 }

@@ -213,6 +213,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-lg-6">
+                                <h5 class="font-weight-bold text-primary">Usuario para Portal</h5>
+                                <hr>
+                                <div class="form-group">
+                                    <label>Seleccione</label>
+                                    <select class="form-control form-control-sm" name="idusuario">
+                                        <option @if(!$empleados->idusuario || $empleados->idusuario==0) {{'selected'}} @endif value="0">No disponible</option>
+                                        @foreach($usuarios as $us)
+                                        <option @if($empleados->idusuario==$us->id) {{'selected'}} @endif value="{{$us->id}}">{{$us->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <div class="form-group">

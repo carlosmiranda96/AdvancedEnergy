@@ -43,8 +43,11 @@
                                 <form id="frmeliminar{{$item->id}}" method="post" action="{{route('grupo.destroy',$item->id)}}" class="form-inline">
                                 @csrf
                                 @method('DELETE')
-                                <a class="btn btn-sm btn-warning" href="{{ route('grupo.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
-                                <a onclick="eliminar('{{$item->id}}')" class="btn btn-sm btn-danger" href="#"><i class="fas fa-trash-alt"></i></a>
+                                <a class="btn btn-sm btn-warning" href="{{ route('grupo.edit',$item->id) }}"><i class="fas fa-edit"></i> Editar</a>
+                                <a class="btn btn-sm btn-info" href="{{ route('grupo.miembros',$item->id) }}"><i class="fas fa-users"></i> Usuarios</a>
+                                <a class="btn btn-sm btn-secondary" href="{{ route('grupo.empleados',$item->id) }}"><i class="fas fa-users"></i> Empleados</a>
+                                <a class="btn btn-sm btn-primary" href="{{ route('grupo.ubicaciones',$item->id) }}"><i class="fas fa-map-marker-alt"></i> Ubicaciones</a>
+                                <a onclick="eliminar('{{$item->id}}')" class="btn btn-sm btn-danger" href="#"><i class="fas fa-trash-alt"></i> Eliminar</a>
                                 </form>
                             </td>
                         </tr>

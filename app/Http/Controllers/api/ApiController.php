@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\config\configapp;
 use App\Models\empleadoDocumento;
 use App\Models\empleados;
 use App\Models\equiposhistorial;
@@ -41,6 +42,42 @@ class ApiController extends Controller
             $data['ubicaciones'][0]['descripcion'] = "No Autorizado";
             $data['ubicaciones'][0]['latitud'] = 0;
             $data['ubicaciones'][0]['longitud'] = 0;
+        }
+        echo json_encode($data);
+    }
+    public function ubicacionesPermitidas(Request $request)
+    {
+        $data = NULL;
+        if($request->toquen==$this->toquen)
+        {
+            $ubicaciones = empleados::join('grupos_empleados as b','empleados.id','b.idempleado')
+            ->join('grupos_ubicacions as c','b.idgrupo','c.idgrupo')
+            ->join('ubicacions as d','c.idUbicacion','d.id')
+            ->select('idEmpleado','nombreCompleto','idUbicacion','descripcion as ubicacion')
+            ->groupby('idEmpleado')
+            ->groupby('nombreCompleto')
+            ->groupby('idUbicacion')
+            ->groupby('ubicacion')
+            ->get();
+            $correlativo = 0;
+            foreach($ubicaciones as $item){
+                $data['ubicaciones'][$correlativo]['idempleado'] = $item->idEmpleado;
+                $data['ubicaciones'][$correlativo]['empleado'] = $item->nombreCompleto;
+                $data['ubicaciones'][$correlativo]['idubicacion'] = $item->idUbicacion;
+                $data['ubicaciones'][$correlativo]['ubicacion'] = $item->ubicacion;
+                $correlativo++;
+            }
+            if($correlativo==0){
+                $data['ubicaciones'][0]['idempleado'] = 0;
+                $data['ubicaciones'][0]['empleado'] = 0;
+                $data['ubicaciones'][0]['idubicacion'] = 0;
+                $data['ubicaciones'][0]['ubicacion'] = "No Autorizado";
+            }	
+        }else{
+            $data['ubicaciones'][0]['idempleado'] = 0;
+            $data['ubicaciones'][0]['empleado'] = 0;
+            $data['ubicaciones'][0]['idubicacion'] = 0;
+            $data['ubicaciones'][0]['ubicacion'] = "No Autorizado";
         }
         echo json_encode($data);
     }
@@ -348,6 +385,21 @@ class ApiController extends Controller
             }
         }else{
             $data['marcacion'][0]['tipo'] = 0;
+        }
+        echo json_encode($data);
+    }
+    public function getConfigApp(Request $request)
+    {
+        $data = NULL;
+        if($request->toquen==$this->toquen){
+            $configapp = configapp::first();
+            if($configapp){
+                $data['configapp'][0]['version'] = $configapp->version;
+            }else{
+                $data['configapp'][0]['version'] = 0;
+            }
+        }else{
+            $data['configapp'][0]['version'] = 0;
         }
         echo json_encode($data);
     }

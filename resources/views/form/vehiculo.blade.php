@@ -67,15 +67,15 @@
                             <label>Marque el equipo que posee el vehiculo</label>
                             <div class="form-group">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input input" type="checkbox" id="inlineCheckbox1" value="1" name="extinguidor" {{$disabled}}>
+                                    <input class="form-check-input input" type="checkbox" id="inlineCheckbox1" value="Extinguidor" name="extinguidor" {{$disabled}}>
                                     <label class="form-check-label" for="inlineCheckbox1">Extinguidor</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input input" type="checkbox" id="inlineCheckbox2" value="1" name="botiquin" {{$disabled}}>
+                                    <input class="form-check-input input" type="checkbox" id="inlineCheckbox2" value="Botiquin" name="botiquin" {{$disabled}}>
                                     <label class="form-check-label" for="inlineCheckbox2">Botiquin</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input input" type="checkbox" id="inlineCheckbox3" value="1" name="equiposeguridad" {{$disabled}}>
+                                    <input class="form-check-input input" type="checkbox" id="inlineCheckbox3" value="Triangulo" name="equiposeguridad" {{$disabled}}>
                                     <label class="form-check-label" for="inlineCheckbox3">Triangulo</label>
                                 </div>
                             </div>

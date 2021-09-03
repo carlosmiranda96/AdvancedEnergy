@@ -11,7 +11,6 @@ use App\Models\marcacionesempleados;
 use App\Models\User;
 use App\Models\equipostrabajo;
 use App\Models\equiposhistorial;
-use App\Models\empleadoUser;
 use App\Models\rrhh\Carnet;
 use App\Models\ubicacion;
 use Illuminate\Http\Request;
@@ -36,12 +35,12 @@ class PageController extends Controller
 	public function loadaplicacion()
 	{
 		$idusuario = session('user_id');
-        $empleadouser = empleadoUser::where('idusuario',$idusuario)->first();
+        $empleadouser = empleados::where('idusuario',$idusuario)->first();
 		$idempleado = 0;
 		$a=0;
 		$b=0;
         if($empleadouser){
-			$a = $empleadouser->idempleado;
+			$a = $empleadouser->id;
 			$empleado = empleados::find($a);
 			$b = $empleado->toquen;
         }
@@ -164,7 +163,7 @@ class PageController extends Controller
 				if($usuario->ldap==1){
 					$validarldap = $this->validarLDAP($email,$password);
 					if($validarldap=="1"){
-						$empleadouser = empleadoUser::where('idusuario',$usuario->id)->first();
+						$empleadouser = empleados::where('idusuario',$usuario->id)->first();
 						if($empleadouser){
 							return "1";
 						}else{
@@ -184,7 +183,7 @@ class PageController extends Controller
 							session()->put('foto','storage/app/'.$usuario->foto);
 							session()->put('idrol',$usuario->idrol);
 							session()->put('menu_id',5);//Seleccionar menu inicio
-							$empleadouser = empleadoUser::where('idusuario',$usuario->id)->first();
+							$empleadouser = empleados::where('idusuario',$usuario->id)->first();
 							if($empleadouser){
 								return "1";
 							}else{
@@ -221,9 +220,9 @@ class PageController extends Controller
 		$data['login'][0]['usuario'] = $usuario->name;
 		$data['login'][0]['clave'] = $password;
 		$data['login'][0]['respuesta'] = $validar;
-		$userempleado = empleadoUser::where('idusuario',$usuario->id)->first();
-		if(isset($userempleado->idempleado)){
-			$idempleado = $userempleado->idempleado;
+		$userempleado = empleados::where('idusuario',$usuario->id)->first();
+		if(isset($userempleado->id)){
+			$idempleado = $userempleado->id;
 		}
 		$data['login'][0]['idempleado'] = $idempleado;
 		echo json_encode($data);
@@ -315,7 +314,7 @@ class PageController extends Controller
 	{
 		if(session('user_id'))
 		{
-			$empleadouser = empleadoUser::where('idusuario',session('user_id'))->first();
+			$empleadouser = empleados::where('idusuario',session('user_id'))->first();
 			if($empleadouser){
 				return 1;
 			}else{
@@ -344,7 +343,7 @@ class PageController extends Controller
 	public function verificarUserEmpleado()
 	{
 		$idusuario = session('user_id');
-		$empleado = empleadoUser::where('idusuario',$idusuario)->first();
+		$empleado = empleados::where('idusuario',$idusuario)->first();
 		if(isset($empleado)){
 			return true;
 		}else{
@@ -368,7 +367,7 @@ class PageController extends Controller
 	public function obtenerEmpleado(Request $request)
 	{
 		$idusuario = $request->idusuario;
-		$empleado = empleadoUser::join('empleados','idempleado','empleados.id')->select('empleados.*')->where('idusuario',$idusuario)->first();
+		$empleado = empleados::where('idusuario',$idusuario)->first();
 		if(isset($empleado)){
 			$datos[0]['id'] = $empleado->id;
 			$datos[0]['nombre'] = $empleado->nombreCompleto;
@@ -492,7 +491,7 @@ class PageController extends Controller
 		$idvehiculo = $request->idvehiculo;
 		$opcion = $request->opcion;
 
-		$empleadouser = empleadoUser::where('idempleado',$idempleadoinicio)->first();
+		$empleadouser = empleados::where('id',$idempleadoinicio)->first();
 		if($empleadouser){
 			$idusuario = $empleadouser->idusuario;
 		}else{
@@ -877,16 +876,14 @@ class PageController extends Controller
 			{
 				$idempleado = $parametros[0]['valor'];
 				$toquen = $parametros[1]['valor'];
+
 				$empleadoCarnet = empleados::where('id',$idempleado)->where('toquen',$toquen)->first();
 				if($empleadoCarnet)
 				{
-					$empleadouser = empleadoUser::where('idempleado',$idempleado)->first();
-					if(!$empleadouser){
+					if($empleadoCarnet->idusuario==0){
 						//Asignar usuario a empleado
-						$empleado = new empleadoUser;
-						$empleado->idusuario = $idusuario;
-						$empleado->idempleado = $idempleado;
-						$empleado->save();
+						$empleadoCarnet->idusuario = $idusuario;
+						$empleadoCarnet->save();
 						echo "1";
 					}else{
 						echo $error."El carnet ya fue configurado con otro usuario!! <br>Contacta al administrador</h3>";

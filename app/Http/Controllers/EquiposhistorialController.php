@@ -123,11 +123,12 @@ class EquiposhistorialController extends Controller
         $equiposhistorial->uso = $request->uso;
         $equiposhistorial->kilometraje = $request->kilometraje;
         $equiposhistorial->combustible = $request->combustible;
-        $equiposhistorial->extinguidor = $request->extinguidor;
-        $equiposhistorial->botiquin = $request->botiquin;
-        $equiposhistorial->equiposeguridad = $request->equiposeguridad;
         $equiposhistorial->observaciones = $request->observaciones;
         $equiposhistorial->proyecto = $request->proyecto;
+
+        $herramienta = $request->extinguidor.",".$request->botiquin.",".$request->equiposeguridad;
+        $equiposhistorial->herramienta = $herramienta;
+
         $equiposhistorial->save();
         if(session()->has('codigoCarnet')){
             $codigoCarnet = session('codigoCarnet');

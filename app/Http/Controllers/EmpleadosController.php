@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\empleados;
 use App\Models\estadocivil;
 use App\Models\genero;
+use App\Models\gruposEmpleados;
 use App\Models\pais;
 use App\Models\svdepartamento;
 use App\Models\svmunicipio;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
@@ -84,6 +86,13 @@ class EmpleadosController extends Controller
         $empleado->estado = $request->estado;
         $empleado->toquen = $toquen;
         $empleado->save();
+
+        //Se registra empleado en grupo por default
+        $grupoEmpleado = new gruposEmpleados();
+        $grupoEmpleado->idempleado = $id;
+        $grupoEmpleado->idgrupo = 1;//Grupo Default
+        $grupoEmpleado->save();
+        
         return redirect()->route('empleadodocumento.show',empleados::latest('id')->first())->with('mensaje','Datos guardados correctamente');
     }
     public function updateGrupo(Request $request)
@@ -123,8 +132,9 @@ class EmpleadosController extends Controller
         $departamentos = svdepartamento::orderby('codigo')->get();
         $departamento = svdepartamento::find($municipio->iddepartamento);
         $pais = pais::all();
+        $usuarios = User::where('estado',1)->orderby('name')->get();
         //$departamentos = svdepartamento::find($);
-        return view('rrhh.empleados.edit',compact('empleados','estadocivil','genero','departamento','departamentos','municipio','municipios','pais'));
+        return view('rrhh.empleados.edit',compact('empleados','estadocivil','genero','departamento','departamentos','municipio','municipios','pais','usuarios'));
     }
     /**
      * Update the specified resource in storage.
@@ -174,6 +184,7 @@ class EmpleadosController extends Controller
         $empleados->idestadocivil = $request->idestadocivil;
         $empleados->idmunicipio = $request->idmunicipio;
         $empleados->estado = $request->estado;
+        $empleados->idusuario = $request->idusuario;
         $empleados->save();
         return redirect()->route('empleados.edit',$id)->with('mensaje','Datos guardados correctamente');
     }

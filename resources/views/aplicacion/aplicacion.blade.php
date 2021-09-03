@@ -83,7 +83,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 font-gotham-bold text-center">Portal Empleado</div>
+                            <div class="h5 mb-0 font-gotham-bold text-center">Portal Colaborador</div>
                         </div>
                         </div>
                     </div>

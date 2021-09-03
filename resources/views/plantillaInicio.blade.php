@@ -12,7 +12,6 @@ use App\Models\modulos;
         <meta name="author" content="Alexander Miranda - IT" />
         <title>Portal Advanced Energy</title>
         <link rel="icon" type="image/png" href="{{asset('img/isotipo.png')}}">
-        <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
         <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('vendor/alertify/css/alertify.min.css')}}" />
         <link rel="stylesheet" href="{{asset('vendor/alertify/css/themes/default.min.css')}}" />
@@ -22,14 +21,18 @@ use App\Models\modulos;
         <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.dataTables.min.css')}}">
         <!--Script para tabla responsive-->
         <link rel="stylesheet" type="text/css" href="{{asset('css/responsive.dataTables.min.css')}}" />
+        <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
         @yield('css')
         @yield('head')
     </head>
-    <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark navae">
-            <button class="btn btn-link btn-sm order-0 ml-3" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-            <a class="navbar-brand p-5"  href="{{route('inicio')}}"><img width="100%" src="{{asset('img/logo.png')}}"></a>
-            
+    <body class="sb-nav-fixed" style="background-color: #faf9f7;">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark navae" >
+            <button class="btn btn-link btn-sm order-0 ml-3 mr-3" id="sidebarToggle" href="#" ><i class="fas fa-bars"></i></button>
+            <div class="navbar-brand p-0 m-0" style="background-color:none;height:100%;width:100%">
+                <a href="{{route('inicio')}}">
+                    <img height="100%" src="{{asset('img/isotipo.png')}}">
+                </a>
+            </div>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             </form>
@@ -170,7 +173,7 @@ use App\Models\modulos;
                         <li><button class="btn" onclick="herramienta(10)"><img height="20px" src="{{asset('img/iconos/enlace.png')}}" /></button></li>
                     </ul>
                 </nav-->
-                <main class="mt-3" id="pagina">
+                <main id="pagina">
                     @yield('pagina')
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -181,15 +184,20 @@ use App\Models\modulos;
                     </div>
                 </footer>
             </div>
+            <div class="layoutBarra">
+                @yield('barra')
+            </div>
         </div>
         <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
         <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('js/bootbox.min.js')}}"></script>
         <script src="{{asset('js/scripts.js')}}"></script>
         <script src="{{asset('vendor/alertify/alertify.min.js')}}"></script>
+        
         <!--Script para tabla responsive-->
         <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('js/calendarioAE.js')}}"></script>
         @yield('script')
         <script>
             function cerrarsesion()

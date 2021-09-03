@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\empleados;
 use App\Models\marcacionesempleados;
 use App\Models\empleadoUser;
 use Illuminate\Http\Request;
@@ -48,9 +49,9 @@ class MarcacionesempleadosController extends Controller
     public function show($idusuario)
     {
         $idusuario = session()->get('user_id');
-        $empleadouser = empleadoUser::where('idusuario',$idusuario)->first();
+        $empleadouser = empleados::where('idusuario',$idusuario)->first();
         if(isset($empleadouser)){
-            $idempleado = $empleadouser->idempleado;
+            $idempleado = $empleadouser->id;
         }else{
             $idempleado = 0;
         }
