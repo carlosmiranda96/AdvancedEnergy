@@ -2,11 +2,11 @@
 @section('pagina')
 <form id="frmescaner" action="#" method="POST">
 <div hidden>
-    <input type="text" id="latitud" name="latitud" value="0"/>
-    <input type="text" id="longitud" name="longitud" value="0"/>
-    <input type="text" id="idempleadoinicio" name="idempleadoinicio" value="@if ($empleado) {{$empleado->id}} @else {{'0'}} @endif"/>
-    <input type="text" id="idvehiculo" name="idvehiculo" value="{{$idvehiculo}}"/>
-    <input type="text" id="contenido"  name="contenido" />
+    Latitud<input type="text" id="latitud" name="latitud" value="0"/>
+    Longitud<input type="text" id="longitud" name="longitud" value="0"/>
+    idUsuario <input type="text" id="idusuario" name="idusuario" value="{{$empleado->idusuario}}"/>
+    idvehiculo<input type="text" id="idvehiculo" name="idvehiculo" value="{{$idvehiculo}}"/>
+    contenido<input type="text" id="contenido"  name="contenido" />
 </div>
 <div class="row">
     <div class="col-12 text-center pt-2">
@@ -14,6 +14,8 @@
         <select class="input" id="idubicacion" name="idubicacion">
         @if($ubicacion)
           <option value="{{$ubicacion->id}}">{{$ubicacion->descripcion}}</option>
+        @else
+          <option value="0">Escanear QR</option>
         @endif
         </select>
     </div>
@@ -33,15 +35,15 @@
     <div class="col-12 text-center color-secondary">
         <label class="font-gotham-medium color-secondary h5 pb-3">Selecciona una opción</label>
         <div class="form-check form-group">
-          <input class="form-check-input" type="radio" name="opcion" id="vehiculo" value="vehiculo" @if(!$ubicacion) {{'checked'}} @endif>
-          <label class="form-check-label h6" for="vehiculo">
-            Utilizar vehiculo&nbsp;&nbsp;
+          <input class="form-check-input" type="radio" name="opcion" id="asistencia" value="asistencia" checked>
+          <label class="form-check-label h6" for="asistencia">
+            Marcar asistencia
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="opcion" id="asistencia" value="asistencia" @if($ubicacion) {{'checked'}} @endif>
-          <label class="form-check-label h6" for="asistencia">
-            Marcar asistencia
+          <input class="form-check-input" type="radio" name="opcion" id="vehiculo" value="vehiculo">
+          <label class="form-check-label h6" for="vehiculo">
+            Utilizar vehiculo&nbsp;&nbsp;
           </label>
         </div>
     </div>
@@ -170,6 +172,7 @@
               {
                   var json = JSON.parse(r);
                   var contador = 0;
+                  $("#idubicacion").empty();
                   $.each(json,function(e,key){
                       contador++;
                       $("#idubicacion").append('<option value="'+key.id+'">'+key.descripcion+'</option>');

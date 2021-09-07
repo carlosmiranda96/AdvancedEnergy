@@ -2,11 +2,11 @@
 @section('pagina')
 <div hidden>
     <form id="frmvehiculo" method="post">
-        <input id="cant" value="0"/>
-        <input id="latitud" name="latitud" value="0"/>
-        <input id="longitud" name="longitud" value="0"/>
-        <input id="idusuario" value="{{$empleado->idusuario}}"/>
-        <input id="idempleado" name="idempleado" value="{{$empleado->id}}">
+        Cantidad<input id="cant" value="0"/>
+        Latitud<input id="latitud" name="latitud" value="0"/>
+        Longitud<input id="longitud" name="longitud" value="0"/>
+        IdUsuario<input id="idusuario" value="{{$empleado->idusuario}}"/>
+        IdEmpleado<input id="idempleado" name="idempleado" value="{{$empleado->id}}">
     </form>
 </div>
 <div class="row">
@@ -489,9 +489,8 @@
         var la = $("#latitud").val();
         var lo = $("#longitud").val();
         var ubicacion = $("#idubicacion").val();
-        var empleado = $("#idempleado").val();
-        var idempleado = $("#idempleadoinicio").val();
-        var datos = {contenido:content,_token:token,opcion:'asistencia',idusuario:user,idempleado:empleado,latitud:la,longitud:lo,idubicacion:ubicacion,idempleadoinicio:idempleado,opcion:'asistencia'};
+        var idempleado = $("#idempleado").val();
+        var datos = {contenido:content,_token:token,opcion:'asistencia',idusuario:user,idempleado:idempleado,latitud:la,longitud:lo,idubicacion:ubicacion};
         $.ajax({
             url:"{{route('api.escanear')}}",
             type:"get",

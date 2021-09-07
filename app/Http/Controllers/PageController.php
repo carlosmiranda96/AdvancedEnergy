@@ -46,7 +46,7 @@ class PageController extends Controller
         }
 		$email = '';
 		$password = '';
-		return view('aplicacion.aplicacion',compact('empleado','email','password'));
+		return view('aplicacion.aplicacion',compact('empleado'));
 		/*
 		$url = route('asistencia',['a'=>$a,'b'=>$b]);
 		//return view('aplicacion.cargar',compact('url'));
@@ -484,19 +484,12 @@ class PageController extends Controller
 	{
 		$contenido = $request->contenido;
 		$idempleado = $request->idempleado;
-		$idempleadoinicio = $request->idempleadoinicio;
+		$idusuario = $request->idusuario;
 		$latitud = $request->latitud;
 		$longitud = $request->longitud;
 		$idubicacion = $request->idubicacion;
 		$idvehiculo = $request->idvehiculo;
 		$opcion = $request->opcion;
-
-		$empleadouser = empleados::where('id',$idempleadoinicio)->first();
-		if($empleadouser){
-			$idusuario = $empleadouser->idusuario;
-		}else{
-			$idusuario = 1;
-		}
 
 		$data['id'] = 0;
 		$data['mensaje'] = 'Sin respuesta';
