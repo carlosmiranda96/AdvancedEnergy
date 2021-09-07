@@ -5,7 +5,7 @@
         <input id="cant" value="0"/>
         <input id="latitud" name="latitud" value="0"/>
         <input id="longitud" name="longitud" value="0"/>
-        <input id="idusuario" value="1"/>
+        <input id="idusuario" value="{{$empleado->idusuario}}"/>
         <input id="idempleado" name="idempleado" value="{{$empleado->id}}">
     </form>
 </div>
